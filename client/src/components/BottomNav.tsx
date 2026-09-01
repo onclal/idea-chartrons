@@ -4,11 +4,9 @@ import { useTranslation } from 'react-i18next';
 const navItems = [
   { path: '/', icon: '🏠', key: 'home' },
   { path: '/posts', icon: '📋', key: 'posts' },
-  { path: '/carte', icon: '🗺️', key: 'carte' },
-  { path: '/decouvrir', icon: '🚶', key: 'decouvrir' },
+  { path: '/anti-gaspi', icon: '♻️', key: 'antigaspi' },
   { path: '/acteurs', icon: '🏪', key: 'acteurs' },
-  { path: '/brocanteurs', icon: '🏺', key: 'brocanteurs' },
-  { path: '/carnet', icon: '📔', key: 'carnet' },
+  { path: '/events', icon: '📅', key: 'events' },
 ] as const;
 
 export function BottomNav() {

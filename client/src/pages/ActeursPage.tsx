@@ -134,6 +134,21 @@ export function ActeursPage() {
         </div>
       </div>
 
+      <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+        <Link
+          to="/carte?layer=commerce"
+          className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold border border-chartrons-beige bg-white text-chartrons-olive-dark touch-target"
+        >
+          🗺️ {t('home.cta.carte')}
+        </Link>
+        <Link
+          to="/brocanteurs"
+          className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold border border-chartrons-beige bg-white text-chartrons-olive-dark touch-target"
+        >
+          🏺 {t('nav.brocanteurs')}
+        </Link>
+      </div>
+
       {filteredActeurs.length === 0 ? (
         <EmptyState
           icon={query ? '🔍' : '🏪'}

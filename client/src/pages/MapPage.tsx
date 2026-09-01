@@ -129,7 +129,12 @@ export function MapPage() {
   const [reviewSummary, setReviewSummary] = useState<ReviewSummary>({ rating: 0, count: 0 });
   const [events, setEvents] = useState<AgendaEvenement[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeLayers, setActiveLayers] = useState<Set<MapLayer>>(new Set(LAYERS));
+  const initialLayerParam = searchParams.get('layer');
+  const [activeLayers, setActiveLayers] = useState<Set<MapLayer>>(
+    initialLayerParam && (LAYERS as string[]).includes(initialLayerParam)
+      ? new Set([initialLayerParam as MapLayer])
+      : new Set(LAYERS),
+  );
   const [selectedId, setSelectedId] = useState<string | null>(searchParams.get('pin'));
   const [locateToken, setLocateToken] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);

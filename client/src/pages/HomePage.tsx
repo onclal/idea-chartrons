@@ -68,18 +68,13 @@ export function HomePage() {
   if (loading) return <Loading message={t('common.loading')} />;
 
   const ctaLinks = [
-    { to: '/posts', label: t('home.cta.posts'), icon: '📋', gradient: 'from-chartrons-bordeaux to-chartrons-brick' },
-    { to: '/anti-gaspi', label: t('home.cta.antigaspi'), icon: '♻️', gradient: 'from-chartrons-olive to-chartrons-green-light' },
+    { to: '/relais', label: t('home.cta.relais'), icon: '📦', gradient: 'from-chartrons-brass to-chartrons-olive' },
+    { to: '/carnet', label: t('nav.carnet'), icon: '📔', gradient: 'from-chartrons-bordeaux to-chartrons-olive-dark' },
     { to: '/decouvrir', label: t('home.cta.decouvrir'), icon: '🚶', gradient: 'from-chartrons-olive to-chartrons-olive-light' },
     { to: '/pratique', label: t('home.cta.pratique'), icon: 'ℹ️', gradient: 'from-chartrons-brass to-chartrons-olive' },
     { to: '/conciergerie', label: t('home.cta.conciergerie'), icon: '🔑', gradient: 'from-chartrons-brass to-chartrons-olive' },
-    { to: '/carte', label: t('home.cta.carte'), icon: '🗺️', gradient: 'from-chartrons-olive to-chartrons-olive-light' },
-    { to: '/acteurs', label: t('home.cta.acteurs'), icon: '🏪', gradient: 'from-chartrons-brass to-chartrons-brick-light' },
-    { to: '/brocanteurs', label: t('home.cta.brocanteurs'), icon: '🏺', gradient: 'from-chartrons-brass to-chartrons-olive-dark' },
     { to: '/favoris', label: t('home.cta.favoris'), icon: '♥', gradient: 'from-chartrons-bordeaux to-chartrons-olive-dark' },
     { to: '/favoris#parcours', label: t('home.cta.parcours'), icon: '🗺️', gradient: 'from-chartrons-brass to-chartrons-bordeaux' },
-    { to: '/events', label: t('home.cta.events'), icon: '📅', gradient: 'from-chartrons-bordeaux-light to-chartrons-bordeaux' },
-    { to: '/faq', label: t('home.cta.faq'), icon: '❓', gradient: 'from-chartrons-olive-dark to-chartrons-olive' },
   ];
 
   return (

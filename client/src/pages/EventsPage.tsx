@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { EventType, isCommunityEvent, type AgendaEvenement } from '@idea-chartrons/shared';
+import { EventType, isCommunityEvent, isFleaMarketEvent, type AgendaEvenement } from '@idea-chartrons/shared';
 import { Badge, Button, Card, EmptyState, Loading } from '../components/ui';
 import { AdminDeleteButton } from '../components/AdminDeleteButton';
 import { matchesSearch, useSearch } from '../context/SearchContext';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
 
-const EVENT_FILTERS = ['all', EventType.AnimationAsso, EventType.Atelier] as const;
+const EVENT_FILTERS = ['all', EventType.AnimationAsso, EventType.Atelier, EventType.Brocante] as const;
 type EventFilter = (typeof EVENT_FILTERS)[number];
 
 function formatDate(dateStr: string, locale: string) {
@@ -75,7 +75,7 @@ export function EventsPage() {
     return events
       .filter((e) => {
         const matchesType =
-          typeFilter === 'all' ? isCommunityEvent(e) : e.type === typeFilter && isCommunityEvent(e);
+          typeFilter === 'all' ? isCommunityEvent(e) || isFleaMarketEvent(e) : e.type === typeFilter;
         const matchesQuery =
           matchesSearch(e.titre, query) || matchesSearch(e.description, query);
         return matchesType && matchesQuery;
@@ -151,7 +151,15 @@ export function EventsPage() {
                   <div className="flex items-start justify-between gap-2 mb-1">
                     <h3 className="font-semibold text-chartrons-olive-dark text-base">{event.titre}</h3>
                     <div className="flex flex-col items-end gap-1 shrink-0">
-                      <Badge variant={event.type === EventType.Atelier ? 'olive' : 'brick'}>
+                      <Badge
+                        variant={
+                          event.type === EventType.Atelier
+                            ? 'olive'
+                            : event.type === EventType.Brocante
+                              ? 'brocante'
+                              : 'brick'
+                        }
+                      >
                         {t(`events.types.${event.type}`)}
                       </Badge>
                       {!upcoming && <Badge variant="stone">{t('events.past')}</Badge>}
