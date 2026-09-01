@@ -156,8 +156,8 @@ const resources = {
         },
       },
       home: {
-        welcome: 'Bienvenue dans votre quartier',
-        description: 'Découvrez les annonces, l’annuaire, la carte et les événements du quartier des Chartrons.',
+        welcome: 'Le concierge de votre quartier',
+        description: 'Trouvez un commerce, une bonne affaire anti-gaspi, un coup de main entre voisins, ou récupérez un objet au Local Relais. Gratuit, sans compte.',
         areaHint: 'Quartier des Chartrons · Bordeaux',
         heroAlt: 'Les quais des Chartrons à Bordeaux, le long de la Garonne',
         heroCredit: 'Quai des Chartrons — photo Marc Ryckaert, CC BY 3.0',
@@ -1913,8 +1913,8 @@ const resources = {
         },
       },
       home: {
-        welcome: 'Welcome to your neighborhood',
-        description: 'Discover listings, the directory, the map and events in the Chartrons district.',
+        welcome: 'Your neighborhood’s concierge',
+        description: 'Find a shop, a good anti-waste deal, a helping hand from a neighbor, or pick up an item at the Local Hub. Free, no account needed.',
         areaHint: 'Chartrons district · Bordeaux',
         heroAlt: 'The Quais des Chartrons in Bordeaux, along the Garonne',
         heroCredit: 'Quai des Chartrons — photo Marc Ryckaert, CC BY 3.0',
