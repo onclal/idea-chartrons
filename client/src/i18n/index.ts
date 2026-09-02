@@ -43,6 +43,9 @@ const resources = {
         dismiss: 'Fermer',
         dismissAria: 'Masquer cette bannière pendant 24 heures',
       },
+      upcomingEvents: {
+        summary: '{{title}} + {{count}} autre(s) événement(s) à venir',
+      },
       qrKit: {
         title: 'Kit Vitrine & QR Code',
         subtitle:
@@ -1830,6 +1833,9 @@ const resources = {
       smartBanner: {
         dismiss: 'Close',
         dismissAria: 'Hide this banner for 24 hours',
+      },
+      upcomingEvents: {
+        summary: '{{title}} + {{count}} more upcoming event(s)',
       },
       qrKit: {
         title: 'Shopfront kit & QR code',

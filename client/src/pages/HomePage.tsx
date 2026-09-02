@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { EventType, isCommunityEvent, isResidentFeedPost } from '@idea-chartrons/shared';
+import { isCommunityEvent, isResidentFeedPost } from '@idea-chartrons/shared';
 import type { AgendaEvenement, LocalRelais, PostAnnonce } from '@idea-chartrons/shared';
 import { Badge, Card, Loading } from '../components/ui';
 import { PageHelp } from '../components/PageHelp';
 import { PickupAlert } from '../components/PickupAlert';
 import { HeroCarousel } from '../components/HeroCarousel';
+import { UpcomingEventsBanner } from '../components/UpcomingEventsBanner';
 import { FaqModal } from '../components/FaqModal';
 import { ConfortDashboard } from '../components/ConfortDashboard';
 import { useConfort } from '../context/ConfortContext';
@@ -15,12 +16,14 @@ import { api } from '../lib/api';
 import { getOwnedPostIds } from '../lib/guestCarnet';
 import { activeHeroSlides, HERO_SLIDES_EVENT, type HeroSlide } from '../lib/heroSlides';
 
-function isUpcomingBrocante(event: AgendaEvenement): boolean {
-  if (event.type !== EventType.Brocante) return false;
+/** Fenêtre de mise en avant sur l'accueil : 14 jours, tous types d'événements confondus. */
+const UPCOMING_EVENTS_WINDOW_DAYS = 14;
+const UPCOMING_EVENTS_MAX = 5;
+
+function isUpcomingSoon(event: AgendaEvenement, now: Date): boolean {
   const start = new Date(event.dateDebut);
-  const now = new Date();
-  const inSevenDays = new Date(now.getTime() + 7 * 86400000);
-  return start >= now && start <= inSevenDays;
+  const windowEnd = new Date(now.getTime() + UPCOMING_EVENTS_WINDOW_DAYS * 86400000);
+  return start >= now && start <= windowEnd;
 }
 
 export function HomePage() {
@@ -29,7 +32,7 @@ export function HomePage() {
   const [stats, setStats] = useState({ posts: 0, acteurs: 0, events: 0 });
   const [relaisList, setRelaisList] = useState<LocalRelais[]>([]);
   const [posts, setPosts] = useState<PostAnnonce[]>([]);
-  const [weekendBrocante, setWeekendBrocante] = useState(false);
+  const [upcomingEvents, setUpcomingEvents] = useState<AgendaEvenement[]>([]);
   const [loading, setLoading] = useState(true);
   const [heroSlides, setHeroSlides] = useState<HeroSlide[]>(() => activeHeroSlides());
   const [faqOpen, setFaqOpen] = useState(false);
@@ -58,7 +61,13 @@ export function HomePage() {
         });
         setRelaisList(relais);
         setPosts(postsData);
-        setWeekendBrocante(events.some(isUpcomingBrocante));
+        const now = new Date();
+        setUpcomingEvents(
+          events
+            .filter((event) => isUpcomingSoon(event, now))
+            .sort((a, b) => new Date(a.dateDebut).getTime() - new Date(b.dateDebut).getTime())
+            .slice(0, UPCOMING_EVENTS_MAX),
+        );
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -101,13 +110,7 @@ export function HomePage() {
 
       <PickupAlert relaisList={relaisList} posts={posts} ownedPostIds={ownedPostIds} />
 
-      {weekendBrocante && (
-        <div className="flex justify-center">
-          <Link to="/brocanteurs">
-            <Badge variant="brocante" icon="🎪">{t('badges.brocante')}</Badge>
-          </Link>
-        </div>
-      )}
+      <UpcomingEventsBanner events={upcomingEvents} />
 
       <section className="relative">
         <div className="absolute top-2 right-2 z-10">
