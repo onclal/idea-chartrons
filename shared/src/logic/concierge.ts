@@ -1714,18 +1714,39 @@ export function buildChineurReply(
     );
   }
 
+  // La pièce demandée est prioritaire : si elle appartient à une boutique connue,
+  // on part de cette boutique-là plutôt que d'une boutique certifiée sans rapport.
+  const topPepite = pepites[0] ?? null;
+  const ownerMatch = topPepite
+    ? (spoken.find((item) => item.poiId === topPepite.merchantId) ??
+        recommendations.find((item) => item.poiId === topPepite.merchantId) ??
+        null)
+    : null;
   const certified = spoken.find((item) => item.tier === 'premium_pro');
-  const lead = certified
-    ? fr
+  const primary = ownerMatch ?? certified ?? spoken[0] ?? null;
+
+  let lead: string;
+  if (topPepite && ownerMatch) {
+    lead = fr
+      ? `Je chine pour vous. « ${topPepite.title} » se trouve chez ${ownerMatch.name}.`
+      : `I would hunt for you. "${topPepite.title}" is at ${ownerMatch.name}.`;
+  } else if (topPepite) {
+    lead = fr
+      ? `Je chine pour vous. « ${topPepite.title} » n’est pas encore rattachée à une boutique du quartier dans mes données.`
+      : `I would hunt for you. "${topPepite.title}" is not yet linked to a neighborhood shop in my data.`;
+  } else if (certified) {
+    lead = fr
       ? `Je chine pour vous. Je commencerais par ${certified.name}, boutique certifiée Notre-Dame.`
-      : `I would hunt for you starting at ${certified.name}, a Notre-Dame certified shop.`
-    : spoken[0]
-      ? fr
-        ? `Je chine pour vous autour de ${spoken[0].name}.`
-        : `I would hunt around ${spoken[0].name}.`
-      : fr
-        ? 'Voici les pépites encore en vitrine dans le quartier.'
-        : 'Here are the finds still in the neighborhood windows.';
+      : `I would hunt for you starting at ${certified.name}, a Notre-Dame certified shop.`;
+  } else if (primary) {
+    lead = fr
+      ? `Je chine pour vous autour de ${primary.name}.`
+      : `I would hunt around ${primary.name}.`;
+  } else {
+    lead = fr
+      ? 'Voici les pépites encore en vitrine dans le quartier.'
+      : 'Here are the finds still in the neighborhood windows.';
+  }
 
   const walkHint =
     spoken.length >= 2
@@ -1738,13 +1759,31 @@ export function buildChineurReply(
     const distance = formatDistanceMeters(item.distanceMeters, lang);
     return `- ${item.name}, ${item.address}, ${distance}.`;
   });
-  const pepiteBullets = pepites.slice(0, 2).map((item) =>
-    fr
-      ? `- ${item.title}, ${item.style}, ${item.era}.`
-      : `- ${item.title}, ${item.style}, ${item.era}.`,
-  );
 
-  return formatAudioReadyReply([`${lead}${walkHint}`, ...shopBullets, ...pepiteBullets].filter(Boolean).join('\n'));
+  // Les pépites sont listées à part de l'itinéraire des boutiques, avec leur
+  // boutique d'origine quand elle est connue, pour ne jamais ressembler à une
+  // adresse supplémentaire sans lieu ni distance.
+  const pepiteBullets = pepites.slice(0, 2).map((item) => {
+    const owner = recommendations.find((rec) => rec.poiId === item.merchantId);
+    const where = owner
+      ? fr
+        ? `chez ${owner.name}`
+        : `at ${owner.name}`
+      : fr
+        ? 'boutique à confirmer'
+        : 'shop to confirm';
+    return `- ${item.title}, ${item.style}, ${item.era} (${where}).`;
+  });
+
+  const sections = [`${lead}${walkHint}`, ...shopBullets];
+  if (pepiteBullets.length > 0) {
+    if (shopBullets.length > 0) {
+      sections.push(fr ? 'Côté pépites :' : 'On the finds side:');
+    }
+    sections.push(...pepiteBullets);
+  }
+
+  return formatAudioReadyReply(sections.filter(Boolean).join('\n'));
 }
 
 export function conciergePhrasebookLang(lang: string): ConciergeLang {

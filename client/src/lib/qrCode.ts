@@ -15,21 +15,24 @@ export const A6_WIDTH_PX = 1240;
 export const A6_HEIGHT_PX = 1748;
 export const QR_EXPORT_SIZE = 720;
 
-export type QrDestination = 'shop' | 'pepites' | 'events' | 'concierge';
-export type QrCtaTemplate = 'pepites' | 'concierge' | 'agenda';
+export type QrDestination = 'shop' | 'pepites' | 'events' | 'concierge' | 'home';
+export type QrCtaTemplate = 'shop' | 'pepites' | 'concierge' | 'agenda' | 'home';
 
-export const QR_DESTINATIONS: QrDestination[] = ['shop', 'pepites', 'events', 'concierge'];
-export const QR_CTA_TEMPLATES: QrCtaTemplate[] = ['pepites', 'concierge', 'agenda'];
+export const QR_DESTINATIONS: QrDestination[] = ['shop', 'pepites', 'events', 'concierge', 'home'];
+export const QR_CTA_TEMPLATES: QrCtaTemplate[] = ['shop', 'pepites', 'concierge', 'agenda', 'home'];
 
 export const QR_DESTINATION_PATH: Record<Exclude<QrDestination, 'shop'>, string> = {
   pepites: '/brocanteurs',
   events: '/events',
   concierge: '/conciergerie',
+  home: '/',
 };
 
 export function defaultCtaForDestination(destination: QrDestination): QrCtaTemplate {
+  if (destination === 'shop') return 'shop';
   if (destination === 'concierge') return 'concierge';
   if (destination === 'events') return 'agenda';
+  if (destination === 'home') return 'home';
   return 'pepites';
 }
 
