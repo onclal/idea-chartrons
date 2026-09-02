@@ -4,8 +4,10 @@ import { PostStatus, PostType, type PostAnnonce } from '@idea-chartrons/shared';
 import { Button, Input, Modal, Textarea } from './ui';
 import { EnhanceWithAiButton } from './EnhanceWithAiButton';
 import { OtpVerifyModal } from './OtpVerifyModal';
+import { DepotSlotModal } from './RelaisSlotPicker';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
+import { bookingErrorMessage } from '../lib/bookingErrors';
 import { rememberOwnedPost } from '../lib/guestCarnet';
 import { needsFirstPostOtp } from '../lib/postVerification';
 
@@ -39,6 +41,10 @@ export function PostCreateForm({ open, onClose, onCreated, post = null }: PostCr
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [wantsDepot, setWantsDepot] = useState(false);
+  const [depotSlotOpen, setDepotSlotOpen] = useState(false);
+  const [depotSubmitting, setDepotSubmitting] = useState(false);
+  const [createdPostId, setCreatedPostId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -54,6 +60,7 @@ export function PostCreateForm({ open, onClose, onCreated, post = null }: PostCr
       setAuteurNom(post.auteurNom ?? '');
       setPhotoPreview(post.photos[0] ?? null);
       setError(null);
+      setWantsDepot(false);
       return;
     }
     setTitre('');
@@ -66,6 +73,7 @@ export function PostCreateForm({ open, onClose, onCreated, post = null }: PostCr
     setAuteurNom('');
     setPhotoPreview(null);
     setError(null);
+    setWantsDepot(false);
   }, [open, post]);
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,13 +105,20 @@ export function PostCreateForm({ open, onClose, onCreated, post = null }: PostCr
       if (post) {
         await api.updatePost(post.id, payload);
         showToast(t('toast.postUpdated'));
+        onCreated();
+        onClose();
       } else {
         const created = await api.createPost({ ...payload, statut: PostStatus.EnAttente });
         rememberOwnedPost(created.id);
-        showToast(t('toast.postPending'));
+        if (wantsDepot) {
+          setCreatedPostId(created.id);
+          setDepotSlotOpen(true);
+        } else {
+          showToast(t('toast.postPending'));
+          onCreated();
+          onClose();
+        }
       }
-      onCreated();
-      onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : t('common.error'));
     } finally {
@@ -118,6 +133,35 @@ export function PostCreateForm({ open, onClose, onCreated, post = null }: PostCr
       return;
     }
     await publish();
+  };
+
+  const handleDepotConfirm = async (creneauId: string) => {
+    if (!createdPostId) return;
+    setDepotSubmitting(true);
+    try {
+      await api.proposeDepotLocal({
+        postId: createdPostId,
+        deposantNom: auteurNom.trim() || null,
+        creneauDepotId: creneauId,
+      });
+      showToast(t('toast.depotReserved'));
+    } catch (err) {
+      showToast(bookingErrorMessage(err, t), 'error');
+    } finally {
+      setDepotSubmitting(false);
+      setDepotSlotOpen(false);
+      setCreatedPostId(null);
+      onCreated();
+      onClose();
+    }
+  };
+
+  const handleDepotSkip = () => {
+    setDepotSlotOpen(false);
+    setCreatedPostId(null);
+    showToast(t('toast.postPending'));
+    onCreated();
+    onClose();
   };
 
   return (
@@ -194,6 +238,25 @@ export function PostCreateForm({ open, onClose, onCreated, post = null }: PostCr
             placeholder={t('common.phonePlaceholder')}
           />
 
+          {!editing && type === PostType.Don && (
+            <label className="flex items-start gap-2.5 p-3 rounded-xl border border-chartrons-gold/20 bg-chartrons-beige/30 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={wantsDepot}
+                onChange={(e) => setWantsDepot(e.target.checked)}
+                className="mt-0.5 w-4 h-4 accent-chartrons-green shrink-0"
+              />
+              <span>
+                <span className="block text-sm font-medium text-chartrons-green-dark">
+                  📦 {t('posts.create.depotOffer')}
+                </span>
+                <span className="block text-xs text-chartrons-warm-gray mt-0.5 leading-relaxed">
+                  {t('posts.create.depotOfferHint')}
+                </span>
+              </span>
+            </label>
+          )}
+
           {requireOtp && (
             <p className="text-xs text-chartrons-olive-dark leading-relaxed rounded-xl border border-chartrons-gold/30 bg-chartrons-beige/40 px-3 py-2">
               {t('posts.create.otp.hint')}
@@ -249,6 +312,13 @@ export function PostCreateForm({ open, onClose, onCreated, post = null }: PostCr
           setOtpOpen(false);
           void publish();
         }}
+      />
+
+      <DepotSlotModal
+        open={depotSlotOpen}
+        onClose={handleDepotSkip}
+        onConfirm={handleDepotConfirm}
+        loading={depotSubmitting}
       />
     </>
   );

@@ -229,6 +229,8 @@ const resources = {
           auteurNomHint: 'Aucun compte n’est créé : ce nom apparaît seulement sur l’annonce.',
           phone: 'Téléphone / Contact',
           phonePlaceholder: '06 12 34 56 78',
+          depotOffer: 'Déposer cet objet au Local Relais',
+          depotOfferHint: 'Pas besoin d\'attendre un preneur : déposez l\'objet au local du quartier, il sera récupéré sur place.',
           submit: 'Publier l\'annonce',
           enhance: {
             button: 'Sublimer avec l’IA',
@@ -1986,6 +1988,8 @@ const resources = {
           auteurNomHint: 'No account is created: this name only appears on the listing.',
           phone: 'Phone / Contact',
           phonePlaceholder: '06 12 34 56 78',
+          depotOffer: 'Drop this item at the Local Hub',
+          depotOfferHint: 'No need to wait for a taker: drop it off at the neighborhood hub, it will be picked up there.',
           submit: 'Publish listing',
           enhance: {
             button: 'Enhance with AI Concierge',
