@@ -6,12 +6,14 @@ import type { AgendaEvenement, LocalRelais, PostAnnonce } from '@idea-chartrons/
 import { Badge, Card, Loading } from '../components/ui';
 import { PageHelp } from '../components/PageHelp';
 import { PickupAlert } from '../components/PickupAlert';
+import { HeroCarousel } from '../components/HeroCarousel';
 import { FaqModal } from '../components/FaqModal';
 import { ConfortDashboard } from '../components/ConfortDashboard';
 import { useConfort } from '../context/ConfortContext';
 import { quaisChartronsPhotoSrc } from '../lib/media';
 import { api } from '../lib/api';
 import { getOwnedPostIds } from '../lib/guestCarnet';
+import { activeHeroSlides, HERO_SLIDES_EVENT, type HeroSlide } from '../lib/heroSlides';
 
 function isUpcomingBrocante(event: AgendaEvenement): boolean {
   if (event.type !== EventType.Brocante) return false;
@@ -29,9 +31,17 @@ export function HomePage() {
   const [posts, setPosts] = useState<PostAnnonce[]>([]);
   const [weekendBrocante, setWeekendBrocante] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [heroSlides, setHeroSlides] = useState<HeroSlide[]>(() => activeHeroSlides());
   const [faqOpen, setFaqOpen] = useState(false);
 
   const ownedPostIds = getOwnedPostIds();
+
+  useEffect(() => {
+    const refreshHeroSlides = () => setHeroSlides(activeHeroSlides());
+    refreshHeroSlides();
+    window.addEventListener(HERO_SLIDES_EVENT, refreshHeroSlides);
+    return () => window.removeEventListener(HERO_SLIDES_EVENT, refreshHeroSlides);
+  }, []);
 
   useEffect(() => {
     Promise.all([
@@ -79,6 +89,16 @@ export function HomePage() {
 
   return (
     <div className="space-y-6 animate-fade-in">
+      <Link
+        to="/pro?tab=kit"
+        className="flex items-center justify-between gap-3 min-h-[52px] px-4 py-3 rounded-2xl bg-chartrons-brass/15 border border-chartrons-brass/50"
+      >
+        <span className="text-sm font-semibold text-chartrons-olive-dark">
+          {t('home.proBanner.text')} <span className="underline">{t('home.proBanner.cta')}</span>
+        </span>
+        <span aria-hidden className="text-lg text-chartrons-olive-dark">→</span>
+      </Link>
+
       <PickupAlert relaisList={relaisList} posts={posts} ownedPostIds={ownedPostIds} />
 
       {weekendBrocante && (
@@ -93,22 +113,15 @@ export function HomePage() {
         <div className="absolute top-2 right-2 z-10">
           <PageHelp page="home" />
         </div>
-        <div className="overflow-hidden rounded-3xl shadow-card">
-          <div className="relative h-52 bg-gradient-to-br from-chartrons-green to-chartrons-beige">
-            <img
-              src={quaisChartronsPhotoSrc()}
-              alt={t('home.heroAlt')}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-chartrons-green via-chartrons-green/45 to-chartrons-green/10" />
-            <div className="relative h-full flex flex-col justify-end p-5 text-white">
-              <h2 className="text-2xl font-bold leading-tight">{t('home.welcome')}</h2>
-              <p className="text-sm text-white/85 leading-relaxed mt-1.5 max-w-sm">
-                {t('home.description')}
-              </p>
-            </div>
-          </div>
-        </div>
+        <HeroCarousel
+          defaultSlide={{
+            imageSrc: quaisChartronsPhotoSrc(),
+            imageAlt: t('home.heroAlt'),
+            title: t('home.welcome'),
+            description: t('home.description'),
+          }}
+          extraSlides={heroSlides}
+        />
         <p className="text-[10px] text-chartrons-warm-gray/80 mt-1.5 px-1">{t('home.heroCredit')}</p>
         <div className="flex items-center justify-center gap-2 mt-3 flex-wrap">
           <Badge variant="brass" icon="🙋">{t('guest.badge')}</Badge>

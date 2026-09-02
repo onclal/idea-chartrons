@@ -9,8 +9,7 @@ import { Badge, Button, Card, Loading, Select } from '../components/ui';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
 import { writeLocalStorage } from '../lib/storage';
-
-const SHOP_KEY = 'idea-chartrons-pro-shop-id';
+import { PRO_SHOP_STORAGE_KEY } from '../lib/proShop';
 const TABS = [
   { id: 'kit', icon: '▦' },
   { id: 'fidelite', icon: '⭐' },
@@ -57,7 +56,7 @@ export function ProDashboardPage() {
     setShopId((current) => {
       if (current && acteurs.some((item) => item.id === current)) return current;
       try {
-        const stored = localStorage.getItem(SHOP_KEY) ?? '';
+        const stored = localStorage.getItem(PRO_SHOP_STORAGE_KEY) ?? '';
         if (acteurs.some((item) => item.id === stored)) return stored;
       } catch {
         // ignore
@@ -75,7 +74,7 @@ export function ProDashboardPage() {
   const selectShop = (id: string) => {
     setShopId(id);
     try {
-      writeLocalStorage(SHOP_KEY, id);
+      writeLocalStorage(PRO_SHOP_STORAGE_KEY, id);
     } catch {
       // ignore
     }

@@ -11,7 +11,8 @@ import type {
 import { ANTI_GASPI_COMMISSION_RATE } from './antiGaspi.js';
 
 export const DEFAULT_TRANSACTION_FEE_EUR = 1;
-export const PREMIUM_PRO_MONTHLY_EUR = 29;
+/** Tarif associatif décidé pour Premium Pro (cahier des charges §2/§4 étape 5). */
+export const PREMIUM_PRO_MONTHLY_EUR = 20;
 export const PLATFORM_SETTINGS_ID = 'default';
 export const DEFAULT_MENU_SECTION_TITLES = ['Entrées', 'Plats', 'Desserts', 'Boissons'] as const;
 

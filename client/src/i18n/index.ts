@@ -161,10 +161,15 @@ const resources = {
         areaHint: 'Quartier des Chartrons · Bordeaux',
         heroAlt: 'Les quais des Chartrons à Bordeaux, le long de la Garonne',
         heroCredit: 'Quai des Chartrons — photo Marc Ryckaert, CC BY 3.0',
+        heroSponsoredDefault: 'Publicité',
         stats: {
           posts: 'Annonces actives',
           acteurs: 'Professionnels locaux',
           events: 'Événements à venir',
+        },
+        proBanner: {
+          text: 'Vous êtes commerçant ?',
+          cta: 'Référencez votre commerce',
         },
         cta: {
           posts: 'Voir les annonces',
@@ -480,7 +485,7 @@ const resources = {
           cta: 'Passer Premium Pro',
           checkbox: 'Souscrire à Premium Pro après publication',
           checkboxHint: 'Débloque le site web, la recommandation IA prioritaire et les modules d’action (table, RDV, Click & Collect).',
-          title: 'Adhésion Premium Pro',
+          title: 'Abonnement Premium Pro',
           intro:
             'La formule Premium Pro met votre vitrine en avant dans le quartier : lien site web, priorité Concierge IA, et modules de réservation / commande.',
           features: [
@@ -491,7 +496,7 @@ const resources = {
           price: '{{price}} / mois',
           simulation: 'Paiement simulé — aucun débit réel n’est effectué.',
           subscribe: 'S’abonner (simulation)',
-          checkoutTitle: 'Adhésion Premium Pro — {{name}}',
+          checkoutTitle: 'Abonnement Premium Pro — {{name}}',
         },
       },
       map: {
@@ -1081,6 +1086,7 @@ const resources = {
           events: 'Agenda',
           relais: 'Local Relais',
           banners: 'Bannières',
+          heroSlides: 'Rectangle Accueil',
           qr: 'Kit QR',
         },
         panel: {
@@ -1227,6 +1233,7 @@ const resources = {
           eventsSub: 'Planifiez brocantes, animations et promos flash.',
           relaisSub: 'Suivez les dépôts, QR codes et créneaux du local.',
           bannersSub: 'Ciblez les messages du bandeau sous la recherche : public, Pro gratuit, Pro payant, et alertes météo.',
+          heroSlidesSub: 'Programmez des visuels temporaires dans le rectangle photo d’accueil : annonces d’événements du quartier ou, plus tard, publicités partenaires.',
           qrSub: 'Générez des flyers A6 et QR codes vers la vitrine, les pépites, l’agenda ou le Concierge IA.',
           slots: 'Prochains créneaux',
         },
@@ -1269,6 +1276,25 @@ const resources = {
             heat: 'Canicule',
             wind: 'Vent fort',
             agenda: 'Alerte agenda',
+          },
+        },
+        heroSlides: {
+          hint: 'Ces visuels s’ajoutent au visuel de bienvenue par défaut, sans jamais le remplacer définitivement : sans slide actif ici, le rectangle d’accueil reste inchangé.',
+          empty: 'Aucun visuel programmé pour le moment.',
+          deleteConfirm: 'Supprimer le visuel « {{title}} » ?',
+          datesHint: 'Sans dates, le visuel tourne dès qu’il est actif. Avec des dates, il n’apparaît que sur ce créneau — utile pour un rappel avant, puis pendant, un événement.',
+          kind: {
+            event: 'Événement du quartier',
+            sponsor: 'Publicité partenaire',
+          },
+          fields: {
+            kind: 'Type',
+            subtitleFr: 'Sous-titre (FR)',
+            subtitleEn: 'Sous-titre (EN)',
+            imageUrl: 'Image (URL)',
+            uploadImage: 'Importer une image',
+            sponsorName: 'Nom de l’annonceur',
+            sponsorNamePlaceholder: 'Ex. Mairie de Bordeaux, Office de tourisme…',
           },
         },
         slots: {
@@ -1920,10 +1946,15 @@ const resources = {
         areaHint: 'Chartrons district · Bordeaux',
         heroAlt: 'The Quais des Chartrons in Bordeaux, along the Garonne',
         heroCredit: 'Quai des Chartrons — photo Marc Ryckaert, CC BY 3.0',
+        heroSponsoredDefault: 'Publicité',
         stats: {
           posts: 'Active listings',
           acteurs: 'Local professionals',
           events: 'Upcoming events',
+        },
+        proBanner: {
+          text: 'Are you a local business?',
+          cta: 'List your business',
         },
         cta: {
           posts: 'Browse listings',
@@ -2067,7 +2098,7 @@ const resources = {
         seller: 'Seller: {{name}}',
         itemPrice: 'Item price',
         bookingPrice: 'Booking fee',
-        membershipPrice: 'Monthly membership',
+        membershipPrice: 'Monthly subscription',
         protection: 'Buyer protection & transaction fees',
         commission: 'Anti-Waste commission (5%)',
         antiGaspiHint:
@@ -2237,7 +2268,7 @@ const resources = {
           cta: 'Go Premium Pro',
           checkbox: 'Subscribe to Premium Pro after publishing',
           checkboxHint: 'Unlocks the website link, AI priority recommendation, and action modules (table, appointment, Click & Collect).',
-          title: 'Premium Pro membership',
+          title: 'Premium Pro subscription',
           intro:
             'Premium Pro puts your listing forward in the neighborhood: website link, AI Concierge priority, and booking / order modules.',
           features: [
@@ -2248,7 +2279,7 @@ const resources = {
           price: '{{price}} / month',
           simulation: 'Simulated payment — no real charge is made.',
           subscribe: 'Subscribe (simulation)',
-          checkoutTitle: 'Premium Pro membership — {{name}}',
+          checkoutTitle: 'Premium Pro subscription — {{name}}',
         },
       },
       map: {
@@ -2838,6 +2869,7 @@ const resources = {
           events: 'Calendar',
           relais: 'Local Hub',
           banners: 'Banners',
+          heroSlides: 'Homepage banner',
           qr: 'QR kit',
         },
         panel: {
@@ -2984,6 +3016,7 @@ const resources = {
           eventsSub: 'Plan flea markets, community events and flash promos.',
           relaisSub: 'Track drop-offs, QR codes and hub time slots.',
           bannersSub: 'Target the strip under search: public, free Pro, paid Pro, and weather alerts.',
+          heroSlidesSub: 'Schedule temporary visuals in the homepage photo rectangle: neighborhood event announcements or, later, partner ads.',
           qrSub: 'Generate A6 flyers and QR codes to a shopfront, finds, the calendar or the AI Concierge.',
           slots: 'Upcoming slots',
         },
@@ -3026,6 +3059,25 @@ const resources = {
             heat: 'Heat',
             wind: 'Strong wind',
             agenda: 'Calendar alert',
+          },
+        },
+        heroSlides: {
+          hint: 'These visuals are added on top of the default welcome visual, never replacing it for good: with no active slide here, the homepage rectangle stays unchanged.',
+          empty: 'No visual scheduled yet.',
+          deleteConfirm: 'Delete the visual "{{title}}"?',
+          datesHint: 'With no dates, the visual rotates as soon as it is active. With dates, it only shows in that window — handy for a reminder before, then during, an event.',
+          kind: {
+            event: 'Neighborhood event',
+            sponsor: 'Partner ad',
+          },
+          fields: {
+            kind: 'Type',
+            subtitleFr: 'Subtitle (FR)',
+            subtitleEn: 'Subtitle (EN)',
+            imageUrl: 'Image (URL)',
+            uploadImage: 'Upload an image',
+            sponsorName: 'Advertiser name',
+            sponsorNamePlaceholder: 'e.g. City of Bordeaux, Tourist office…',
           },
         },
         slots: {

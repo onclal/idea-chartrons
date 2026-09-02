@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { to: '/admin/agenda', icon: '📅', key: 'events', end: false },
   { to: '/admin/relais', icon: '📦', key: 'relais', end: false },
   { to: '/admin/banners', icon: '📢', key: 'banners', end: false },
+  { to: '/admin/hero', icon: '🖼️', key: 'heroSlides', end: false },
   { to: '/admin/qr', icon: '▦', key: 'qr', end: false },
 ] as const;
 

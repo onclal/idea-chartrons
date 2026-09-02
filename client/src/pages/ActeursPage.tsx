@@ -13,6 +13,8 @@ import { useToast } from '../context/ToastContext';
 import { matchesSearch, useSearch } from '../context/SearchContext';
 import { api } from '../lib/api';
 import { getDeviceId } from '../lib/guestCarnet';
+import { writeLocalStorage } from '../lib/storage';
+import { PRO_SHOP_STORAGE_KEY } from '../lib/proShop';
 import { useConfort } from '../context/ConfortContext';
 
 export function ActeursPage() {
@@ -192,6 +194,11 @@ export function ActeursPage() {
         open={showCreate}
         onClose={closeCreateForm}
         onCreated={(acteur, options) => {
+          try {
+            writeLocalStorage(PRO_SHOP_STORAGE_KEY, acteur.id);
+          } catch {
+            // ignore
+          }
           loadActeurs();
           if (options?.subscribePro) setProActeur(acteur);
         }}

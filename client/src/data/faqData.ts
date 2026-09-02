@@ -104,8 +104,8 @@ export const FAQ_AUDIENCES: FaqAudience[] = [
           en: 'Who runs the platform and how is it funded?',
         },
         a: {
-          fr: 'L’association locale édite IDÉA CHARTRONS comme un bien commun. Les habitants consultent tout gratuitement. Le modèle économique repose uniquement sur l’adhésion « Premium Pro » des commerçants, sans publicité intrusive ni commission sur les ventes.',
-          en: 'The local association publishes IDÉA CHARTRONS as a common good. Residents browse everything for free. The only revenue is the “Premium Pro” merchant membership — no intrusive ads, no commission on sales.',
+          fr: 'L’association locale édite IDÉA CHARTRONS comme un bien commun. Les habitants consultent tout gratuitement. Le modèle économique repose uniquement sur l’abonnement « Premium Pro » des commerçants, sans publicité intrusive ni commission sur les ventes.',
+          en: 'The local association publishes IDÉA CHARTRONS as a common good. Residents browse everything for free. The only revenue is the “Premium Pro” merchant subscription — no intrusive ads, no commission on sales.',
         },
       },
       {
@@ -126,8 +126,8 @@ export const FAQ_AUDIENCES: FaqAudience[] = [
           en: 'Which business contacts can I use for free?',
         },
         a: {
-          fr: 'Tous les commerces locaux ont un téléphone cliquable, un e-mail cliquable dès qu’il est connu, et leurs réseaux (Instagram, Facebook, WhatsApp). Le lien direct vers le site web, la mise en avant par le concierge IA et les modules d’action (Click & Collect, prise de RDV, ardoise) sont réservés aux membres Premium Pro.',
-          en: 'Every local business has a clickable phone, a clickable email when known, and social links (Instagram, Facebook, WhatsApp). The direct website link, AI concierge priority and action modules (Click & Collect, booking, daily specials) are reserved for Premium Pro members.',
+          fr: 'Tous les commerces locaux ont un téléphone cliquable, un e-mail cliquable dès qu’il est connu, et leurs réseaux (Instagram, Facebook, WhatsApp). Le lien direct vers le site web, la mise en avant par le concierge IA et les modules d’action (Click & Collect, prise de RDV, ardoise) sont réservés aux abonnés Premium Pro.',
+          en: 'Every local business has a clickable phone, a clickable email when known, and social links (Instagram, Facebook, WhatsApp). The direct website link, AI concierge priority and action modules (Click & Collect, booking, daily specials) are reserved for Premium Pro subscribers.',
         },
       },
       {
@@ -219,8 +219,8 @@ export const FAQ_AUDIENCES: FaqAudience[] = [
           en: 'Is there a commission on Click & Collect sales?',
         },
         a: {
-          fr: 'Aucune sur le Click & Collect habituel : les échanges se font directement entre vous et vos clients. Seule l’adhésion Premium Pro rémunère l’association. Exception : les paiements CB de la rubrique Anti-Gaspi incluent une petite commission plateforme (5 %), destinée à sécuriser le créneau et à financer l’outil.',
-          en: 'None on regular Click & Collect: exchanges happen directly between you and your customers. Only the Premium Pro membership funds the association. Exception: card payments in the Anti-Waste section include a small platform commission (5%), which secures the slot and funds the tool.',
+          fr: 'Aucune sur le Click & Collect habituel : les échanges se font directement entre vous et vos clients. Seul l’abonnement Premium Pro rémunère l’association. Exception : les paiements CB de la rubrique Anti-Gaspi incluent une petite commission plateforme (5 %), destinée à sécuriser le créneau et à financer l’outil.',
+          en: 'None on regular Click & Collect: exchanges happen directly between you and your customers. Only the Premium Pro subscription funds the association. Exception: card payments in the Anti-Waste section include a small platform commission (5%), which secures the slot and funds the tool.',
         },
       },
       {
@@ -330,7 +330,7 @@ export interface FaqComparisonRow {
 export const FAQ_COMPARISON = {
   title: { fr: 'Fiche gratuite vs Premium Pro', en: 'Free listing vs Premium Pro' },
   subtitle: {
-    fr: 'Tous les commerces locaux restent visibles. L’adhésion Premium Pro débloque le site web, la priorité IA, les modules d’action et les pépites des brocanteurs.',
+    fr: 'Tous les commerces locaux restent visibles. L’abonnement Premium Pro débloque le site web, la priorité IA, les modules d’action et les pépites des brocanteurs.',
     en: 'Every local business stays visible. Premium Pro unlocks the website, AI priority, action modules and antique dealers’ finds.',
   },
   freeHeader: {
@@ -338,10 +338,16 @@ export const FAQ_COMPARISON = {
     en: 'Free listing (clickable contacts & free socials)',
   },
   premiumHeader: {
-    fr: 'Membre Premium Pro (site web, priorité IA & réservation)',
-    en: 'Premium Pro member (website, AI priority & direct booking)',
+    fr: 'Abonné Premium Pro (site web, priorité IA & réservation)',
+    en: 'Premium Pro subscriber (website, AI priority & direct booking)',
   },
   rows: [
+    {
+      id: 'price',
+      feature: { fr: 'Tarif', en: 'Price' },
+      free: { fr: 'Gratuit', en: 'Free' },
+      premium: { fr: '20 €/mois (tarif associatif)', en: '€20/month (nonprofit rate)' },
+    },
     {
       id: 'visibility',
       feature: { fr: 'Présence dans l’annuaire', en: 'Directory presence' },
