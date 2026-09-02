@@ -945,7 +945,7 @@ const resources = {
           all: 'Tous types',
         },
         types: {
-          Brocante: 'Brocante',
+          Brocante: 'Braderie',
           Animation_Asso: 'Animation associative',
           Promo_Flash: 'Promo flash',
           Marché: 'Marché',
