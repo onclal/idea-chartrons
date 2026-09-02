@@ -17,6 +17,7 @@ import { AntiGaspiPage } from './pages/AntiGaspiPage';
 import { RelaisPage } from './pages/RelaisPage';
 import { ActeursPage } from './pages/ActeursPage';
 import { BrocanteursPage } from './pages/BrocanteursPage';
+import { TourismePage } from './pages/TourismePage';
 import { MapPage } from './pages/MapPage';
 import { DecouvrirPage } from './pages/DecouvrirPage';
 import { PratiquePage } from './pages/PratiquePage';
@@ -71,7 +72,7 @@ export function App() {
                 <Route path="/decouvrir" element={<DecouvrirPage />} />
                 <Route path="/pratique" element={<PratiquePage />} />
                 <Route path="/conciergerie" element={<ConciergeriePage />} />
-                <Route path="/tourisme" element={<Navigate to="/decouvrir" replace />} />
+                <Route path="/tourisme" element={<TourismePage />} />
                 <Route path="/favoris" element={<FavoritesPage />} />
                 <Route path="/recherche" element={<SearchPage />} />
                 <Route path="/events" element={<EventsPage />} />

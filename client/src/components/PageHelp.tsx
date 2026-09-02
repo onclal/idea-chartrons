@@ -13,7 +13,8 @@ export type HelpPage =
   | 'pratique'
   | 'favoris'
   | 'carnet'
-  | 'brocanteurs';
+  | 'brocanteurs'
+  | 'tourisme';
 
 interface PageHelpProps {
   page: HelpPage;
