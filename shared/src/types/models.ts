@@ -61,6 +61,8 @@ export interface PlatformSettings {
   transactionFee: number;
   /** Commission plateforme (0–1) sur les paiements CB Anti-Gaspi. */
   antiGaspiCommissionRate?: number;
+  /** Catalogue d'étiquettes proposées aux brocanteurs pour leurs pépites (modifiable en Admin, sans recodage). */
+  pepiteTags?: string[];
   updatedAt?: string;
 }
 
@@ -190,6 +192,8 @@ export interface AntiqueItem {
   style: string;
   era: string;
   photoUrl: string | null;
+  /** Étiquettes issues du catalogue administrable (PlatformSettings.pepiteTags), pour affiner le matching IA Chineur. */
+  tags?: string[];
   status: AntiqueItemStatus;
   merchantId: string;
   createdAt: string;

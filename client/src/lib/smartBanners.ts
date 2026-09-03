@@ -91,12 +91,12 @@ export const DEFAULT_SMART_BANNERS: SmartBanner[] = [
   {
     id: 'sb-public-delivery',
     title: txt(
-      'Livraison à domicile : filtrez les commerces qui livrent',
-      'Home delivery: filter shops that deliver',
+      'Des commerces du quartier livrent à domicile',
+      'Neighborhood shops that deliver to your door',
     ),
     iconName: 'delivery',
     ctaLabel: txt('Voir', 'See'),
-    ctaUrl: '/acteurs',
+    ctaUrl: '/acteurs?livraison=1',
     targetAudience: 'public',
     weatherCondition: 'none',
     isActive: true,
@@ -106,12 +106,12 @@ export const DEFAULT_SMART_BANNERS: SmartBanner[] = [
   {
     id: 'sb-public-filters',
     title: txt(
-      'Affinez l’annuaire par métier, rue ou accessibilité',
-      'Refine the directory by trade, street or accessibility',
+      'Des commerces du quartier sont accessibles PMR',
+      'Some neighborhood shops are wheelchair-accessible',
     ),
     iconName: 'filter',
-    ctaLabel: txt('Explorer', 'Browse'),
-    ctaUrl: '/acteurs',
+    ctaLabel: txt('Voir', 'See'),
+    ctaUrl: '/acteurs?accessible=1',
     targetAudience: 'public',
     weatherCondition: 'none',
     isActive: true,

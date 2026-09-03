@@ -915,6 +915,7 @@ class LocalDatabase {
     style: string;
     era: string;
     photoUrl?: string | null;
+    tags?: string[];
     merchantId: string;
   }): AntiqueItem {
     const merchant = this.getById('acteursLocaux', data.merchantId);
@@ -931,6 +932,7 @@ class LocalDatabase {
       style: data.style,
       era: data.era,
       photoUrl: data.photoUrl?.trim() || null,
+      tags: data.tags ?? [],
       status: 'active',
       merchantId: data.merchantId,
       createdAt: now,

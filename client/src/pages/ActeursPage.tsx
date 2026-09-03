@@ -70,18 +70,39 @@ export function ActeursPage() {
     }
   };
 
+  const livraisonFilter = searchParams.get('livraison') === '1';
+  const accessibleFilter = searchParams.get('accessible') === '1';
+  const hasActiveFilter = livraisonFilter || accessibleFilter;
+
   const filteredActeurs = useMemo(
     () =>
-      acteurs.filter(
-        (a) =>
-          matchesSearch(a.nomCommerce, query) ||
-          matchesSearch(a.description, query) ||
-          matchesSearch(a.adresse, query) ||
-          matchesSearch(a.telephone ?? '', query) ||
-          matchesSearch(a.specialite ?? '', query),
-      ),
-    [acteurs, query],
+      acteurs
+        .filter((a) => !livraisonFilter || a.hasDelivery)
+        .filter((a) => !accessibleFilter || a.wheelchairAccessible)
+        .filter(
+          (a) =>
+            matchesSearch(a.nomCommerce, query) ||
+            matchesSearch(a.description, query) ||
+            matchesSearch(a.adresse, query) ||
+            matchesSearch(a.telephone ?? '', query) ||
+            matchesSearch(a.specialite ?? '', query),
+        ),
+    [acteurs, query, livraisonFilter, accessibleFilter],
   );
+
+  const toggleParam = (key: 'livraison' | 'accessible') => {
+    const next = new URLSearchParams(searchParams);
+    if (next.get(key) === '1') next.delete(key);
+    else next.set(key, '1');
+    setSearchParams(next, { replace: true });
+  };
+
+  const clearFilters = () => {
+    const next = new URLSearchParams(searchParams);
+    next.delete('livraison');
+    next.delete('accessible');
+    setSearchParams(next, { replace: true });
+  };
 
   const handleDeleteActeur = async (acteurId: string) => {
     await api.deleteActeur(acteurId);
@@ -121,6 +142,18 @@ export function ActeursPage() {
                 {t('search.results', { count: filteredActeurs.length, query })}
               </p>
             )}
+            {hasActiveFilter && (
+              <p className="text-xs text-chartrons-olive-dark mt-0.5 flex items-center gap-1.5">
+                <span>{t('acteurs.filtersActive', { count: filteredActeurs.length })}</span>
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="underline font-semibold hover:text-chartrons-bordeaux"
+                >
+                  {t('acteurs.livraisonFilterClear')}
+                </button>
+              </p>
+            )}
           </div>
           <PageHelp page="acteurs" />
         </div>
@@ -149,15 +182,39 @@ export function ActeursPage() {
         >
           🏺 {t('nav.brocanteurs')}
         </Link>
+        <button
+          type="button"
+          onClick={() => toggleParam('livraison')}
+          aria-pressed={livraisonFilter}
+          className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold border touch-target transition-colors ${
+            livraisonFilter
+              ? 'bg-chartrons-olive text-white border-chartrons-olive'
+              : 'bg-white text-chartrons-olive-dark border-chartrons-beige'
+          }`}
+        >
+          🚚 {t('acteurs.filterLivraison')}
+        </button>
+        <button
+          type="button"
+          onClick={() => toggleParam('accessible')}
+          aria-pressed={accessibleFilter}
+          className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold border touch-target transition-colors ${
+            accessibleFilter
+              ? 'bg-chartrons-olive text-white border-chartrons-olive'
+              : 'bg-white text-chartrons-olive-dark border-chartrons-beige'
+          }`}
+        >
+          ♿ {t('acteurs.filterAccessible')}
+        </button>
       </div>
 
       {filteredActeurs.length === 0 ? (
         <EmptyState
-          icon={query ? '🔍' : '🏪'}
-          title={query ? t('search.noResultsTitle') : t('acteurs.emptyTitle')}
-          message={query ? t('search.noResultsHint') : t('acteurs.emptyHint')}
+          icon={query ? '🔍' : hasActiveFilter ? '🔎' : '🏪'}
+          title={query ? t('search.noResultsTitle') : hasActiveFilter ? t('acteurs.emptyDeliveryTitle') : t('acteurs.emptyTitle')}
+          message={query ? t('search.noResultsHint') : hasActiveFilter ? t('acteurs.emptyDeliveryHint') : t('acteurs.emptyHint')}
           action={
-            !query
+            !query && !hasActiveFilter
               ? { label: `+ ${t('acteurs.create.button')}`, onClick: () => setShowCreate(true) }
               : undefined
           }

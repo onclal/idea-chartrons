@@ -62,7 +62,10 @@ export function publicPepites(items: AntiqueItem[], acteurs: ActeurLocal[]): Ant
   const premiumIds = new Set(
     acteurs.filter((acteur) => isNotreDameCertifiedDealer(acteur)).map((acteur) => acteur.id),
   );
-  return items.filter((item) => premiumIds.has(item.merchantId));
+  // Une pépite sans photo n'est jamais montrée comme fiche objet publique (ça ressemblerait à une fiche
+  // vide pour le chineur) : ses étiquettes servent seulement à mieux orienter le Concierge IA vers la
+  // boutique (voir searchAntiqueItems / buildChineurReply, qui eux ne filtrent pas sur la photo).
+  return items.filter((item) => premiumIds.has(item.merchantId) && Boolean(item.photoUrl));
 }
 
 export function searchAntiqueItems(query: string, items: AntiqueItem[]): AntiqueItem[] {
@@ -74,10 +77,19 @@ export function searchAntiqueItems(query: string, items: AntiqueItem[]): Antique
 
   return active
     .map((item) => {
-      const blob = normalizeSearchText(`${item.title} ${item.description} ${item.style} ${item.era}`);
+      const tagsText = (item.tags ?? []).join(' ');
+      const blob = normalizeSearchText(
+        `${item.title} ${item.description} ${item.style} ${item.era} ${tagsText}`,
+      );
       let score = 0;
       for (const token of tokens) {
         if (blob.includes(token)) score += 20;
+      }
+      // Une correspondance directe sur une étiquette (liste fermée, donc fiable) compte un peu plus
+      // qu'un simple mot trouvé dans un texte libre.
+      const tagBlob = normalizeSearchText(tagsText);
+      for (const token of tokens) {
+        if (tagBlob.includes(token)) score += 10;
       }
       return { item, score };
     })

@@ -1,26 +1,38 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { hasQrVitrine, type ActeurLocal } from '@idea-chartrons/shared';
+import {
+  PREMIUM_PEPITE_ACTIVE_LIMIT,
+  activePepitesForMerchant,
+  canPublishPepite,
+  hasQrVitrine,
+  isAntiqueDealer,
+  isPremiumProMerchant,
+  type ActeurLocal,
+  type AntiqueItem,
+} from '@idea-chartrons/shared';
 import { AppointmentLinkEditor } from '../components/AppointmentLinkEditor';
+import { PepiteCreateForm } from '../components/PepiteCreateForm';
 import { QRCodeGenerator } from '../components/QRCodeGenerator';
 import { RestaurantMenuEditor } from '../components/RestaurantMenuEditor';
-import { Badge, Button, Card, Loading, Select } from '../components/ui';
+import { Badge, Button, Card, EmptyState, Loading, Select } from '../components/ui';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
 import { writeLocalStorage } from '../lib/storage';
 import { PRO_SHOP_STORAGE_KEY } from '../lib/proShop';
-const TABS = [
+const BASE_TABS = [
   { id: 'kit', icon: '▦' },
   { id: 'fidelite', icon: '⭐' },
   { id: 'menu', icon: '🍽️' },
   { id: 'rdv', icon: '📅' },
 ] as const;
+const PEPITES_TAB = { id: 'pepites', icon: '✨' } as const;
+const ALL_TABS = [...BASE_TABS, PEPITES_TAB];
 
-type TabId = (typeof TABS)[number]['id'];
+type TabId = (typeof ALL_TABS)[number]['id'];
 
 function isTab(value: string | null): value is TabId {
-  return TABS.some((tab) => tab.id === value);
+  return ALL_TABS.some((tab) => tab.id === value);
 }
 
 export function ProDashboardPage() {
@@ -31,6 +43,9 @@ export function ProDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [generatingQr, setGeneratingQr] = useState(false);
+  const [antiqueItems, setAntiqueItems] = useState<AntiqueItem[]>([]);
+  const [pepiteTags, setPepiteTags] = useState<string[]>([]);
+  const [pepiteFormOpen, setPepiteFormOpen] = useState(false);
   const requestedShop = searchParams.get('shop');
   const requestedTab = searchParams.get('tab');
   const [shopId, setShopId] = useState('');
@@ -38,9 +53,12 @@ export function ProDashboardPage() {
 
   const load = () => {
     setLoading(true);
-    api
-      .getActeurs()
-      .then(setActeurs)
+    Promise.all([api.getActeurs(), api.getAntiqueItems(), api.getPlatformSettings()])
+      .then(([acteursData, items, settings]) => {
+        setActeurs(acteursData);
+        setAntiqueItems(items);
+        setPepiteTags(settings.pepiteTags ?? []);
+      })
       .catch(console.error)
       .finally(() => setLoading(false));
   };
@@ -70,6 +88,44 @@ export function ProDashboardPage() {
   }, [requestedTab]);
 
   const acteur = useMemo(() => acteurs.find((item) => item.id === shopId) ?? null, [acteurs, shopId]);
+
+  const isDealer = acteur ? isAntiqueDealer(acteur) : false;
+  const isPremium = acteur ? isPremiumProMerchant(acteur) : false;
+
+  const visibleTabs = useMemo(
+    () => (isDealer ? [...BASE_TABS, PEPITES_TAB] : [...BASE_TABS]),
+    [isDealer],
+  );
+
+  const merchantPepites = useMemo(
+    () => (acteur ? antiqueItems.filter((item) => item.merchantId === acteur.id) : []),
+    [antiqueItems, acteur],
+  );
+
+  const activePepitesCount = useMemo(
+    () => (acteur ? activePepitesForMerchant(antiqueItems, acteur.id).length : 0),
+    [antiqueItems, acteur],
+  );
+
+  const publishCheck = useMemo(
+    () => (acteur ? canPublishPepite(acteur, antiqueItems) : { ok: false as const, reason: 'not_dealer' as const }),
+    [acteur, antiqueItems],
+  );
+
+  const refreshAntiqueItems = () => {
+    api.getAntiqueItems().then(setAntiqueItems).catch(console.error);
+  };
+
+  const toggleSoldStatus = async (item: AntiqueItem) => {
+    try {
+      const updated = await api.updateAntiqueItem(item.id, {
+        status: item.status === 'active' ? 'sold' : 'active',
+      });
+      setAntiqueItems((list) => list.map((entry) => (entry.id === updated.id ? updated : entry)));
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : t('common.error'), 'error');
+    }
+  };
 
   const selectShop = (id: string) => {
     setShopId(id);
@@ -135,7 +191,7 @@ export function ProDashboardPage() {
         role="tablist"
         aria-label={t('proSpace.title')}
       >
-        {TABS.map((item) => {
+        {visibleTabs.map((item) => {
           const active = tab === item.id;
           return (
             <button
@@ -245,6 +301,98 @@ export function ProDashboardPage() {
                 setSaving(false);
               }
             }}
+          />
+        </Card>
+      )}
+
+      {tab === 'pepites' && (
+        <Card className="!p-4 sm:!p-5 space-y-4">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h3 className="font-bold text-chartrons-green-dark">{t('proSpace.pepites.title')}</h3>
+              <p className="text-xs text-chartrons-warm-gray mt-1 leading-relaxed">
+                {t('proSpace.pepites.subtitle')}
+              </p>
+            </div>
+            <Badge variant={isPremium ? 'olive' : 'stone'}>
+              {t('proSpace.pepites.quota', { count: activePepitesCount, max: PREMIUM_PEPITE_ACTIVE_LIMIT })}
+            </Badge>
+          </div>
+
+          {!isPremium ? (
+            <div className="rounded-xl border border-chartrons-gold/30 bg-chartrons-beige/40 px-3 py-3 space-y-2">
+              <p className="text-sm text-chartrons-olive-dark leading-relaxed">
+                {t('proSpace.pepites.premiumRequired')}
+              </p>
+              <Button type="button" variant="gold" onClick={() => selectTab('fidelite')}>
+                {t('proSpace.pepites.discoverPremium')}
+              </Button>
+            </div>
+          ) : (
+            <Button
+              type="button"
+              variant="bordeaux"
+              className="w-full"
+              disabled={!publishCheck.ok}
+              onClick={() => setPepiteFormOpen(true)}
+            >
+              {t('proSpace.pepites.add')}
+            </Button>
+          )}
+          {isPremium && !publishCheck.ok && publishCheck.reason === 'quota' && (
+            <p className="text-xs text-chartrons-warm-gray">{t('proSpace.pepites.quotaReached')}</p>
+          )}
+
+          {merchantPepites.length === 0 ? (
+            <EmptyState
+              icon="✨"
+              title={t('brocanteurs.pepitesEmpty')}
+              message={t('proSpace.pepites.emptyHint')}
+            />
+          ) : (
+            <div className="space-y-2">
+              {merchantPepites.map((item) => {
+                const sold = item.status === 'sold';
+                return (
+                  <div
+                    key={item.id}
+                    className={`flex items-center gap-3 rounded-xl border border-chartrons-beige p-3 ${sold ? 'opacity-70' : ''}`}
+                  >
+                    {item.photoUrl ? (
+                      <img src={item.photoUrl} alt="" className="w-14 h-14 rounded-lg object-cover shrink-0" />
+                    ) : (
+                      <div className="w-14 h-14 rounded-lg bg-chartrons-stone flex items-center justify-center text-lg shrink-0" aria-hidden>
+                        🏷️
+                      </div>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <p className="font-semibold text-chartrons-olive-dark truncate">{item.title}</p>
+                        <Badge variant={sold ? 'stone' : 'brass'}>
+                          {sold ? t('brocanteurs.sold') : t('brocanteurs.active')}
+                        </Badge>
+                      </div>
+                      {!item.photoUrl && (
+                        <p className="text-[11px] text-chartrons-warm-gray mt-0.5">
+                          {t('proSpace.pepites.noPhotoBadge')}
+                        </p>
+                      )}
+                    </div>
+                    <Button type="button" variant="ghost" size="sm" onClick={() => toggleSoldStatus(item)}>
+                      {sold ? t('proSpace.pepites.markActive') : t('proSpace.pepites.markSold')}
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          <PepiteCreateForm
+            open={pepiteFormOpen}
+            onClose={() => setPepiteFormOpen(false)}
+            onCreated={refreshAntiqueItems}
+            merchantId={acteur.id}
+            tagsCatalog={pepiteTags}
           />
         </Card>
       )}

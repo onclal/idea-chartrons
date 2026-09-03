@@ -16,6 +16,20 @@ export const PREMIUM_PRO_MONTHLY_EUR = 20;
 export const PLATFORM_SETTINGS_ID = 'default';
 export const DEFAULT_MENU_SECTION_TITLES = ['Entrées', 'Plats', 'Desserts', 'Boissons'] as const;
 
+/** Catalogue par défaut des étiquettes pépites (modifiable ensuite depuis Admin > Étiquettes Chineur). */
+export const DEFAULT_PEPITE_TAGS: string[] = [
+  'Commode', 'Buffet / Enfilade', 'Table', 'Chaise / Fauteuil', 'Armoire', 'Bureau', 'Miroir / Psyché',
+  'Service de table', 'Verrerie', 'Argenterie', 'Théière / Cafetière', 'Faïence', 'Couverts',
+  'Lampe à poser', 'Lustre / Suspension', 'Applique', 'Lampadaire', 'Abat-jour',
+  'Bague', 'Collier', 'Broche', 'Montre', 'Sac', 'Foulard / Écharpe',
+  'Manteau / Veste', 'Robe', 'Linge de maison', 'Tapis', 'Rideau',
+  'Peinture', 'Gravure / Estampe', 'Sculpture', 'Cadre ancien', 'Affiche',
+  'Poupée', 'Petite voiture', 'Jeu de société', 'Peluche', 'Train miniature',
+  'Livre ancien', 'Carte postale', 'Affiche publicitaire', 'Partition', 'Journal ancien',
+  'Disque vinyle', 'Instrument de musique', 'Platine', 'Boîte à musique',
+  'Objet scientifique', 'Militaria', 'Objet religieux', 'Outil ancien', 'Objet exotique',
+];
+
 export function merchantTierPatch(tier: MerchantTier): { tier: MerchantTier; isVip: boolean } {
   return {
     tier,
@@ -28,6 +42,7 @@ export function createDefaultPlatformSettings(): PlatformSettings {
     id: PLATFORM_SETTINGS_ID,
     transactionFee: DEFAULT_TRANSACTION_FEE_EUR,
     antiGaspiCommissionRate: ANTI_GASPI_COMMISSION_RATE,
+    pepiteTags: [...DEFAULT_PEPITE_TAGS],
   };
 }
 
@@ -42,6 +57,10 @@ export function normalizePlatformSettings(input?: Partial<PlatformSettings> | nu
       Number.isFinite(commission) && commission >= 0 && commission <= 1
         ? Math.round(commission * 1000) / 1000
         : ANTI_GASPI_COMMISSION_RATE,
+    pepiteTags:
+      Array.isArray(input?.pepiteTags) && input.pepiteTags.length > 0
+        ? input.pepiteTags.filter((tag): tag is string => typeof tag === 'string' && tag.trim().length > 0)
+        : [...DEFAULT_PEPITE_TAGS],
     updatedAt: input?.updatedAt,
   };
 }

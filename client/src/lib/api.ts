@@ -139,6 +139,7 @@ export const api = {
     style: string;
     era: string;
     photoUrl?: string | null;
+    tags?: string[];
     merchantId: string;
   }) => withDelay(() => localDb.createAntiqueItem(data)),
   updateAntiqueItem: (

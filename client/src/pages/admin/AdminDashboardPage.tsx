@@ -15,6 +15,7 @@ const QUICK_LINKS = [
   { to: '/admin/agenda', key: 'events', icon: '📅' },
   { to: '/admin/relais', key: 'relais', icon: '📦' },
   { to: '/admin/qr', key: 'qr', icon: '▦' },
+  { to: '/admin/tags-chineur', key: 'pepiteTags', icon: '🏷️' },
 ] as const;
 
 export function AdminDashboardPage() {
