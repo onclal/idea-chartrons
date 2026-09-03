@@ -47,9 +47,9 @@ export const STATIC_MAP_POIS: StaticMapPoi[] = [
     kind: 'marche',
     titleKey: 'map.pois.hallesTitle',
     descriptionKey: 'map.pois.hallesHint',
-    adresse: 'Halles des Chartrons, Quai des Chartrons, 33000 Bordeaux',
-    latitude: 44.8498,
-    longitude: -0.5669,
+    adresse: 'Halles des Chartrons, Place du Marché des Chartrons, 33000 Bordeaux',
+    latitude: 44.85235,
+    longitude: -0.56985,
     href: '/carte',
   },
 ];

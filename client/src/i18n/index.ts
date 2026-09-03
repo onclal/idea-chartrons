@@ -25,6 +25,8 @@ const resources = {
       geo: {
         fromYou: '{{distance}} de vous',
         fromCenter: '{{distance}} du cœur des Chartrons',
+        youAreHere: 'Vous êtes ici',
+        approxCenter: 'Centre du quartier (position approximative)',
       },
       smartBanner: {
         dismiss: 'Fermer',
@@ -1858,6 +1860,8 @@ const resources = {
       geo: {
         fromYou: '{{distance}} from you',
         fromCenter: '{{distance}} from the heart of the Chartrons',
+        youAreHere: 'You are here',
+        approxCenter: 'Neighborhood center (approximate position)',
       },
       smartBanner: {
         dismiss: 'Close',

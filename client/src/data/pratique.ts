@@ -212,9 +212,9 @@ export const WORK_CAFES: PracticalPlace[] = [
     id: 'halles-wifi',
     title: { fr: 'Halles des Chartrons', en: 'Chartrons Market Hall' },
     hint: { fr: 'Tables, Wi-Fi des commerces, prises selon les stands. Idéal en journée.', en: 'Tables, shop Wi-Fi, sockets depending on the stall. Good in daytime.' },
-    adresse: 'Halles des Chartrons, Quai des Chartrons, 33000 Bordeaux',
-    latitude: 44.8498,
-    longitude: -0.5669,
+    adresse: 'Halles des Chartrons, Place du Marché des Chartrons, 33000 Bordeaux',
+    latitude: 44.85235,
+    longitude: -0.56985,
   },
   {
     id: 'notre-dame-cafe',

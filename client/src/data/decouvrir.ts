@@ -58,7 +58,7 @@ export const CHARTRONS_WALKS: NeighborhoodWalk[] = [
       { name: { fr: 'Quai des Chartrons', en: 'Chartrons quay' }, latitude: 44.8512, longitude: -0.5694 },
       { name: { fr: 'Musée du Vin et du Négoce', en: 'Wine and Trade Museum' }, latitude: 44.8519, longitude: -0.5746 },
       { name: { fr: 'Rue Notre-Dame', en: 'Rue Notre-Dame' }, latitude: 44.8511, longitude: -0.5728 },
-      { name: { fr: 'Halles des Chartrons', en: 'Chartrons market hall' }, latitude: 44.8498, longitude: -0.5669 },
+      { name: { fr: 'Halles des Chartrons', en: 'Chartrons market hall' }, latitude: 44.85235, longitude: -0.56985 },
     ],
   },
   {
@@ -87,7 +87,7 @@ export const CHARTRONS_WALKS: NeighborhoodWalk[] = [
     },
     stops: [
       { name: { fr: 'Pont de pierre (côté Chartrons)', en: 'Stone Bridge (Chartrons side)' }, latitude: 44.8484, longitude: -0.5632 },
-      { name: { fr: 'Halles des Chartrons', en: 'Chartrons market hall' }, latitude: 44.8498, longitude: -0.5669 },
+      { name: { fr: 'Halles des Chartrons', en: 'Chartrons market hall' }, latitude: 44.85235, longitude: -0.56985 },
       { name: { fr: 'Quai des Chartrons', en: 'Chartrons quay' }, latitude: 44.8512, longitude: -0.5694 },
       { name: { fr: 'Place des Chartrons', en: 'Place des Chartrons' }, latitude: 44.8541, longitude: -0.5718 },
     ],
@@ -99,13 +99,13 @@ export const HERITAGE_SPOTS: HeritageSpot[] = [
     id: 'halles',
     icon: '🏛️',
     title: { fr: 'Halle des Chartrons', en: 'Chartrons Market Hall' },
-    adresse: 'Halles des Chartrons, Quai des Chartrons, 33000 Bordeaux',
+    adresse: 'Halles des Chartrons, Place du Marché des Chartrons, 33000 Bordeaux',
     summary: {
       fr: 'Halles gourmandes sur les quais : étals, tables et rendez-vous du quartier.',
       en: 'Food hall on the quays: stalls, tables and a neighborhood meeting place.',
     },
-    latitude: 44.8498,
-    longitude: -0.5669,
+    latitude: 44.85235,
+    longitude: -0.56985,
   },
   {
     id: 'notre-dame',
@@ -187,8 +187,8 @@ export const INSTAGRAM_SPOTS: InstagramSpot[] = [
       fr: 'Les Halles actuelles occupent l’emplacement des anciens hangars d’expédition : on y dîne aujourd’hui là où partaient les barriques vers le monde entier.',
       en: 'Today’s food hall stands where shipping sheds once stood: you now dine where barrels left for the world.',
     },
-    latitude: 44.8498,
-    longitude: -0.5669,
+    latitude: 44.85235,
+    longitude: -0.56985,
   },
   {
     id: 'marche-dimanche',

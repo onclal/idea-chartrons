@@ -182,6 +182,7 @@ export function ActeursPage() {
         >
           🏺 {t('nav.brocanteurs')}
         </Link>
+        <span className="shrink-0 w-px self-stretch bg-chartrons-beige mx-0.5" aria-hidden />
         <button
           type="button"
           onClick={() => toggleParam('livraison')}
