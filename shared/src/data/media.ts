@@ -1,5 +1,9 @@
 /** Generic Unsplash church used as a neighborhood placeholder — never restore. */
-export const RETIRED_STOCK_IMAGE_MARKERS = ['photo-1548625361-1811e59543e3'] as const;
+export const RETIRED_STOCK_IMAGE_MARKERS = [
+  'photo-1548625361-1811e59543e3',
+  // Brocante des Chartrons (acteur-1) : photo de couverture Unsplash morte (icone cassee constatee en prod).
+  'photo-1555041469-a586c12ebb9a',
+] as const;
 
 /** Local hero of the Quais des Chartrons (Marc Ryckaert, CC BY 3.0). */
 export const QUAIS_CHARTRONS_IMAGE = 'images/quais-chartrons.jpg';

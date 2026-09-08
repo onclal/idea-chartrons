@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@idea-chartrons/shared": "*",
+    "@supabase/supabase-js": "^2.116.0",
     "i18next": "^24.2.2",
     "leaflet": "^1.9.4",
     "qrcode.react": "^4.2.0",

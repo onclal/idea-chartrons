@@ -5,6 +5,7 @@ export * from './types/review.js';
 export * from './types/poi.js';
 export * from './types/post.js';
 export * from './types/admin.js';
+export * from './types/reseauPro.js';
 export * from './logic/relais.js';
 export * from './logic/fidelite.js';
 export * from './logic/antiGaspi.js';

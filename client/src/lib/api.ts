@@ -20,10 +20,13 @@ import type {
   CivicReportChannel,
   CivicReportStatus,
   ReportSubcategoryId,
+  DispoSignal,
+  DispoSignalDraft,
 } from '@idea-chartrons/shared';
 import { localDb, withDelay, resetLocalDb } from './localDb';
 import { getMenus, updateMenus, upsertAppointmentLink } from './gbp';
 import { loadContactMessages, saveContactMessage, type ContactMessage } from './contact';
+import { getActiveDispoSignals, createDispoSignal, getShopDispoSignals } from './reseauPro';
 
 export interface FideliteScanResult {
   scan: CarteFideliteScan;
@@ -207,4 +210,8 @@ export const api = {
   seedDemoMerchants: () => withDelay(() => localDb.seedDemoData()),
   wipeDemoMerchants: () => withDelay(() => localDb.wipeDemoData()),
   health: () => Promise.resolve({ status: 'ok', app: 'IDÉA CHARTRONS', version: '1.0.0' }),
+  // --- Réseau Pro (volet B2B, base partagée Supabase) ---
+  getActiveDispoSignals: (): Promise<DispoSignal[]> => getActiveDispoSignals(),
+  getShopDispoSignals: (shopId: string): Promise<DispoSignal[]> => getShopDispoSignals(shopId),
+  createDispoSignal: (draft: DispoSignalDraft): Promise<DispoSignal> => createDispoSignal(draft),
 };

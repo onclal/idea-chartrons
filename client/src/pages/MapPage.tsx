@@ -133,7 +133,9 @@ export function MapPage() {
   const [activeLayers, setActiveLayers] = useState<Set<MapLayer>>(
     initialLayerParam && (LAYERS as string[]).includes(initialLayerParam)
       ? new Set([initialLayerParam as MapLayer])
-      : new Set(LAYERS),
+      // Une seule categorie active a l'ouverture : toutes les activer par defaut noyait
+      // la carte sous des dizaines de pastilles empilees et illisibles.
+      : new Set<MapLayer>(['commerce']),
   );
   const [selectedId, setSelectedId] = useState<string | null>(searchParams.get('pin'));
   const [locateToken, setLocateToken] = useState(0);

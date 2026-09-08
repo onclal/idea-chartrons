@@ -28,6 +28,10 @@ const resources = {
         youAreHere: 'Vous êtes ici',
         approxCenter: 'Centre du quartier (position approximative)',
       },
+      dispoBanner: {
+        title: 'En ce moment dans le quartier',
+        live: 'En direct',
+      },
       smartBanner: {
         dismiss: 'Fermer',
         dismissAria: 'Masquer cette bannière pendant 24 heures',
@@ -1475,6 +1479,25 @@ const resources = {
         subtitle: 'Paramétrez votre fidélité et créditez les points en caisse',
         badge: 'Commerçants',
         open: 'Espace Pro',
+        login: {
+          title: 'Espace Pro',
+          subtitle: 'Réservé aux commerçants du quartier. Entrez le code unique remis à votre commerce.',
+          password: 'Code de votre commerce',
+          show: 'Afficher',
+          hide: 'Masquer',
+          submit: 'Entrer',
+          error: 'Code incorrect. Vérifiez auprès de l’équipe Idéa Chartrons si besoin.',
+          back: 'Retour au site',
+        },
+        changeShop: 'Changer de commerce',
+        codeModal: {
+          title: 'Votre code Espace Pro',
+          intro:
+            'Notez précieusement ce code : il ne sera plus jamais affiché. Il vous permettra d’accéder à l’Espace Pro pour {{shop}}.',
+          copy: 'Copier',
+          copied: 'Code copié.',
+          close: 'J’ai noté mon code',
+        },
         restrictedTitle: 'Réservé aux commerçants',
         restrictedHint:
           'L’Espace Pro permet d’attribuer des points et de choisir votre règle de fidélité. Connectez-vous avec un compte commerçant pour y accéder.',
@@ -1490,9 +1513,23 @@ const resources = {
           rdv: 'Gérer mon lien de Rendez-vous & Prestations',
           kit: 'Kit Vitrine & QR Code',
           pepites: 'Pépites',
+          dispo: 'Dispo maintenant',
         },
         kit: {
           dashboardHint: 'Téléchargez une carte A6 ou un flyer vitrine, puis gérez menu, rendez-vous et fidélité.',
+        },
+        dispo: {
+          title: 'Je suis dispo là maintenant',
+          subtitle: 'Publiez un signal visible dans le quartier pendant une durée limitée — utile pour remplir un creux.',
+          messageLabel: 'Message',
+          messagePlaceholder: 'Ex. Table dispo pour 2 ce midi',
+          durationLabel: 'Durée de validité',
+          submit: 'Publier',
+          published: 'Signal publié dans le quartier.',
+          activeTitle: 'Vos signaux actifs',
+          noneActive: 'Aucun signal actif pour le moment.',
+          remainingMinutes: '{{count}} min',
+          remainingHours: '{{count}} h',
         },
         pepites: {
           title: 'Pépites & Arrivages',
@@ -1862,6 +1899,10 @@ const resources = {
         fromCenter: '{{distance}} from the heart of the Chartrons',
         youAreHere: 'You are here',
         approxCenter: 'Neighborhood center (approximate position)',
+      },
+      dispoBanner: {
+        title: 'Right now in the neighbourhood',
+        live: 'Live',
       },
       smartBanner: {
         dismiss: 'Close',
@@ -3308,6 +3349,25 @@ const resources = {
         subtitle: 'Set your loyalty rule and credit points at checkout',
         badge: 'Merchants',
         open: 'Pro space',
+        login: {
+          title: 'Pro space',
+          subtitle: 'Reserved for neighbourhood merchants. Enter the unique code issued to your shop.',
+          password: 'Your shop code',
+          show: 'Show',
+          hide: 'Hide',
+          submit: 'Enter',
+          error: 'Incorrect code. Check with the Idéa Chartrons team if needed.',
+          back: 'Back to site',
+        },
+        changeShop: 'Switch shop',
+        codeModal: {
+          title: 'Your Pro space code',
+          intro:
+            'Note this code carefully: it will never be shown again. It gives access to the Pro space for {{shop}}.',
+          copy: 'Copy',
+          copied: 'Code copied.',
+          close: 'I noted my code',
+        },
         restrictedTitle: 'Merchants only',
         restrictedHint:
           'The Pro space lets you award points and choose your loyalty rule. Sign in with a merchant account to access it.',
@@ -3323,6 +3383,20 @@ const resources = {
           rdv: 'Manage my booking link & services',
           kit: 'Shopfront kit & QR code',
           pepites: 'Finds',
+          dispo: 'Available now',
+        },
+        dispo: {
+          title: "I'm available right now",
+          subtitle: 'Publish a signal visible in the neighbourhood for a limited time — handy to fill a quiet slot.',
+          messageLabel: 'Message',
+          messagePlaceholder: 'E.g. Table available for 2 this lunchtime',
+          durationLabel: 'Valid for',
+          submit: 'Publish',
+          published: 'Signal published in the neighbourhood.',
+          activeTitle: 'Your active signals',
+          noneActive: 'No active signal right now.',
+          remainingMinutes: '{{count}} min',
+          remainingHours: '{{count}} h',
         },
         pepites: {
           title: 'Finds & new arrivals',

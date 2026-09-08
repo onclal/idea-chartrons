@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   hasQrVitrine,
@@ -206,15 +205,6 @@ export function MerchantCard({
                 )}
               </>
             )}
-            <Link
-              to={`/pro?shop=${encodeURIComponent(acteur.id)}&tab=kit`}
-              className="w-full"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <Button type="button" variant="secondary" size="sm" className="w-full">
-                {t('proSpace.tabs.kit')}
-              </Button>
-            </Link>
           </div>
         )}
       </div>

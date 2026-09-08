@@ -6,6 +6,7 @@ import { FavoritesProvider } from './context/FavoritesContext';
 import { RoutesProvider } from './context/RoutesContext';
 import { PwaProvider } from './context/PwaContext';
 import { AdminProvider } from './context/AdminContext';
+import { ProAccessProvider } from './context/ProAccessContext';
 import { ToastProvider } from './context/ToastContext';
 import { ConfortProvider } from './context/ConfortContext';
 import { Layout } from './components/Layout';
@@ -42,6 +43,7 @@ export function App() {
   return (
     <ConfortProvider>
     <AdminProvider>
+    <ProAccessProvider>
       <ToastProvider>
         <PwaProvider>
         <FavoritesProvider>
@@ -95,6 +97,7 @@ export function App() {
         </FavoritesProvider>
         </PwaProvider>
       </ToastProvider>
+    </ProAccessProvider>
     </AdminProvider>
     </ConfortProvider>
   );

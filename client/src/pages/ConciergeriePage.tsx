@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AIConcierge } from '../components/AIConcierge';
+import { DispoMaintenantBanner } from '../components/DispoMaintenantBanner';
 import { Button, Card, Input, Textarea } from '../components/ui';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
@@ -68,6 +69,8 @@ export function ConciergeriePage() {
         <h2 className="text-xl font-bold text-chartrons-bordeaux">{t('conciergerie.title')}</h2>
         <p className="text-sm text-chartrons-warm-gray mt-1">{t('conciergerie.subtitle')}</p>
       </div>
+
+      <DispoMaintenantBanner />
 
       <AIConcierge />
 

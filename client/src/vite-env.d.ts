@@ -3,6 +3,10 @@
 interface ImportMetaEnv {
   /** Code d'accès du panneau d'administration (mode invité : seule identité de la plateforme). */
   readonly VITE_ADMIN_PASSCODE?: string;
+  /** URL du projet Supabase (base partagée, volet Réseau Pro / B2B). */
+  readonly VITE_SUPABASE_URL?: string;
+  /** Clé publique ("anon"/"publishable") du projet Supabase. */
+  readonly VITE_SUPABASE_ANON_KEY?: string;
   /** Backend concierge IA ; absent sur GitHub Pages, le moteur local prend alors le relais. */
   readonly VITE_CONCIERGE_API_URL?: string;
   /**

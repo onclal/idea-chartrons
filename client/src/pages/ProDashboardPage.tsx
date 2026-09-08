@@ -13,15 +13,17 @@ import {
 } from '@idea-chartrons/shared';
 import { AppointmentLinkEditor } from '../components/AppointmentLinkEditor';
 import { PepiteCreateForm } from '../components/PepiteCreateForm';
+import { DispoMaintenantPanel } from '../components/DispoMaintenantPanel';
+import { ProLoginScreen } from '../components/ProLoginScreen';
 import { QRCodeGenerator } from '../components/QRCodeGenerator';
 import { RestaurantMenuEditor } from '../components/RestaurantMenuEditor';
-import { Badge, Button, Card, EmptyState, Loading, Select } from '../components/ui';
+import { Badge, Button, Card, EmptyState, Loading } from '../components/ui';
+import { useProAccess } from '../context/ProAccessContext';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
-import { writeLocalStorage } from '../lib/storage';
-import { PRO_SHOP_STORAGE_KEY } from '../lib/proShop';
 const BASE_TABS = [
   { id: 'kit', icon: '▦' },
+  { id: 'dispo', icon: '📍' },
   { id: 'fidelite', icon: '⭐' },
   { id: 'menu', icon: '🍽️' },
   { id: 'rdv', icon: '📅' },
@@ -37,6 +39,7 @@ function isTab(value: string | null): value is TabId {
 
 export function ProDashboardPage() {
   const { t } = useTranslation();
+  const { session, logout: logoutPro } = useProAccess();
   const { showToast } = useToast();
   const [searchParams, setSearchParams] = useSearchParams();
   const [acteurs, setActeurs] = useState<ActeurLocal[]>([]);
@@ -46,9 +49,7 @@ export function ProDashboardPage() {
   const [antiqueItems, setAntiqueItems] = useState<AntiqueItem[]>([]);
   const [pepiteTags, setPepiteTags] = useState<string[]>([]);
   const [pepiteFormOpen, setPepiteFormOpen] = useState(false);
-  const requestedShop = searchParams.get('shop');
   const requestedTab = searchParams.get('tab');
-  const [shopId, setShopId] = useState('');
   const [tab, setTab] = useState<TabId>(isTab(requestedTab) ? requestedTab : 'kit');
 
   const load = () => {
@@ -66,28 +67,13 @@ export function ProDashboardPage() {
   useEffect(load, []);
 
   useEffect(() => {
-    if (acteurs.length === 0) return;
-    if (requestedShop && acteurs.some((item) => item.id === requestedShop)) {
-      setShopId(requestedShop);
-      return;
-    }
-    setShopId((current) => {
-      if (current && acteurs.some((item) => item.id === current)) return current;
-      try {
-        const stored = localStorage.getItem(PRO_SHOP_STORAGE_KEY) ?? '';
-        if (acteurs.some((item) => item.id === stored)) return stored;
-      } catch {
-        // ignore
-      }
-      return acteurs[0]?.id ?? '';
-    });
-  }, [acteurs, requestedShop]);
-
-  useEffect(() => {
     if (isTab(requestedTab)) setTab(requestedTab);
   }, [requestedTab]);
 
-  const acteur = useMemo(() => acteurs.find((item) => item.id === shopId) ?? null, [acteurs, shopId]);
+  const acteur = useMemo(
+    () => (session ? acteurs.find((item) => item.id === session.shopId) ?? null : null),
+    [acteurs, session],
+  );
 
   const isDealer = acteur ? isAntiqueDealer(acteur) : false;
   const isPremium = acteur ? isPremiumProMerchant(acteur) : false;
@@ -127,29 +113,18 @@ export function ProDashboardPage() {
     }
   };
 
-  const selectShop = (id: string) => {
-    setShopId(id);
-    try {
-      writeLocalStorage(PRO_SHOP_STORAGE_KEY, id);
-    } catch {
-      // ignore
-    }
-    const next = new URLSearchParams(searchParams);
-    next.set('shop', id);
-    setSearchParams(next, { replace: true });
-  };
-
   const selectTab = (nextTab: TabId) => {
     setTab(nextTab);
     const next = new URLSearchParams(searchParams);
     next.set('tab', nextTab);
-    if (shopId) next.set('shop', shopId);
     setSearchParams(next, { replace: true });
   };
 
   const refreshActeur = (updated: ActeurLocal) => {
     setActeurs((list) => list.map((item) => (item.id === updated.id ? updated : item)));
   };
+
+  if (!session) return <ProLoginScreen />;
 
   if (loading) return <Loading message={t('common.loading')} />;
 
@@ -169,22 +144,24 @@ export function ProDashboardPage() {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <div>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-chartrons-brass">
-          {t('proSpace.badge')}
-        </p>
-        <h2 className="text-xl font-bold text-chartrons-bordeaux mt-1">
-          {t('proSpace.titleWithShop', { shop: acteur.nomCommerce })}
-        </h2>
-        <p className="text-sm text-chartrons-warm-gray mt-1">{t('proSpace.kit.dashboardHint')}</p>
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-chartrons-brass">
+            {t('proSpace.badge')}
+          </p>
+          <h2 className="text-xl font-bold text-chartrons-bordeaux mt-1">
+            {t('proSpace.titleWithShop', { shop: acteur.nomCommerce })}
+          </h2>
+          <p className="text-sm text-chartrons-warm-gray mt-1">{t('proSpace.kit.dashboardHint')}</p>
+        </div>
+        <button
+          type="button"
+          onClick={logoutPro}
+          className="shrink-0 touch-target px-3 py-2 rounded-xl text-xs font-semibold text-chartrons-warm-gray hover:text-chartrons-bordeaux hover:bg-chartrons-stone transition-colors"
+        >
+          {t('proSpace.changeShop')}
+        </button>
       </div>
-
-      <Select
-        label={t('proSpace.shop')}
-        value={acteur.id}
-        onChange={(event) => selectShop(event.target.value)}
-        options={acteurs.map((item) => ({ value: item.id, label: item.nomCommerce }))}
-      />
 
       <div
         className="flex gap-2 overflow-x-auto scrollbar-hide -mx-1 px-1"
@@ -218,6 +195,8 @@ export function ProDashboardPage() {
           <QRCodeGenerator acteur={acteur} />
         </Card>
       )}
+
+      {tab === 'dispo' && <DispoMaintenantPanel shopId={acteur.id} shopName={acteur.nomCommerce} />}
 
       {tab === 'fidelite' && (
         <Card className="!p-4 sm:!p-5 space-y-4">

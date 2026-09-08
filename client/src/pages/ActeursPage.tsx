@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { type ActeurLocal } from '@idea-chartrons/shared';
-import { Button, EmptyState, Loading } from '../components/ui';
+import { Button, EmptyState, Loading, Modal } from '../components/ui';
+import { DispoMaintenantBanner } from '../components/DispoMaintenantBanner';
 import { PageHelp } from '../components/PageHelp';
 import { MerchantCard } from '../components/MerchantCard';
 import { ContactForm } from '../components/ContactForm';
@@ -12,9 +13,8 @@ import { useAdmin } from '../context/AdminContext';
 import { useToast } from '../context/ToastContext';
 import { matchesSearch, useSearch } from '../context/SearchContext';
 import { api } from '../lib/api';
+import { claimShopAccessCode } from '../lib/shopAccess';
 import { getDeviceId } from '../lib/guestCarnet';
-import { writeLocalStorage } from '../lib/storage';
-import { PRO_SHOP_STORAGE_KEY } from '../lib/proShop';
 import { useConfort } from '../context/ConfortContext';
 
 export function ActeursPage() {
@@ -33,6 +33,7 @@ export function ActeursPage() {
   const [generatingQrId, setGeneratingQrId] = useState<string | null>(null);
   const [contactContext, setContactContext] = useState<string | null>(null);
   const [proActeur, setProActeur] = useState<ActeurLocal | null>(null);
+  const [newShopCode, setNewShopCode] = useState<{ shopName: string; code: string } | null>(null);
 
   const loadActeurs = () => {
     setLoading(true);
@@ -169,6 +170,8 @@ export function ActeursPage() {
         </div>
       </div>
 
+      <DispoMaintenantBanner />
+
       <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
         <Link
           to="/carte?layer=commerce"
@@ -252,15 +255,49 @@ export function ActeursPage() {
         open={showCreate}
         onClose={closeCreateForm}
         onCreated={(acteur, options) => {
-          try {
-            writeLocalStorage(PRO_SHOP_STORAGE_KEY, acteur.id);
-          } catch {
-            // ignore
-          }
           loadActeurs();
           if (options?.subscribePro) setProActeur(acteur);
+          claimShopAccessCode(acteur.id, acteur.nomCommerce)
+            .then((code) => {
+              if (code) setNewShopCode({ shopName: acteur.nomCommerce, code });
+            })
+            .catch(console.error);
         }}
       />
+
+      <Modal
+        open={!!newShopCode}
+        onClose={() => setNewShopCode(null)}
+        title={t('proSpace.codeModal.title')}
+      >
+        {newShopCode && (
+          <div className="space-y-4">
+            <p className="text-sm text-chartrons-warm-gray leading-relaxed">
+              {t('proSpace.codeModal.intro', { shop: newShopCode.shopName })}
+            </p>
+            <div className="flex items-center gap-2">
+              <p className="flex-1 text-center text-2xl font-bold tracking-[0.2em] text-chartrons-bordeaux bg-chartrons-beige/50 rounded-xl py-3">
+                {newShopCode.code}
+              </p>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => {
+                  navigator.clipboard?.writeText(newShopCode.code).then(
+                    () => showToast(t('proSpace.codeModal.copied')),
+                    () => {},
+                  );
+                }}
+              >
+                {t('proSpace.codeModal.copy')}
+              </Button>
+            </div>
+            <Button type="button" variant="bordeaux" className="w-full" onClick={() => setNewShopCode(null)}>
+              {t('proSpace.codeModal.close')}
+            </Button>
+          </div>
+        )}
+      </Modal>
 
       <PremiumProModal
         open={!!proActeur}
