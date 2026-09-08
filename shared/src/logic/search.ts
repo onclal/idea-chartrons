@@ -42,7 +42,9 @@ export const ACTIVITY_ALIAS_GROUPS: ActivityAliasGroup[] = [
   },
   {
     canonical: 'restaurant',
-    aliases: ['restaurant', 'restaurants', 'resto', 'bistro', 'brasserie', 'table', 'manger'],
+    // NB: 'table' est volontairement exclu des alias - trop ambigu (table en verre/basse
+    // = meuble, pas envie de manger), ce qui causait de faux positifs type "table en verre" -> bistrot.
+    aliases: ['restaurant', 'restaurants', 'resto', 'bistro', 'brasserie', 'manger'],
   },
   {
     canonical: 'coiffeur',

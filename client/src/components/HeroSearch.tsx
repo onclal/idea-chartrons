@@ -75,10 +75,10 @@ export function HeroSearch() {
               role="tab"
               aria-selected={active}
               onClick={() => switchMode(tab.id)}
-              className={`min-h-[44px] px-2 py-2 rounded-xl text-left transition-all ${
+              className={`min-h-[44px] px-2 py-2 rounded-xl text-left transition-all border ${
                 active
-                  ? 'bg-white text-chartrons-bordeaux shadow-sm'
-                  : 'text-white/85 hover:bg-white/10'
+                  ? 'bg-white text-chartrons-bordeaux shadow-sm border-white'
+                  : 'bg-white/10 text-white border-white/25 hover:bg-white/20'
               }`}
             >
               <span className="block font-semibold leading-tight text-[11px]">

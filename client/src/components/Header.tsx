@@ -15,7 +15,7 @@ export function Header() {
   const { online } = usePwa();
   const { isConfortMode, toggleConfortMode } = useConfort();
 
-  const setLanguage = (lang: 'fr' | 'en') => {
+  const setLanguage = (lang: 'fr' | 'en' | 'es') => {
     i18n.changeLanguage(lang);
   };
 
@@ -62,17 +62,23 @@ export function Header() {
                 )}
               </Link>
               <div className="flex items-center gap-1 bg-white/10 rounded-xl p-0.5" role="group" aria-label={t('common.language')}>
-              {(['fr', 'en'] as const).map((lang) => (
+              {([
+                { code: 'fr' as const, flag: '🇫🇷', label: 'Français' },
+                { code: 'en' as const, flag: '🇬🇧', label: 'English' },
+                { code: 'es' as const, flag: '🇪🇸', label: 'Español' },
+              ]).map(({ code, flag, label }) => (
                 <button
-                  key={lang}
-                  onClick={() => setLanguage(lang)}
-                  className={`touch-target px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    i18n.language === lang
-                      ? 'bg-white text-chartrons-bordeaux shadow-sm'
-                      : 'text-white/80 hover:text-white'
+                  key={code}
+                  onClick={() => setLanguage(code)}
+                  aria-label={label}
+                  title={label}
+                  className={`touch-target px-2.5 py-1.5 rounded-lg text-base leading-none transition-all ${
+                    i18n.language === code
+                      ? 'bg-white shadow-sm'
+                      : 'opacity-70 hover:opacity-100'
                   }`}
                 >
-                  {lang.toUpperCase()}
+                  {flag}
                 </button>
               ))}
               </div>

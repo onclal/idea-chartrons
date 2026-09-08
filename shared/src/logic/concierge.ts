@@ -155,8 +155,9 @@ const CONCIERGE_INTENTS: ConciergeIntent[] = [
     id: 'bar',
     subcategory: 'restauration_cafes',
     keywords: [
-      'bar', 'bars', 'pub', 'aperitif', 'apero', 'biere', 'cocktail', 'cocktails', 'verre', 'sortir',
+      'bar', 'bars', 'pub', 'aperitif', 'apero', 'biere', 'cocktail', 'cocktails', 'sortir',
       'drink', 'drinks', 'beer', 'copas', 'cerveza', 'bier', 'birra', 'borrel', 'nightlife',
+      'un verre', 'boire un verre', 'prendre un verre', 'aller boire',
     ],
     specialties: ['bar', 'pub'],
     budget: euros(6, 15, 'person'),
@@ -198,7 +199,7 @@ const CONCIERGE_INTENTS: ConciergeIntent[] = [
     keywords: [
       'vin', 'vins', 'caviste', 'bouteille', 'degustation', 'cave', 'vignoble', 'vigneron', 'chateau',
       'wine', 'wines', 'tasting', 'vino', 'vinos', 'bodega', 'wein', 'weinprobe', 'weinhandlung',
-      'vinho', 'wijn', 'sommelier', 'bordeaux',
+      'vinho', 'wijn', 'sommelier',
     ],
     specialties: ['caviste', 'vigneron', 'vin'],
     budget: euros(12, 45, 'item'),
@@ -656,6 +657,10 @@ const ANTI_GASPI_HINTS = [
   'too good to go', 'reste du jour', 'sac surprise',
 ];
 const RECIPE_HINTS = ['recette', 'recipe', 'ingredient', 'ingredients', 'canele', 'canelé', 'preparer', 'cook', 'cooking'];
+const TABLE_FURNITURE_HINTS = [
+  'en verre', 'en bois', 'en marbre', 'en inox', 'basse', 'ronde', 'a manger', 'de jardin',
+  'de chevet', 'de nuit', 'pliante', 'de cuisine', 'de salon', 'rabattable', 'reglable',
+];
 const DELIVERY_HINTS = [
   'livraison', 'livrer', 'livré', 'livree', 'a domicile', 'delivery', 'deliver', 'deliveroo',
   'uber eats', 'ubereats', 'bring', 'bezorgen',
@@ -768,8 +773,12 @@ export function analyzeConciergeQuery(
       ...expanded.filter((token) => token.length > 1 && !STOP_TOKENS.has(token)),
     ]),
   ];
+  const isFurnitureTable = containsAny(normalized, TABLE_FURNITURE_HINTS);
   const intentIds = CONCIERGE_INTENTS.filter((intent) =>
-    intent.keywords.some((keyword) => matchesKeyword(normalized, tokens, normalizeConciergeText(keyword))),
+    intent.keywords.some((keyword) => {
+      if (keyword === 'table' && isFurnitureTable) return false;
+      return matchesKeyword(normalized, tokens, normalizeConciergeText(keyword));
+    }),
   ).map((intent) => intent.id);
   const subcategoryIds = CHARTRONS_SUBCATEGORIES.filter((subcategory) =>
     SUBCATEGORY_KEYWORDS[subcategory].some((keyword) =>
@@ -879,6 +888,8 @@ function scorePoi(poi: ChartronsPoi, analysis: ConciergeQueryAnalysis) {
   let score = 0;
   /** Part du score réellement liée à la demande, hors bonus de qualité. */
   let relevance = 0;
+  /** Signal non ambigu (intention reconnue, nom, sous-catégorie, rue ou catalogue) — à distinguer d'une simple coïncidence de mot dans une fiche. */
+  let strongSignal = false;
 
   for (const intentId of analysis.intentIds) {
     const intent = intentById(intentId);
@@ -886,6 +897,7 @@ function scorePoi(poi: ChartronsPoi, analysis: ConciergeQueryAnalysis) {
     if (intent.specialties.some((fragment) => containsWords(specialty, fragment))) {
       // Correspondance fine : « pharmacie » plutôt que « services de proximité ».
       relevance += 50;
+      strongSignal = true;
       rationale.push({ kind: 'intent', value: poi.specialty });
     } else if (intent.subcategory === poi.subcategory) {
       // Même famille unifiée : pertinent, mais moins précis.
@@ -896,6 +908,7 @@ function scorePoi(poi: ChartronsPoi, analysis: ConciergeQueryAnalysis) {
   // Demande formulée directement au niveau d'une sous-catégorie unifiée.
   if (analysis.subcategoryIds.includes(poi.subcategory)) {
     relevance += 30;
+    strongSignal = true;
     rationale.push({ kind: 'subcategory', value: poi.subcategory });
   }
 
@@ -903,6 +916,7 @@ function scorePoi(poi: ChartronsPoi, analysis: ConciergeQueryAnalysis) {
     if (token.length < 3) continue;
     if (name.includes(token) || tokensMatch(name, token)) {
       relevance += 16;
+      strongSignal = true;
       rationale.push({ kind: 'keyword', value: token });
     } else if (containsWords(specialty, token) || specialty.includes(token) || tokensMatch(specialty, token)) {
       relevance += 12;
@@ -926,6 +940,7 @@ function scorePoi(poi: ChartronsPoi, analysis: ConciergeQueryAnalysis) {
     }
     if (catalogHay.includes(token)) {
       relevance += 14;
+      strongSignal = true;
       rationale.push({ kind: 'catalog', value: token });
     }
   }
@@ -933,6 +948,7 @@ function scorePoi(poi: ChartronsPoi, analysis: ConciergeQueryAnalysis) {
   for (const street of analysis.streets) {
     if (address.includes(normalizeConciergeText(street.street))) {
       relevance += 24;
+      strongSignal = true;
       rationale.push({ kind: 'street', value: street.street });
     }
   }
@@ -987,11 +1003,15 @@ function scorePoi(poi: ChartronsPoi, analysis: ConciergeQueryAnalysis) {
   // Le Click & Collect a son propre badge côté interface : inutile de le répéter en justification.
   if (conciergeClickAndCollect(poi)) score += 3;
 
-  return { score, relevance, rationale };
+  return { score, relevance, strongSignal, rationale };
 }
 
 /** Score minimal de pertinence : en dessous, on ne propose rien plutôt qu’une adresse au hasard. */
 const MIN_RELEVANCE = 16;
+/** Barre plus haute quand la pertinence ne vient QUE de coïncidences de texte libre (specialty/description),
+ * sans aucun signal fiable (nom, intention, sous-catégorie, rue, catalogue) — évite qu'un mot générique
+ * (« table », « verre »…) fasse remonter un commerce sans rapport avec la demande. */
+const MIN_RELEVANCE_WEAK_ONLY = 36;
 /** Si une adresse colle vraiment à l’intention, on écarte les simples voisins de catégorie. */
 const PRECISE_RELEVANCE = 40;
 const PRECISE_KEEP = 28;
@@ -1197,7 +1217,7 @@ export function rankConciergeMatches(
       else score -= Math.min(12, distanceMeters / 250);
       return { poi, ...ranked, score, openNow, distanceMeters };
     })
-    .filter((entry) => entry.relevance >= MIN_RELEVANCE);
+    .filter((entry) => entry.relevance >= MIN_RELEVANCE && (entry.strongSignal || entry.relevance >= MIN_RELEVANCE_WEAK_ONLY));
 
   const preciseHits = scored.filter((entry) => entry.relevance >= PRECISE_RELEVANCE);
   if (preciseHits.length > 0) {
@@ -1225,7 +1245,7 @@ export function rankConciergeMatches(
     const inB = Number(b.distanceMeters <= radiusMeters);
     if (inB !== inA) return inB - inA;
     const premium = Number(b.poi.tier === 'premium_pro') - Number(a.poi.tier === 'premium_pro');
-    if (Math.abs(a.relevance - b.relevance) < 8 && premium !== 0) return premium;
+    if (Math.abs(a.relevance - b.relevance) < 3 && premium !== 0) return premium;
     if (Math.abs(a.relevance - b.relevance) < 8) return a.distanceMeters - b.distanceMeters;
     return b.score - a.score || a.distanceMeters - b.distanceMeters || a.poi.name.localeCompare(b.poi.name, 'fr');
   });
@@ -1345,6 +1365,15 @@ export function buildConciergeContext(
     for (const post of extras.posts.slice(0, CONCIERGE_SPOKEN_RESULTS)) {
       const price = post.prix != null ? `${post.prix} euros` : 'gratuit';
       lines.push(`- ${post.titre}, ${price}${post.telephone ? `, ${post.telephone}` : ''}.`);
+    }
+  } else if (matches.length === 0 && extras.posts && extras.posts.length > 0) {
+    lines.push(
+      'Aucun commerce ne correspond. Ces annonces publiées par des habitants pourraient répondre à la demande — ' +
+        'à ne citer qu’en dernier recours, brièvement, dans une phrase clairement séparée, jamais à la place d’un commerce ni avant lui :',
+    );
+    for (const post of extras.posts.slice(0, CONCIERGE_SPOKEN_RESULTS)) {
+      const price = post.prix != null ? `${post.prix} euros` : 'gratuit';
+      lines.push(`- ${post.titre}, ${price}.`);
     }
   }
 
@@ -1650,6 +1679,17 @@ export function buildLocalConciergeReply(
     const lead = fr
       ? 'Voici les annonces du quartier qui collent vraiment à votre demande.'
       : 'Here are the neighborhood posts that actually match your request.';
+    const bullets = extras.posts.slice(0, CONCIERGE_SPOKEN_RESULTS).map((post) => {
+      const price = post.prix != null ? `${post.prix} euros` : fr ? 'gratuit' : 'free';
+      return `- ${post.titre}, ${price}.`;
+    });
+    return formatAudioReadyReply([lead, ...bullets].join('\n'));
+  }
+
+  if (spoken.length === 0 && extras.posts && extras.posts.length > 0) {
+    const lead = fr
+      ? 'Je ne trouve pas de commerce qui corresponde vraiment à votre demande. En revanche, un habitant du quartier a publié ceci récemment :'
+      : 'I can’t find a shop that really matches your request. However, a neighbor recently posted this nearby:';
     const bullets = extras.posts.slice(0, CONCIERGE_SPOKEN_RESULTS).map((post) => {
       const price = post.prix != null ? `${post.prix} euros` : fr ? 'gratuit' : 'free';
       return `- ${post.titre}, ${price}.`;

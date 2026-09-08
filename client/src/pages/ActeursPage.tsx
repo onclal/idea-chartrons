@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { type ActeurLocal } from '@idea-chartrons/shared';
 import { Button, EmptyState, Loading, Modal } from '../components/ui';
@@ -20,6 +20,7 @@ import { useConfort } from '../context/ConfortContext';
 export function ActeursPage() {
   const { t } = useTranslation();
   const { query } = useSearch();
+  const navigate = useNavigate();
   const { isAdminMode } = useAdmin();
   const { setConfortMode } = useConfort();
   const { showToast } = useToast();
@@ -170,8 +171,6 @@ export function ActeursPage() {
         </div>
       </div>
 
-      <DispoMaintenantBanner />
-
       <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
         <Link
           to="/carte?layer=commerce"
@@ -212,15 +211,19 @@ export function ActeursPage() {
         </button>
       </div>
 
+      <DispoMaintenantBanner />
+
       {filteredActeurs.length === 0 ? (
         <EmptyState
           icon={query ? '🔍' : hasActiveFilter ? '🔎' : '🏪'}
           title={query ? t('search.noResultsTitle') : hasActiveFilter ? t('acteurs.emptyDeliveryTitle') : t('acteurs.emptyTitle')}
           message={query ? t('search.noResultsHint') : hasActiveFilter ? t('acteurs.emptyDeliveryHint') : t('acteurs.emptyHint')}
           action={
-            !query && !hasActiveFilter
-              ? { label: `+ ${t('acteurs.create.button')}`, onClick: () => setShowCreate(true) }
-              : undefined
+            query
+              ? { label: `🔍 ${t('acteurs.searchElsewhereAction')}`, onClick: () => navigate('/posts') }
+              : !hasActiveFilter
+                ? { label: `+ ${t('acteurs.create.button')}`, onClick: () => setShowCreate(true) }
+                : undefined
           }
         />
       ) : (
