@@ -22,11 +22,22 @@ import type {
   ReportSubcategoryId,
   DispoSignal,
   DispoSignalDraft,
+  ProCampaign,
+  ProContent,
+  ProContentDraft,
+  ProContentStatus,
 } from '@idea-chartrons/shared';
 import { localDb, withDelay, resetLocalDb } from './localDb';
 import { getMenus, updateMenus, upsertAppointmentLink } from './gbp';
 import { loadContactMessages, saveContactMessage, type ContactMessage } from './contact';
 import { getActiveDispoSignals, createDispoSignal, getShopDispoSignals } from './reseauPro';
+import {
+  getShopContents,
+  createProContent,
+  updateProContentStatus,
+  getShopCampaigns,
+  createProCampaign,
+} from './proCommunication';
 
 export interface FideliteScanResult {
   scan: CarteFideliteScan;
@@ -214,4 +225,12 @@ export const api = {
   getActiveDispoSignals: (): Promise<DispoSignal[]> => getActiveDispoSignals(),
   getShopDispoSignals: (shopId: string): Promise<DispoSignal[]> => getShopDispoSignals(shopId),
   createDispoSignal: (draft: DispoSignalDraft): Promise<DispoSignal> => createDispoSignal(draft),
+  // --- Communication Pro (calendrier / bibliothèque / campagnes, base partagée Supabase) ---
+  getShopContents: (shopId: string): Promise<ProContent[]> => getShopContents(shopId),
+  createProContent: (draft: ProContentDraft): Promise<ProContent> => createProContent(draft),
+  updateProContentStatus: (id: string, status: ProContentStatus): Promise<ProContent> =>
+    updateProContentStatus(id, status),
+  getShopCampaigns: (shopId: string): Promise<ProCampaign[]> => getShopCampaigns(shopId),
+  createProCampaign: (shopId: string, name: string): Promise<ProCampaign> =>
+    createProCampaign(shopId, name),
 };

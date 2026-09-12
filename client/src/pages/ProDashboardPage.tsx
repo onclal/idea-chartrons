@@ -14,6 +14,7 @@ import {
 import { AppointmentLinkEditor } from '../components/AppointmentLinkEditor';
 import { PepiteCreateForm } from '../components/PepiteCreateForm';
 import { DispoMaintenantPanel } from '../components/DispoMaintenantPanel';
+import { ProCommunicationPanel } from '../components/ProCommunicationPanel';
 import { ProLoginScreen } from '../components/ProLoginScreen';
 import { QRCodeGenerator } from '../components/QRCodeGenerator';
 import { RestaurantMenuEditor } from '../components/RestaurantMenuEditor';
@@ -27,6 +28,7 @@ const BASE_TABS = [
   { id: 'fidelite', icon: '⭐' },
   { id: 'menu', icon: '🍽️' },
   { id: 'rdv', icon: '📅' },
+  { id: 'communication', icon: '📣' },
 ] as const;
 const PEPITES_TAB = { id: 'pepites', icon: '✨' } as const;
 const ALL_TABS = [...BASE_TABS, PEPITES_TAB];
@@ -197,6 +199,10 @@ export function ProDashboardPage() {
       )}
 
       {tab === 'dispo' && <DispoMaintenantPanel shopId={acteur.id} shopName={acteur.nomCommerce} />}
+
+      {tab === 'communication' && (
+        <ProCommunicationPanel shopId={acteur.id} shopName={acteur.nomCommerce} />
+      )}
 
       {tab === 'fidelite' && (
         <Card className="!p-4 sm:!p-5 space-y-4">
