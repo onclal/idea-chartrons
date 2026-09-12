@@ -12,6 +12,7 @@ export interface ProSession {
 interface ProAccessContextValue {
   session: ProSession | null;
   login: (code: string) => Promise<boolean>;
+  enterAsAdmin: (shopId: string, shopName: string) => void;
   logout: () => void;
 }
 
@@ -50,10 +51,14 @@ export function ProAccessProvider({ children }: { children: ReactNode }) {
     return true;
   }, []);
 
+  const enterAsAdmin = useCallback((shopId: string, shopName: string) => {
+    setSession({ shopId, shopName });
+  }, []);
+
   const logout = useCallback(() => setSession(null), []);
 
   return (
-    <ProAccessContext.Provider value={{ session, login, logout }}>
+    <ProAccessContext.Provider value={{ session, login, enterAsAdmin, logout }}>
       {children}
     </ProAccessContext.Provider>
   );

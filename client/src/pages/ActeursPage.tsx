@@ -10,6 +10,7 @@ import { ContactForm } from '../components/ContactForm';
 import { ActeurCreateForm } from '../components/ActeurCreateForm';
 import { PremiumProModal } from '../components/PremiumProModal';
 import { useAdmin } from '../context/AdminContext';
+import { useProAccess } from '../context/ProAccessContext';
 import { useToast } from '../context/ToastContext';
 import { matchesSearch, useSearch } from '../context/SearchContext';
 import { api } from '../lib/api';
@@ -22,6 +23,7 @@ export function ActeursPage() {
   const { query } = useSearch();
   const navigate = useNavigate();
   const { isAdminMode } = useAdmin();
+  const { enterAsAdmin } = useProAccess();
   const { setConfortMode } = useConfort();
   const { showToast } = useToast();
   const [acteurs, setActeurs] = useState<ActeurLocal[]>([]);
@@ -248,6 +250,14 @@ export function ActeursPage() {
                 onDelete={() => handleDeleteActeur(acteur.id)}
                 onGenerateQr={() => handleGenerateQr(acteur.id)}
                 onSubscribePro={() => setProActeur(acteur)}
+                onEnterProAsAdmin={
+                  isAdminMode
+                    ? () => {
+                        enterAsAdmin(acteur.id, acteur.nomCommerce);
+                        navigate('/pro');
+                      }
+                    : undefined
+                }
               />
             );
           })}

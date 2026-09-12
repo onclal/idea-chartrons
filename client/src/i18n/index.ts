@@ -1064,6 +1064,8 @@ const resources = {
         deleteEventConfirm: 'Supprimer définitivement « {{title}} » ?',
         deleteSuccess: 'Contenu supprimé',
         openDashboard: 'Ouvrir le tableau de bord',
+        enterPro: 'Prendre la main sur l\'Espace Pro',
+        enterProConfirm: 'Entrer dans l\'Espace Pro de « {{name}} » comme si vous étiez ce commerçant ?',
       },
       adminSpace: {
         title: 'Administration',
@@ -2960,6 +2962,8 @@ const resources = {
         deleteEventConfirm: 'Permanently delete "{{title}}"?',
         deleteSuccess: 'Content deleted',
         openDashboard: 'Open dashboard',
+        enterPro: 'Take over Pro Space',
+        enterProConfirm: 'Enter "{{name}}"\'s Pro Space as if you were this merchant?',
       },
       adminSpace: {
         title: 'Administration',

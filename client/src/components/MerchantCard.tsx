@@ -20,6 +20,7 @@ import { MerchantReviews } from './MerchantReviews';
 import { DailyMenuSection } from './DailyMenuSection';
 import { RestaurantMenu } from './RestaurantMenu';
 import { AdminDeleteButton } from './AdminDeleteButton';
+import { AdminEnterProButton } from './AdminEnterProButton';
 import { QrCodeDisplay } from './QrCodeDisplay';
 import { VipOfferCard } from './VipOfferCard';
 import { getAverageRating } from '../services/reviewService';
@@ -39,6 +40,7 @@ interface MerchantCardProps {
   onDelete: () => Promise<void>;
   onGenerateQr: () => void;
   onSubscribePro?: () => void;
+  onEnterProAsAdmin?: () => void;
 }
 
 export function MerchantCard({
@@ -53,6 +55,7 @@ export function MerchantCard({
   onDelete,
   onGenerateQr,
   onSubscribePro,
+  onEnterProAsAdmin,
 }: MerchantCardProps) {
   const { t } = useTranslation();
   const vip = isPremiumProMerchant(acteur);
@@ -134,6 +137,11 @@ export function MerchantCard({
             <Button type="button" variant="gold" className="w-full" onClick={onSubscribePro}>
               {t('acteurs.premiumPro.cta')}
             </Button>
+          </div>
+        )}
+        {onEnterProAsAdmin && (
+          <div className="mt-2" onClick={(event) => event.stopPropagation()}>
+            <AdminEnterProButton shopName={acteur.nomCommerce} onEnter={onEnterProAsAdmin} />
           </div>
         )}
         <MerchantReviews merchantId={acteur.id} onSummaryChange={setReviewSummary} />
