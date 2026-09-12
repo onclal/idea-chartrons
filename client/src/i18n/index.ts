@@ -1538,6 +1538,8 @@ const resources = {
         communication: {
           title: 'Créer ma communication',
           subtitle: 'Rédigez une annonce, améliorez-la avec l’IA, publiez-la dans Idéa Chartrons et regroupez-la dans une campagne si besoin.',
+          premiumRequired:
+            'La création de communications est réservée aux commerçants abonnés Premium Pro (20 €/mois).',
           titlePlaceholder: 'Titre (facultatif)',
           bodyLabel: 'Votre message',
           bodyPlaceholder: 'Ex. Nouvelle collection en boutique cette semaine !',
@@ -3433,6 +3435,8 @@ const resources = {
         communication: {
           title: 'Create my communication',
           subtitle: 'Write a post, polish it with AI, publish it in Idéa Chartrons and group it into a campaign if you like.',
+          premiumRequired:
+            'Creating communications is reserved for merchants subscribed to Premium Pro (€20/month).',
           titlePlaceholder: 'Title (optional)',
           bodyLabel: 'Your message',
           bodyPlaceholder: 'E.g. New collection in store this week!',

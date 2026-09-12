@@ -171,8 +171,8 @@ export const FAQ_AUDIENCES: FaqAudience[] = [
     label: { fr: 'Pour les Commerçants', en: 'For merchants' },
     kicker: { fr: 'Commerçants & Premium Pro', en: 'Merchants & Premium Pro' },
     intro: {
-      fr: 'Chaque commerce est référencé gratuitement sur la carte et dans l’annuaire. L’espace Pro / Premium Pro débloque le site web, la priorité IA, les modules d’action et, pour les brocanteurs, jusqu’à 10 pépites en vitrine.',
-      en: 'Every business is listed for free on the map and in the directory. Pro / Premium Pro unlocks the website, AI priority, action modules and, for antique dealers, up to 10 finds in the showcase.',
+      fr: 'Chaque commerce est référencé gratuitement sur la carte et dans l’annuaire. L’espace Pro / Premium Pro débloque le site web, la priorité IA, les modules d’action, l’onglet Communication et, pour les brocanteurs, jusqu’à 10 pépites en vitrine.',
+      en: 'Every business is listed for free on the map and in the directory. Pro / Premium Pro unlocks the website, AI priority, action modules, the Communication tab and, for antique dealers, up to 10 finds in the showcase.',
     },
     cta: {
       to: '/acteurs?referencer=1',
@@ -208,8 +208,19 @@ export const FAQ_AUDIENCES: FaqAudience[] = [
           en: 'What does the free listing include, and what is Premium Pro for?',
         },
         a: {
-          fr: 'Gratuit pour tous : présence dans l’annuaire et sur la carte, téléphone cliquable, e-mail cliquable, liens Instagram / Facebook / WhatsApp. Premium Pro : lien vers votre site, priorité dans le Concierge IA et l’IA Chineur, modules d’action (Click & Collect, rendez-vous, ardoise) et, pour les brocanteurs, jusqu’à 10 pépites actives avec le badge Boutique Certifiée Notre-Dame. Aucune commission sur vos ventes.',
-          en: 'Free for everyone: directory and map presence, clickable phone, clickable email, Instagram / Facebook / WhatsApp links. Premium Pro: a website link, priority in the AI Concierge and Hunter AI, action modules (Click & Collect, booking, daily specials) and, for antique dealers, up to 10 active finds with the Notre-Dame Certified Shop badge. No commission on your sales.',
+          fr: 'Gratuit pour tous : présence dans l’annuaire et sur la carte, téléphone cliquable, e-mail cliquable, liens Instagram / Facebook / WhatsApp. Premium Pro : lien vers votre site, priorité dans le Concierge IA et l’IA Chineur, modules d’action (Click & Collect, rendez-vous, ardoise), l’onglet Communication (créer et publier vos annonces, avec aide à la rédaction par IA) et, pour les brocanteurs, jusqu’à 10 pépites actives avec le badge Boutique Certifiée Notre-Dame. Aucune commission sur vos ventes.',
+          en: 'Free for everyone: directory and map presence, clickable phone, clickable email, Instagram / Facebook / WhatsApp links. Premium Pro: a website link, priority in the AI Concierge and Hunter AI, action modules (Click & Collect, booking, daily specials), the Communication tab (create and publish posts, with AI writing help) and, for antique dealers, up to 10 active finds with the Notre-Dame Certified Shop badge. No commission on your sales.',
+        },
+      },
+      {
+        id: 'communication-pro',
+        q: {
+          fr: 'À quoi sert l’onglet Communication dans l’espace Pro ?',
+          en: 'What is the Communication tab in the Pro space for?',
+        },
+        a: {
+          fr: 'Réservé aux abonnés Premium Pro, cet onglet permet de rédiger une annonce, de la faire améliorer par l’IA, puis de la publier directement dans Idéa Chartrons et de la regrouper dans une campagne. Pour l’instant, la diffusion reste interne à la plateforme ; la connexion vers des réseaux externes (Google, Facebook, Instagram, WhatsApp, TikTok…) est à l’étude pour une prochaine évolution.',
+          en: 'Reserved for Premium Pro subscribers, this tab lets you write a post, have it polished by AI, then publish it directly on Idéa Chartrons and group it into a campaign. For now, distribution stays within the platform; connecting to external networks (Google, Facebook, Instagram, WhatsApp, TikTok…) is being explored for a future update.',
         },
       },
       {
@@ -395,6 +406,12 @@ export const FAQ_COMPARISON = {
       feature: { fr: 'Pépites & Arrivages (brocanteurs)', en: 'Finds & arrivals (antique dealers)' },
       free: { fr: 'Fiche carte & annuaire', en: 'Map & directory listing' },
       premium: { fr: 'Jusqu’à 10 objets actifs + badge Notre-Dame', en: 'Up to 10 active items + Notre-Dame badge' },
+    },
+    {
+      id: 'communication',
+      feature: { fr: 'Onglet Communication (annonces + aide IA)', en: 'Communication tab (posts + AI help)' },
+      free: { fr: 'Non', en: 'No' },
+      premium: { fr: 'Oui, publication illimitée dans Idéa Chartrons', en: 'Yes, unlimited publishing on Idéa Chartrons' },
     },
   ] satisfies FaqComparisonRow[],
 };

@@ -201,7 +201,21 @@ export function ProDashboardPage() {
       {tab === 'dispo' && <DispoMaintenantPanel shopId={acteur.id} shopName={acteur.nomCommerce} />}
 
       {tab === 'communication' && (
-        <ProCommunicationPanel shopId={acteur.id} shopName={acteur.nomCommerce} />
+        isPremium ? (
+          <ProCommunicationPanel shopId={acteur.id} shopName={acteur.nomCommerce} />
+        ) : (
+          <Card className="!p-4 sm:!p-5 space-y-3">
+            <h3 className="font-bold text-chartrons-green-dark">{t('proSpace.communication.title')}</h3>
+            <div className="rounded-xl border border-chartrons-gold/30 bg-chartrons-beige/40 px-3 py-3 space-y-2">
+              <p className="text-sm text-chartrons-olive-dark leading-relaxed">
+                {t('proSpace.communication.premiumRequired')}
+              </p>
+              <Button type="button" variant="gold" onClick={() => selectTab('fidelite')}>
+                {t('proSpace.pepites.discoverPremium')}
+              </Button>
+            </div>
+          </Card>
+        )
       )}
 
       {tab === 'fidelite' && (
