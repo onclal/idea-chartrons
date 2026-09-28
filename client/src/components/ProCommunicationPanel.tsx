@@ -9,6 +9,8 @@ import { EnhanceWithAiButton } from './EnhanceWithAiButton';
 interface ProCommunicationPanelProps {
   shopId: string;
   shopName: string;
+  /** Code du commerce (ou code administrateur) vérifié par la base à chaque appel. */
+  code: string;
 }
 
 const STATUS_VARIANT: Record<ProContentStatus, 'olive' | 'gold' | 'bordeaux' | 'stone'> = {
@@ -19,7 +21,7 @@ const STATUS_VARIANT: Record<ProContentStatus, 'olive' | 'gold' | 'bordeaux' | '
   error: 'bordeaux',
 };
 
-export function ProCommunicationPanel({ shopId, shopName }: ProCommunicationPanelProps) {
+export function ProCommunicationPanel({ shopId, shopName, code }: ProCommunicationPanelProps) {
   const { t } = useTranslation();
   const { showToast } = useToast();
   const [title, setTitle] = useState('');
@@ -33,7 +35,7 @@ export function ProCommunicationPanel({ shopId, shopName }: ProCommunicationPane
 
   const load = () => {
     setLoading(true);
-    Promise.all([api.getShopContents(shopId), api.getShopCampaigns(shopId)])
+    Promise.all([api.getShopContents(shopId, code), api.getShopCampaigns(shopId, code)])
       .then(([contentList, campaignList]) => {
         setContents(contentList);
         setCampaigns(campaignList);
@@ -42,7 +44,7 @@ export function ProCommunicationPanel({ shopId, shopName }: ProCommunicationPane
       .finally(() => setLoading(false));
   };
 
-  useEffect(load, [shopId]);
+  useEffect(load, [shopId, code]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -55,7 +57,7 @@ export function ProCommunicationPanel({ shopId, shopName }: ProCommunicationPane
         body,
         campaignId: campaignId || null,
         status: 'ready',
-      });
+      }, code);
       setTitle('');
       setBody('');
       showToast(t('proSpace.communication.created'), 'info');
@@ -70,7 +72,7 @@ export function ProCommunicationPanel({ shopId, shopName }: ProCommunicationPane
   const handleNewCampaign = async () => {
     if (!newCampaignName.trim()) return;
     try {
-      const campaign = await api.createProCampaign(shopId, newCampaignName);
+      const campaign = await api.createProCampaign(shopId, code, newCampaignName);
       setNewCampaignName('');
       setCampaigns((list) => [campaign, ...list]);
       setCampaignId(campaign.id);

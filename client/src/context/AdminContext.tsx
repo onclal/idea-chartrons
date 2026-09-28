@@ -6,39 +6,53 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { ADMIN_PASSCODE, ADMIN_SESSION_KEY } from '../config/admin';
+import { ADMIN_SESSION_KEY } from '../config/admin';
+import { verifyAdminPasscode } from '../lib/adminAccess';
 
 interface AdminContextValue {
   isAdminMode: boolean;
-  login: (password: string) => boolean;
+  /** Code administrateur vérifié de la session, transmis aux fonctions protégées de la base. */
+  adminCode: string | null;
+  login: (password: string) => Promise<boolean>;
   logout: () => void;
 }
 
 const AdminContext = createContext<AdminContextValue | null>(null);
 
-function readSession(): boolean {
-  return sessionStorage.getItem(ADMIN_SESSION_KEY) === '1';
+function readSession(): string | null {
+  try {
+    return sessionStorage.getItem(ADMIN_SESSION_KEY) || null;
+  } catch {
+    return null;
+  }
 }
 
 export function AdminProvider({ children }: { children: ReactNode }) {
-  const [isAdminMode, setIsAdminMode] = useState(readSession);
+  const [adminCode, setAdminCode] = useState<string | null>(readSession);
 
   useEffect(() => {
-    sessionStorage.setItem(ADMIN_SESSION_KEY, isAdminMode ? '1' : '0');
-  }, [isAdminMode]);
+    try {
+      if (adminCode) sessionStorage.setItem(ADMIN_SESSION_KEY, adminCode);
+      else sessionStorage.removeItem(ADMIN_SESSION_KEY);
+    } catch {
+      // ignore
+    }
+  }, [adminCode]);
 
-  const login = useCallback((password: string) => {
-    if (password.trim() !== ADMIN_PASSCODE) return false;
-    setIsAdminMode(true);
+  const login = useCallback(async (password: string) => {
+    const code = password.trim();
+    const ok = await verifyAdminPasscode(code).catch(() => false);
+    if (!ok) return false;
+    setAdminCode(code);
     return true;
   }, []);
 
   const logout = useCallback(() => {
-    setIsAdminMode(false);
+    setAdminCode(null);
   }, []);
 
   return (
-    <AdminContext.Provider value={{ isAdminMode, login, logout }}>
+    <AdminContext.Provider value={{ isAdminMode: adminCode !== null, adminCode, login, logout }}>
       {children}
     </AdminContext.Provider>
   );

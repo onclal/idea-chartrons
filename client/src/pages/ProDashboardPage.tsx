@@ -198,11 +198,11 @@ export function ProDashboardPage() {
         </Card>
       )}
 
-      {tab === 'dispo' && <DispoMaintenantPanel shopId={acteur.id} shopName={acteur.nomCommerce} />}
+      {tab === 'dispo' && <DispoMaintenantPanel shopId={acteur.id} shopName={acteur.nomCommerce} code={session?.code ?? ''} />}
 
       {tab === 'communication' && (
         isPremium ? (
-          <ProCommunicationPanel shopId={acteur.id} shopName={acteur.nomCommerce} />
+          <ProCommunicationPanel shopId={acteur.id} shopName={acteur.nomCommerce} code={session?.code ?? ''} />
         ) : (
           <Card className="!p-4 sm:!p-5 space-y-3">
             <h3 className="font-bold text-chartrons-green-dark">{t('proSpace.communication.title')}</h3>

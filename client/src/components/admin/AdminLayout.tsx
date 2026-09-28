@@ -25,9 +25,9 @@ function AdminLoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (login(password)) {
+    if (await login(password)) {
       setPassword('');
       setError('');
       showToast(t('admin.loginSuccess'), 'info');
