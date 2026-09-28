@@ -197,8 +197,8 @@ export const FAQ_AUDIENCES: FaqAudience[] = [
           en: 'Is my establishment already listed on the platform?',
         },
         a: {
-          fr: 'La plateforme référence 362 adresses réelles du quartier, extraites d’OpenStreetMap puis enrichies. Vérifiez votre fiche via la barre de recherche (elle accepte les accents, le pluriel et des alias comme DAB, cash ou crèche). Si elle n’apparaît pas, demandez son ajout gratuit via « Référencer mon commerce ».',
-          en: 'The platform lists 362 real neighborhood addresses, extracted from OpenStreetMap and then enriched. Check your listing in the search bar (it handles accents, plurals and aliases such as ATM, cash or nursery). If it is missing, request a free listing via “List my business”.',
+          fr: 'La plateforme référence plus de 360 adresses réelles du quartier, extraites d’OpenStreetMap puis enrichies ; le chiffre exact s’affiche sur l’accueil. Vérifiez votre fiche via la barre de recherche (elle accepte les accents, le pluriel et des alias comme DAB, cash ou crèche). Si elle n’apparaît pas, demandez son ajout gratuit via « Référencer mon commerce ».',
+          en: 'The platform lists more than 360 real neighborhood addresses, extracted from OpenStreetMap and then enriched; the exact figure is shown on the home page. Check your listing in the search bar (it handles accents, plurals and aliases such as ATM, cash or nursery). If it is missing, request a free listing via “List my business”.',
         },
       },
       {

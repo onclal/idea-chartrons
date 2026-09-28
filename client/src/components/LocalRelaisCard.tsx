@@ -6,6 +6,7 @@ import { Badge, Button, Card } from './ui';
 import { QrCodeDisplay } from './QrCodeDisplay';
 import { RelaisSlotPicker } from './RelaisSlotPicker';
 import { RelaisFeeBreakdown } from './RelaisFeeBreakdown';
+import { ExampleBadge } from './ExampleBadge';
 
 export const LOCAL_RELAIS_ADDRESS = '26 place Jean Jaques Rabaud';
 
@@ -93,6 +94,7 @@ export function LocalRelaisCard({
                         <p className="text-sm font-medium text-chartrons-green-dark truncate">
                           {ready && <span className="mr-1">🔔</span>}
                           {post?.titre ?? relais.postId}
+                          <ExampleBadge item={relais} className="ml-1.5" />
                         </p>
                         <Badge variant={statusVariant(relais.statutRetrait) === 'green' ? 'local' : statusVariant(relais.statutRetrait) === 'gold' ? 'brass' : 'stone'}>
                           {t(`relais.status.${relais.statutRetrait}`)}

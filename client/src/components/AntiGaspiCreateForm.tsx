@@ -11,6 +11,7 @@ import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
 import { rememberOwnedPost } from '../lib/guestCarnet';
 import { toDatetimeLocal } from '../lib/format';
+import { LocalPublishNotice } from './DemoNotice';
 
 interface AntiGaspiCreateFormProps {
   open: boolean;
@@ -156,6 +157,7 @@ export function AntiGaspiCreateForm({ open, onClose, onCreated }: AntiGaspiCreat
           </label>
         </div>
         {error && <p className="text-sm text-chartrons-brick">{error}</p>}
+        <LocalPublishNotice />
         <Button type="submit" variant="bordeaux" className="w-full" disabled={submitting}>
           {submitting ? t('common.loading') : t('antigaspi.create.submit')}
         </Button>

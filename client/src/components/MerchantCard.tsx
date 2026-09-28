@@ -27,6 +27,7 @@ import { getAverageRating } from '../services/reviewService';
 import { AudioReader } from './AudioReader';
 import { AccessibilityBadges } from './AccessibilityBadges';
 import { DistanceBadge } from './DistanceBadge';
+import { ExampleBadge } from './ExampleBadge';
 
 interface MerchantCardProps {
   acteur: ActeurLocal;
@@ -80,7 +81,10 @@ export function MerchantCard({
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <h3 className="font-semibold text-chartrons-olive-dark text-base">{acteur.nomCommerce}</h3>
+            <h3 className="font-semibold text-chartrons-olive-dark text-base">
+              {acteur.nomCommerce}
+              <ExampleBadge item={acteur} className="ml-1.5" />
+            </h3>
             <div className="flex flex-wrap gap-1.5 mt-1.5">
               <Badge variant="olive">{t(`acteurs.categories.${acteur.categorie}`)}</Badge>
               {vip && (

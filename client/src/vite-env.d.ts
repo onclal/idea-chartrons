@@ -14,6 +14,7 @@ interface ImportMetaEnv {
    * Staging / démo onboarding : `true`. Production : absent ou `false`.
    */
   readonly VITE_INCLUDE_DEMO_DATA?: string;
+  readonly VITE_DEMO_NOTICE?: string;
 }
 
 declare module 'virtual:pwa-register' {

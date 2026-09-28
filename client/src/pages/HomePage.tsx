@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isCommunityEvent, isResidentFeedPost } from '@idea-chartrons/shared';
+import { isExampleContent, isResidentFeedPost, isUpcomingEvent } from '@idea-chartrons/shared';
 import type { AgendaEvenement, LocalRelais, PostAnnonce } from '@idea-chartrons/shared';
 import { Badge, Card, Loading } from '../components/ui';
 import { PageHelp } from '../components/PageHelp';
@@ -55,9 +55,12 @@ export function HomePage() {
     ])
       .then(([postsData, acteurs, events, relais]) => {
         setStats({
-          posts: postsData.filter((p) => p.statut === 'Disponible' && isResidentFeedPost(p)).length,
-          acteurs: acteurs.length,
-          events: events.filter((e) => isCommunityEvent(e) && new Date(e.dateFin) >= new Date()).length,
+          // Annonces réelles uniquement, comme pour les professionnels : les exemples ne sont pas comptés.
+          posts: postsData.filter((p) => p.statut === 'Disponible' && isResidentFeedPost(p) && !isExampleContent(p)).length,
+          // Commerces réels uniquement : les fiches d'exemple de la démonstration ne sont pas comptées.
+          acteurs: acteurs.filter((acteur) => !isExampleContent(acteur)).length,
+          // Même règle que l'Agenda et le bandeau « à venir » : tous les événements non terminés.
+          events: events.filter((event) => isUpcomingEvent(event)).length,
         });
         setRelaisList(relais);
         setPosts(postsData);

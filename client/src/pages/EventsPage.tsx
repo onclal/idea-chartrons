@@ -6,6 +6,7 @@ import { AdminDeleteButton } from '../components/AdminDeleteButton';
 import { matchesSearch, useSearch } from '../context/SearchContext';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
+import { ExampleBadge } from '../components/ExampleBadge';
 
 const EVENT_FILTERS = ['all', EventType.AnimationAsso, EventType.Atelier, EventType.Brocante] as const;
 type EventFilter = (typeof EVENT_FILTERS)[number];
@@ -149,7 +150,10 @@ export function EventsPage() {
                 )}
                 <div className="p-4">
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <h3 className="font-semibold text-chartrons-olive-dark text-base">{event.titre}</h3>
+                    <h3 className="font-semibold text-chartrons-olive-dark text-base">
+                      {event.titre}
+                      <ExampleBadge item={event} className="ml-1.5" />
+                    </h3>
                     <div className="flex flex-col items-end gap-1 shrink-0">
                       <Badge
                         variant={
