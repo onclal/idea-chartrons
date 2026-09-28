@@ -22,7 +22,7 @@ export function ActeursPage() {
   const { t } = useTranslation();
   const { query } = useSearch();
   const navigate = useNavigate();
-  const { isAdminMode } = useAdmin();
+  const { isAdminMode, adminCode } = useAdmin();
   const { enterAsAdmin } = useProAccess();
   const { setConfortMode } = useConfort();
   const { showToast } = useToast();
@@ -251,9 +251,9 @@ export function ActeursPage() {
                 onGenerateQr={() => handleGenerateQr(acteur.id)}
                 onSubscribePro={() => setProActeur(acteur)}
                 onEnterProAsAdmin={
-                  isAdminMode
+                  isAdminMode && adminCode
                     ? () => {
-                        enterAsAdmin(acteur.id, acteur.nomCommerce);
+                        enterAsAdmin(acteur.id, acteur.nomCommerce, adminCode);
                         navigate('/pro');
                       }
                     : undefined

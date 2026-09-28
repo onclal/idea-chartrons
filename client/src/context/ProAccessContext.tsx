@@ -7,12 +7,14 @@ import { verifyShopAccess } from '../lib/shopAccess';
 export interface ProSession {
   shopId: string;
   shopName: string;
+  /** Code du commerce (ou code administrateur) présenté à la base à chaque appel protégé. */
+  code: string;
 }
 
 interface ProAccessContextValue {
   session: ProSession | null;
   login: (code: string) => Promise<boolean>;
-  enterAsAdmin: (shopId: string, shopName: string) => void;
+  enterAsAdmin: (shopId: string, shopName: string, adminCode: string) => void;
   logout: () => void;
 }
 
@@ -23,8 +25,13 @@ function readSession(): ProSession | null {
     const raw = sessionStorage.getItem(PRO_SESSION_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as Partial<ProSession>;
-    if (typeof parsed.shopId === 'string' && typeof parsed.shopName === 'string') {
-      return { shopId: parsed.shopId, shopName: parsed.shopName };
+    if (
+      typeof parsed.shopId === 'string' &&
+      typeof parsed.shopName === 'string' &&
+      typeof parsed.code === 'string' &&
+      parsed.code
+    ) {
+      return { shopId: parsed.shopId, shopName: parsed.shopName, code: parsed.code };
     }
     return null;
   } catch {
@@ -47,12 +54,12 @@ export function ProAccessProvider({ children }: { children: ReactNode }) {
   const login = useCallback(async (code: string) => {
     const result = await verifyShopAccess(code);
     if (!result) return false;
-    setSession(result);
+    setSession({ ...result, code: code.trim() });
     return true;
   }, []);
 
-  const enterAsAdmin = useCallback((shopId: string, shopName: string) => {
-    setSession({ shopId, shopName });
+  const enterAsAdmin = useCallback((shopId: string, shopName: string, adminCode: string) => {
+    setSession({ shopId, shopName, code: adminCode });
   }, []);
 
   const logout = useCallback(() => setSession(null), []);

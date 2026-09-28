@@ -12,9 +12,9 @@ export function AdminPanel() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(password)) {
+    if (await login(password)) {
       setPassword('');
       setError('');
       showToast(t('admin.loginSuccess'), 'info');
