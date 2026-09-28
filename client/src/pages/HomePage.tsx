@@ -55,7 +55,8 @@ export function HomePage() {
     ])
       .then(([postsData, acteurs, events, relais]) => {
         setStats({
-          posts: postsData.filter((p) => p.statut === 'Disponible' && isResidentFeedPost(p)).length,
+          // Annonces réelles uniquement, comme pour les professionnels : les exemples ne sont pas comptés.
+          posts: postsData.filter((p) => p.statut === 'Disponible' && isResidentFeedPost(p) && !isExampleContent(p)).length,
           // Commerces réels uniquement : les fiches d'exemple de la démonstration ne sont pas comptées.
           acteurs: acteurs.filter((acteur) => !isExampleContent(acteur)).length,
           // Même règle que l'Agenda et le bandeau « à venir » : tous les événements non terminés.
