@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { RELAIS_FRAIS_GESTION_EUR } from '@idea-chartrons/shared';
 import { formatEuro } from '../lib/format';
+import { SimulatedPaymentNotice } from './DemoNotice';
 
 interface RelaisFeeBreakdownProps {
   prix: number | null;
@@ -39,6 +40,7 @@ export function RelaisFeeBreakdown({ prix, compact = false }: RelaisFeeBreakdown
           <dd className="font-bold text-chartrons-bordeaux">{formatEuro(total, locale)}</dd>
         </div>
       </dl>
+      <SimulatedPaymentNotice className="mt-2" />
     </div>
   );
 }

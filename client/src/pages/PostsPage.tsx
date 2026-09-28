@@ -16,6 +16,7 @@ import { matchesSearch, useSearch } from '../context/SearchContext';
 import { api } from '../lib/api';
 import { bookingErrorMessage } from '../lib/bookingErrors';
 import { ownsPost } from '../lib/guestCarnet';
+import { ExampleBadge } from '../components/ExampleBadge';
 
 const FILTER_TYPES = [
   'all',
@@ -214,6 +215,7 @@ export function PostsPage() {
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <h3 className="font-semibold text-chartrons-olive-dark text-base leading-snug">
                       {post.titre}
+                      <ExampleBadge item={post} className="ml-1.5" />
                     </h3>
                     <Badge
                       variant={

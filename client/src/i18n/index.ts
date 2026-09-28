@@ -9,6 +9,13 @@ const resources = {
         tagline: 'Le village numérique des Chartrons',
         subtitle: 'Quartier des Chartrons · Bordeaux',
       },
+      demo: {
+        exampleBadge: 'Exemple',
+        exampleTitle: 'Contenu fictif, affiché pour la démonstration',
+        notice: 'Version de démonstration : les contenus marqués « Exemple » sont fictifs et les paiements sont simulés.',
+        publishNotice: 'En démonstration, votre publication reste enregistrée sur cet appareil uniquement.',
+        paymentSimulated: 'Paiement simulé — aucun débit ne sera effectué.',
+      },
       nav: {
         home: 'Accueil',
         posts: 'Annonces',
@@ -1251,7 +1258,7 @@ const resources = {
         },
         pages: {
           postsSub: 'Modérez, approuvez ou retirez les annonces du quartier.',
-          acteursSub: 'Recherchez, éditez ou supprimez les 362 POI, et basculez Gratuit / Premium Pro.',
+          acteursSub: 'Recherchez, éditez ou supprimez toutes les fiches, et basculez Gratuit / Premium Pro.',
           eventsSub: 'Planifiez brocantes, animations et promos flash.',
           relaisSub: 'Suivez les dépôts, QR codes et créneaux du local.',
           bannersSub: 'Ciblez les messages du bandeau sous la recherche : public, Pro gratuit, Pro payant, et alertes météo.',
@@ -1910,6 +1917,13 @@ const resources = {
         name: 'IDÉA CHARTRONS',
         tagline: 'The digital village of Chartrons',
         subtitle: 'Chartrons District · Bordeaux',
+      },
+      demo: {
+        exampleBadge: 'Example',
+        exampleTitle: 'Fictional content, shown for the demo',
+        notice: 'Demo version: content marked “Example” is fictional and payments are simulated.',
+        publishNotice: 'In this demo, your post is saved on this device only.',
+        paymentSimulated: 'Simulated payment — you will not be charged.',
       },
       nav: {
         home: 'Home',
@@ -3151,7 +3165,7 @@ const resources = {
         },
         pages: {
           postsSub: 'Moderate, approve or remove neighborhood listings.',
-          acteursSub: 'Search, edit or delete the 362 POIs, and toggle Free / Premium Pro.',
+          acteursSub: 'Search, edit or delete all listings, and toggle Free / Premium Pro.',
           eventsSub: 'Plan flea markets, community events and flash promos.',
           relaisSub: 'Track drop-offs, QR codes and hub time slots.',
           bannersSub: 'Target the strip under search: public, free Pro, paid Pro, and weather alerts.',
@@ -3809,6 +3823,13 @@ const resources = {
         name: 'IDÉA CHARTRONS',
         tagline: 'El pueblo digital de Chartrons',
         subtitle: 'Barrio de Chartrons · Burdeos',
+      },
+      demo: {
+        exampleBadge: 'Ejemplo',
+        exampleTitle: 'Contenido ficticio, mostrado para la demostración',
+        notice: 'Versión de demostración: los contenidos marcados «Ejemplo» son ficticios y los pagos son simulados.',
+        publishNotice: 'En la demostración, su publicación se guarda solo en este dispositivo.',
+        paymentSimulated: 'Pago simulado: no se realizará ningún cargo.',
       },
       nav: {
         home: 'Inicio',

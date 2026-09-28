@@ -7,3 +7,9 @@ import { parseBooleanEnv, setIncludeDemoDataOverride } from '@idea-chartrons/sha
  */
 const explicit = parseBooleanEnv(import.meta.env.VITE_INCLUDE_DEMO_DATA);
 setIncludeDemoDataOverride(explicit ?? import.meta.env.DEV);
+
+/**
+ * Bandeau « Version de démonstration » et mentions « paiement simulé » : affichés par défaut,
+ * désactivables avec `VITE_DEMO_NOTICE=false` le jour où le site devient un vrai service.
+ */
+export const SHOW_DEMO_NOTICE = parseBooleanEnv(import.meta.env.VITE_DEMO_NOTICE) ?? true;

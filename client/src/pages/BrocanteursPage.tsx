@@ -21,6 +21,7 @@ import { resolveMediaUrl } from '../lib/media';
 import { api } from '../lib/api';
 import { useConciergePanel } from '../context/ConciergePanelContext';
 import type { MapPin } from '../components/NeighborhoodMap';
+import { ExampleBadge } from '../components/ExampleBadge';
 
 const NeighborhoodMap = lazy(() =>
   import('../components/NeighborhoodMap').then((mod) => ({ default: mod.NeighborhoodMap })),
@@ -148,7 +149,10 @@ export function BrocanteursPage() {
                   {event.image && <img src={event.image} alt="" className="w-full h-32 object-cover" />}
                   <div className="p-4">
                     <div className="flex items-start justify-between gap-2">
-                      <h4 className="font-semibold text-chartrons-olive-dark">{event.titre}</h4>
+                      <h4 className="font-semibold text-chartrons-olive-dark">
+                        {event.titre}
+                        <ExampleBadge item={event} className="ml-1.5" />
+                      </h4>
                       <Badge variant="brocante">{t(`events.types.${event.type}`)}</Badge>
                     </div>
                     <p className="text-sm text-chartrons-warm-gray mt-1 leading-relaxed">{event.description}</p>
@@ -199,7 +203,10 @@ export function BrocanteursPage() {
                   <Card className="!p-0 overflow-hidden hover:shadow-card-hover">
                     {cover && <PlaceCover src={cover} />}
                     <div className="p-4">
-                      <h4 className="font-semibold text-chartrons-olive-dark">{dealer.nomCommerce}</h4>
+                      <h4 className="font-semibold text-chartrons-olive-dark">
+                        {dealer.nomCommerce}
+                        <ExampleBadge item={dealer} className="ml-1.5" />
+                      </h4>
                       <div className="flex flex-wrap gap-1.5 mt-1.5">
                         {dealer.specialite && <Badge variant="olive">{dealer.specialite}</Badge>}
                         {certified ? (
@@ -252,7 +259,10 @@ export function BrocanteursPage() {
                   )}
                   <div className="p-4">
                     <div className="flex items-start justify-between gap-2">
-                      <h4 className="font-semibold text-chartrons-olive-dark">{item.title}</h4>
+                      <h4 className="font-semibold text-chartrons-olive-dark">
+                        {item.title}
+                        <ExampleBadge item={item} className="ml-1.5" />
+                      </h4>
                       <Badge variant={sold ? 'stone' : 'brass'}>
                         {sold ? t('brocanteurs.sold') : t('brocanteurs.active')}
                       </Badge>

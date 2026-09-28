@@ -16,7 +16,7 @@ import {
 } from '../logic/commerce.js';
 import { createChartronsPoiActeurs } from './chartronsPois.js';
 import { createDemoPosts } from './demoMerchants.js';
-import { includeDemoData } from '../logic/demoEnv.js';
+import { includeDemoData, isDemoRecord } from '../logic/demoEnv.js';
 
 /** Bump when seed acteurs / Chartrons POIs / pépites change so localStorage upserts the catalog. */
 export const SEED_CATALOG_VERSION = 9;
@@ -971,3 +971,32 @@ export function createSeedData(): DatabaseSchema {
 }
 
 export const seedData = createSeedData();
+
+/**
+ * Contenus d'exemple livrés avec l'application (annonces, dépôts Relais, commerces fictifs,
+ * événements, pépites, scans, signalements). Ils restent affichés en démonstration, mais
+ * l'interface doit les signaler comme « Exemple » pour ne jamais passer pour du réel.
+ */
+const SEED_EXAMPLE_IDS: ReadonlySet<string> = new Set<string>([
+  ...seedData.postsAnnonces.map((post) => post.id),
+  ...seedData.localRelais.map((relais) => relais.id),
+  ...seedData.acteursLocaux.filter((acteur) => !acteur.id.startsWith('acteur-poi-')).map((acteur) => acteur.id),
+  ...seedData.antiqueItems.map((item) => item.id),
+  ...seedData.cartesFideliteScans.map((scan) => scan.id),
+  ...seedData.privilegeConsommations.map((privilege) => privilege.id),
+  ...seedData.civicReports.map((report) => report.id),
+  'event-1',
+  'event-2',
+  'event-atelier-1',
+  'event-3',
+]);
+
+export const DEMO_RECEIPT_ID_PREFIX = 'receipt-demo-';
+
+/** `true` pour un contenu fictif : fiche `isDemo` ou contenu d'exemple livré avec l'application. */
+export function isExampleContent(item: { id?: string; isDemo?: boolean } | null | undefined): boolean {
+  if (!item) return false;
+  if (isDemoRecord(item)) return true;
+  const id = item.id ?? '';
+  return SEED_EXAMPLE_IDS.has(id) || id.startsWith(DEMO_RECEIPT_ID_PREFIX);
+}

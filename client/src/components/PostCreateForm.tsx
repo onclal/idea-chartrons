@@ -10,6 +10,7 @@ import { api } from '../lib/api';
 import { bookingErrorMessage } from '../lib/bookingErrors';
 import { rememberOwnedPost } from '../lib/guestCarnet';
 import { needsFirstPostOtp } from '../lib/postVerification';
+import { LocalPublishNotice } from './DemoNotice';
 
 interface PostCreateFormProps {
   open: boolean;
@@ -290,6 +291,8 @@ export function PostCreateForm({ open, onClose, onCreated, post = null }: PostCr
           </div>
 
           {error && <p className="text-xs text-chartrons-green-dark">{error}</p>}
+
+          <LocalPublishNotice />
 
           <div className="flex gap-2 pt-2">
             <Button type="button" variant="secondary" className="flex-1" onClick={onClose}>

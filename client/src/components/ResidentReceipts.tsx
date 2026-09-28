@@ -5,6 +5,7 @@ import { QrCodeDisplay } from './QrCodeDisplay';
 import { formatEuro, formatDateTime } from '../lib/format';
 import { formatWalkingItinerary } from '../lib/itinerary';
 import type { ResidentReceipt } from '../lib/receipts';
+import { ExampleBadge } from './ExampleBadge';
 
 interface ResidentReceiptsProps {
   receipts: ResidentReceipt[];
@@ -37,6 +38,7 @@ export function ResidentReceipts({ receipts }: ResidentReceiptsProps) {
             >
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-chartrons-olive-dark truncate">{receipt.shopName}</p>
+                <ExampleBadge item={receipt} className="mt-1" />
                 <p className="text-[11px] text-chartrons-warm-gray mt-0.5">
                   {formatDateTime(receipt.createdAt, locale)} · {receipt.orderId}
                 </p>

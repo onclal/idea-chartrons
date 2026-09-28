@@ -19,6 +19,7 @@ import { api } from '../lib/api';
 import { formatDateTime, formatEuro } from '../lib/format';
 import { ownsPost } from '../lib/guestCarnet';
 import { DistanceBadge } from '../components/DistanceBadge';
+import { ExampleBadge } from '../components/ExampleBadge';
 
 export function AntiGaspiPage() {
   const { t, i18n } = useTranslation();
@@ -125,7 +126,10 @@ export function AntiGaspiPage() {
                   )}
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <h3 className="font-semibold text-chartrons-olive-dark text-base leading-snug">{post.titre}</h3>
+                      <h3 className="font-semibold text-chartrons-olive-dark text-base leading-snug">
+                        {post.titre}
+                        <ExampleBadge item={post} className="ml-1.5" />
+                      </h3>
                       {shop && <p className="text-xs text-chartrons-warm-gray mt-1">{shop}</p>}
                       {post.acteurId && (
                         <DistanceBadge
