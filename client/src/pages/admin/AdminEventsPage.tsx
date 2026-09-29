@@ -90,6 +90,12 @@ export function AdminEventsPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    const debut = new Date(form.dateDebut).getTime();
+    const fin = new Date(form.dateFin).getTime();
+    if (!Number.isFinite(debut) || !Number.isFinite(fin) || fin < debut) {
+      showToast(t('adminSpace.eventDatesInvalid'), 'error');
+      return;
+    }
     setSaving(true);
     try {
       const payload = {
