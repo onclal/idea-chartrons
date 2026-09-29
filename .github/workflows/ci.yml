@@ -17,3 +17,4 @@ jobs:
       - run: npm ci
       # Compile shared, server et client (tsc vérifie les types avant le build Vite).
       - run: npm run build
+      - run: npm test

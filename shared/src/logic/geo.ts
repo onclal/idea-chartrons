@@ -58,7 +58,8 @@ export function resolveUserOrigin(value: unknown): GeoCoordinates {
 /** Distance affichable : mètres entiers sous 1 km, sinon km à une décimale. */
 export function formatDistanceMeters(meters: number, locale = 'fr'): string {
   if (!Number.isFinite(meters) || meters < 0) return '';
-  if (meters < 1000) return `${Math.round(meters)} m`;
+  // Arrondi d'abord : 999,6 m doit s'afficher « 1,0 km », pas « 1000 m ».
+  if (Math.round(meters) < 1000) return `${Math.round(meters)} m`;
   const km = meters / 1000;
   const value = km >= 10 ? km.toFixed(0) : km.toFixed(1);
   const formatted = locale.toLowerCase().startsWith('fr') ? value.replace('.', ',') : value;
