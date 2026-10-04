@@ -1081,6 +1081,7 @@ const resources = {
         logout: 'Déconnexion',
         viewSite: 'Voir le site',
         saved: 'Enregistré',
+        eventDatesInvalid: 'Vérifiez les dates : la fin doit être après le début.',
         photoHint: 'Touchez pour ajouter une photo, ou collez une URL',
         login: {
           title: 'Espace administrateur',
@@ -2988,6 +2989,7 @@ const resources = {
         logout: 'Log out',
         viewSite: 'View site',
         saved: 'Saved',
+        eventDatesInvalid: 'Check the dates: the end must be after the start.',
         photoHint: 'Tap to add a photo, or paste a URL',
         login: {
           title: 'Admin space',
