@@ -47,75 +47,67 @@ function fromCampaignRow(row: ProCampaignRow): ProCampaign {
   return { id: row.id, shopId: row.shop_id, name: row.name, createdAt: row.created_at };
 }
 
-export async function getShopContents(shopId: string): Promise<ProContent[]> {
+/**
+ * Toutes les lectures et écritures passent par des fonctions de la base qui vérifient
+ * le code du commerce (ou le code administrateur) : voir
+ * `docs/sql/003a_securite_espace_pro_gardiennes.sql`. Les tables ne sont plus
+ * accessibles directement depuis le site.
+ */
+export async function getShopContents(shopId: string, code: string): Promise<ProContent[]> {
   const client = requireSupabase();
-  const { data, error } = await client
-    .from(CONTENTS_TABLE)
-    .select('*')
-    .eq('shop_id', shopId)
-    .order('created_at', { ascending: false })
-    .limit(200);
+  const { data, error } = await client.rpc('pro_list_contents', { p_shop_id: shopId, p_code: code });
   if (error) throw new Error(error.message);
-  return (data ?? []).map(fromContentRow);
+  return ((data as ProContentRow[] | null) ?? []).map(fromContentRow);
 }
 
-export async function createProContent(draft: ProContentDraft): Promise<ProContent> {
+export async function createProContent(draft: ProContentDraft, code: string): Promise<ProContent> {
   const client = requireSupabase();
   const body = draft.body.trim();
   if (!body) throw new Error('Le contenu ne peut pas être vide.');
-  const now = new Date().toISOString();
-  const { data, error } = await client
-    .from(CONTENTS_TABLE)
-    .insert({
-      shop_id: draft.shopId,
-      campaign_id: draft.campaignId ?? null,
-      channel: draft.channel ?? 'idea',
-      title: draft.title ?? null,
-      body,
-      status: draft.status ?? 'draft',
-      scheduled_at: draft.scheduledAt ?? null,
-      media_url: draft.mediaUrl ?? null,
-      created_at: now,
-      updated_at: now,
-    })
-    .select('*')
-    .single();
+  const { data, error } = await client.rpc('pro_create_content', {
+    p_shop_id: draft.shopId,
+    p_code: code,
+    p_campaign_id: draft.campaignId ?? null,
+    p_channel: draft.channel ?? 'idea',
+    p_title: draft.title ?? null,
+    p_body: body,
+    p_status: draft.status ?? 'draft',
+    p_scheduled_at: draft.scheduledAt ?? null,
+    p_media_url: draft.mediaUrl ?? null,
+  });
   if (error) throw new Error(error.message);
   return fromContentRow(data as ProContentRow);
 }
 
-export async function updateProContentStatus(id: string, status: ProContentStatus): Promise<ProContent> {
+export async function updateProContentStatus(
+  shopId: string,
+  code: string,
+  id: string,
+  status: ProContentStatus,
+): Promise<ProContent> {
   const client = requireSupabase();
-  const { data, error } = await client
-    .from(CONTENTS_TABLE)
-    .update({ status, updated_at: new Date().toISOString() })
-    .eq('id', id)
-    .select('*')
-    .single();
+  const { data, error } = await client.rpc('pro_update_content_status', {
+    p_shop_id: shopId,
+    p_code: code,
+    p_id: id,
+    p_status: status,
+  });
   if (error) throw new Error(error.message);
   return fromContentRow(data as ProContentRow);
 }
 
-export async function getShopCampaigns(shopId: string): Promise<ProCampaign[]> {
+export async function getShopCampaigns(shopId: string, code: string): Promise<ProCampaign[]> {
   const client = requireSupabase();
-  const { data, error } = await client
-    .from(CAMPAIGNS_TABLE)
-    .select('*')
-    .eq('shop_id', shopId)
-    .order('created_at', { ascending: false });
+  const { data, error } = await client.rpc('pro_list_campaigns', { p_shop_id: shopId, p_code: code });
   if (error) throw new Error(error.message);
-  return (data ?? []).map(fromCampaignRow);
+  return ((data as ProCampaignRow[] | null) ?? []).map(fromCampaignRow);
 }
 
-export async function createProCampaign(shopId: string, name: string): Promise<ProCampaign> {
+export async function createProCampaign(shopId: string, code: string, name: string): Promise<ProCampaign> {
   const client = requireSupabase();
   const trimmed = name.trim();
   if (!trimmed) throw new Error('Le nom de la campagne ne peut pas être vide.');
-  const { data, error } = await client
-    .from(CAMPAIGNS_TABLE)
-    .insert({ shop_id: shopId, name: trimmed, created_at: new Date().toISOString() })
-    .select('*')
-    .single();
+  const { data, error } = await client.rpc('pro_create_campaign', { p_shop_id: shopId, p_code: code, p_name: trimmed });
   if (error) throw new Error(error.message);
   return fromCampaignRow(data as ProCampaignRow);
 }

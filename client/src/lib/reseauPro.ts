@@ -49,7 +49,8 @@ export async function getShopDispoSignals(shopId: string): Promise<DispoSignal[]
   return (data ?? []).map(fromRow);
 }
 
-export async function createDispoSignal(draft: DispoSignalDraft): Promise<DispoSignal> {
+/** Publication protégée : la base vérifie le code du commerce (fonction `pro_create_dispo_signal`). */
+export async function createDispoSignal(draft: DispoSignalDraft, code: string): Promise<DispoSignal> {
   const client = requireSupabase();
   const message = draft.message.trim().slice(0, 140);
   if (!message) throw new Error('Le message ne peut pas être vide.');
@@ -57,19 +58,13 @@ export async function createDispoSignal(draft: DispoSignalDraft): Promise<DispoS
     Math.max(Math.round(draft.durationMinutes), MIN_DURATION_MINUTES),
     MAX_DURATION_MINUTES,
   );
-  const createdAt = new Date();
-  const expiresAt = new Date(createdAt.getTime() + duration * 60_000);
-  const { data, error } = await client
-    .from(TABLE)
-    .insert({
-      shop_id: draft.shopId,
-      shop_name: draft.shopName,
-      message,
-      created_at: createdAt.toISOString(),
-      expires_at: expiresAt.toISOString(),
-    })
-    .select('*')
-    .single();
+  const { data, error } = await client.rpc('pro_create_dispo_signal', {
+    p_shop_id: draft.shopId,
+    p_code: code,
+    p_shop_name: draft.shopName,
+    p_message: message,
+    p_duration_minutes: duration,
+  });
   if (error) throw new Error(error.message);
   return fromRow(data as DispoSignalRow);
 }

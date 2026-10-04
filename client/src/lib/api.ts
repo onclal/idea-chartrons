@@ -224,13 +224,13 @@ export const api = {
   // --- Réseau Pro (volet B2B, base partagée Supabase) ---
   getActiveDispoSignals: (): Promise<DispoSignal[]> => getActiveDispoSignals(),
   getShopDispoSignals: (shopId: string): Promise<DispoSignal[]> => getShopDispoSignals(shopId),
-  createDispoSignal: (draft: DispoSignalDraft): Promise<DispoSignal> => createDispoSignal(draft),
+  createDispoSignal: (draft: DispoSignalDraft, code: string): Promise<DispoSignal> => createDispoSignal(draft, code),
   // --- Communication Pro (calendrier / bibliothèque / campagnes, base partagée Supabase) ---
-  getShopContents: (shopId: string): Promise<ProContent[]> => getShopContents(shopId),
-  createProContent: (draft: ProContentDraft): Promise<ProContent> => createProContent(draft),
-  updateProContentStatus: (id: string, status: ProContentStatus): Promise<ProContent> =>
-    updateProContentStatus(id, status),
-  getShopCampaigns: (shopId: string): Promise<ProCampaign[]> => getShopCampaigns(shopId),
-  createProCampaign: (shopId: string, name: string): Promise<ProCampaign> =>
-    createProCampaign(shopId, name),
+  getShopContents: (shopId: string, code: string): Promise<ProContent[]> => getShopContents(shopId, code),
+  createProContent: (draft: ProContentDraft, code: string): Promise<ProContent> => createProContent(draft, code),
+  updateProContentStatus: (shopId: string, code: string, id: string, status: ProContentStatus): Promise<ProContent> =>
+    updateProContentStatus(shopId, code, id, status),
+  getShopCampaigns: (shopId: string, code: string): Promise<ProCampaign[]> => getShopCampaigns(shopId, code),
+  createProCampaign: (shopId: string, code: string, name: string): Promise<ProCampaign> =>
+    createProCampaign(shopId, code, name),
 };

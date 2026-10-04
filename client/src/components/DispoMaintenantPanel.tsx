@@ -10,6 +10,8 @@ const DURATION_OPTIONS = [30, 60, 120, 240] as const;
 interface DispoMaintenantPanelProps {
   shopId: string;
   shopName: string;
+  /** Code du commerce (ou code administrateur) vérifié par la base à la publication. */
+  code: string;
 }
 
 function formatRemaining(expiresAt: string, t: (key: string, opts?: Record<string, unknown>) => string): string {
@@ -18,7 +20,7 @@ function formatRemaining(expiresAt: string, t: (key: string, opts?: Record<strin
   return t('proSpace.dispo.remainingHours', { count: Math.round(minutes / 60) });
 }
 
-export function DispoMaintenantPanel({ shopId, shopName }: DispoMaintenantPanelProps) {
+export function DispoMaintenantPanel({ shopId, shopName, code }: DispoMaintenantPanelProps) {
   const { t } = useTranslation();
   const { showToast } = useToast();
   const [message, setMessage] = useState('');
@@ -43,7 +45,7 @@ export function DispoMaintenantPanel({ shopId, shopName }: DispoMaintenantPanelP
     if (!message.trim()) return;
     setSaving(true);
     try {
-      await api.createDispoSignal({ shopId, shopName, message, durationMinutes: duration });
+      await api.createDispoSignal({ shopId, shopName, message, durationMinutes: duration }, code);
       setMessage('');
       showToast(t('proSpace.dispo.published'), 'info');
       load();

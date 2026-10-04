@@ -18,7 +18,7 @@ type TabId = (typeof TABS)[number]['id'];
  * Panneau de contrôle administrateur.
  *
  * Seule zone privilégiée de la plateforme : la modération remplace les comptes commerçants.
- * L'accès est protégé par le code `VITE_ADMIN_PASSCODE` vérifié dans `AdminLayout`.
+ * L'accès est protégé par le code administrateur, vérifié côté base (`idea_verify_admin`) dans `AdminLayout`.
  */
 export function AdminDashboard() {
   const { t } = useTranslation();
