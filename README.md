@@ -206,7 +206,6 @@ npm run build:client
 | `npm run build:client` | Build client pour déploiement |
 | `npm run preview` | Prévisualiser `client/dist` |
 | `npm start` | Démarrer l'API compilée |
-| `npm run deploy` | Build complet puis publication sur la branche `gh-pages` |
 
 ---
 
