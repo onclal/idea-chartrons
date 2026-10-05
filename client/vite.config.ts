@@ -5,10 +5,8 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
-/** GitHub Pages project URL: https://onclal.github.io/idea-chartrons/ */
-const GITHUB_PAGES_BASE = '/idea-chartrons/';
-/** Vercel sert la SPA à la racine (`idea-chartrons.vercel.app/`). */
-const base = process.env.VITE_BASE ?? (process.env.VERCEL ? '/' : GITHUB_PAGES_BASE);
+/** Le site est servi à la racine (`idea-chartrons.vercel.app/`) ; la copie GitHub Pages est retirée. */
+const base = process.env.VITE_BASE ?? '/';
 
 export default defineConfig({
   base,
