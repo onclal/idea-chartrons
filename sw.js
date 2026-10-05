@@ -1,25 +1,12 @@
-
-self.addEventListener('install', (e) => {
-  self.skipWaiting();
+// Ancienne copie retirée : ce service worker efface le cache et se désinstalle,
+// pour que les téléphones qui avaient installé l'ancienne version ne l'affichent plus.
+self.addEventListener('install', function () { self.skipWaiting(); });
+self.addEventListener('activate', function (event) {
+  event.waitUntil(
+    caches.keys()
+      .then(function (keys) { return Promise.all(keys.map(function (k) { return caches.delete(k); })); })
+      .then(function () { return self.registration.unregister(); })
+      .then(function () { return self.clients.matchAll({ type: 'window' }); })
+      .then(function (clients) { clients.forEach(function (c) { c.navigate('https://idea-chartrons.vercel.app/'); }); })
+  );
 });
-self.addEventListener('activate', (e) => {
-  self.registration.unregister()
-    .then(() => self.clients.matchAll())
-    .then((clients) => {
-      clients.forEach((client) => {
-        if (client instanceof WindowClient)
-          client.navigate(client.url);
-      });
-      return Promise.resolve();
-    })
-    .then(() => {
-      self.caches.keys().then((cacheNames) => {
-        Promise.all(
-          cacheNames.map((cacheName) => {
-            return self.caches.delete(cacheName);
-          }),
-        );
-      })
-    });
-});
-    
