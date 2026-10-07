@@ -37,6 +37,7 @@ import { AdminBannersPage } from './pages/admin/AdminBannersPage';
 import { AdminHeroSlidesPage } from './pages/admin/AdminHeroSlidesPage';
 import { AdminQrPage } from './pages/admin/AdminQrPage';
 import { AdminPepiteTagsPage } from './pages/admin/AdminPepiteTagsPage';
+import { AdminHelpPage } from './pages/admin/AdminHelpPage';
 import { ProDashboardPage } from './pages/ProDashboardPage';
 
 export function App() {
@@ -63,6 +64,7 @@ export function App() {
                 <Route path="hero" element={<AdminHeroSlidesPage />} />
                 <Route path="qr" element={<AdminQrPage />} />
                 <Route path="tags-chineur" element={<AdminPepiteTagsPage />} />
+                <Route path="aide" element={<AdminHelpPage />} />
                 <Route path="commerces" element={<Navigate to="/admin/panneau" replace />} />
               </Route>
               <Route element={<Layout />}>

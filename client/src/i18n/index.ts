@@ -1117,6 +1117,7 @@ const resources = {
           heroSlides: 'Rectangle Accueil',
           qr: 'Kit QR',
           pepiteTags: 'Étiquettes Chineur',
+          help: 'Mode d’emploi',
         },
         pepiteTags: {
           title: 'Étiquettes Chineur',

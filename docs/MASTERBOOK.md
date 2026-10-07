@@ -136,9 +136,13 @@ Attention : le « Lot 2 » de la PR #3 (vérification automatique, Vercel) **n'e
 | 3. En-tête allégé (226 px → 124 px sur mobile) | ✅ prête |
 | 4. Accueil épuré (« Aujourd'hui aux Chartrons », liens en bas) | ✅ prête |
 | 5. Emplacements STUDIO ALL (`docs/BRANCHEMENT-STUDIO-ALL.md`) | ✅ prête |
-| 6. Mode d'emploi de l'administration | ⏳ |
+| 6. Mode d'emploi de l'administration (page `/admin/aide`, en français) | ✅ prête |
 | 7. Navigation (noms des 2 pages « conciergerie », favoris en double) | ⏳ décision du propriétaire |
 | 8. FAQ, tarifs, mentions légales, traduction espagnole des pages publiques restantes (fidélité, légal) | ⏳ décisions du propriétaire |
 
 Constats à traiter : lien « Espace admin » visible dans le pied de page (S2) ; traduction espagnole incomplète (463 textes sur 1385, surtout administration et Espace Pro, laissés en français volontairement).
+
+### Constat important de l'étape 6 : l'administration n'est pas partagée
+Annonces, agenda, bannières, rectangle d'accueil, fiches commerces, Local Relais, ardoises et signalements sont enregistrés dans le navigateur de l'appareil utilisé (`localStorage`, voir `client/src/lib/localDb.ts`). **Ce que le propriétaire modifie dans l'administration n'est pas vu par les autres visiteurs.** Seuls l'Espace Pro (Communication, « Dispo maintenant »), les codes d'accès commerçants et le code administrateur sont dans Supabase.
+Conséquence : pour administrer réellement le site en ligne, ces contenus devront être déplacés dans Supabase. À décider avec le propriétaire (étape à ajouter au plan).
 
