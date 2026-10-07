@@ -13,6 +13,7 @@ const resources = {
         exampleBadge: 'Exemple',
         exampleTitle: 'Contenu fictif, affiché pour la démonstration',
         notice: 'Version de démonstration : les contenus marqués « Exemple » sont fictifs et les paiements sont simulés.',
+        noticeNoPayments: 'Version de démonstration : les contenus marqués « Exemple » sont fictifs.',
         publishNotice: 'En démonstration, votre publication reste enregistrée sur cet appareil uniquement.',
         paymentSimulated: 'Paiement simulé — aucun débit ne sera effectué.',
       },
@@ -169,6 +170,12 @@ const resources = {
         heroAlt: 'Les quais des Chartrons à Bordeaux, le long de la Garonne',
         heroCredit: 'Quai des Chartrons — photo Marc Ryckaert, CC BY 3.0',
         heroSponsoredDefault: 'Publicité',
+        today: {
+          title: 'Aujourd’hui aux Chartrons',
+          empty: 'Rien d’annoncé dans les prochains jours.',
+          agenda: 'Voir tout l’agenda',
+        },
+        moreTitle: 'Dans le quartier',
         stats: {
           posts: 'Annonces actives',
           acteurs: 'Professionnels locaux',
@@ -1924,6 +1931,7 @@ const resources = {
         exampleBadge: 'Example',
         exampleTitle: 'Fictional content, shown for the demo',
         notice: 'Demo version: content marked “Example” is fictional and payments are simulated.',
+        noticeNoPayments: 'Demo version: content marked “Example” is fictional.',
         publishNotice: 'In this demo, your post is saved on this device only.',
         paymentSimulated: 'Simulated payment — you will not be charged.',
       },
@@ -2080,6 +2088,12 @@ const resources = {
         heroAlt: 'The Quais des Chartrons in Bordeaux, along the Garonne',
         heroCredit: 'Quai des Chartrons — photo Marc Ryckaert, CC BY 3.0',
         heroSponsoredDefault: 'Publicité',
+        today: {
+          title: 'Today in the Chartrons',
+          empty: 'Nothing announced in the coming days.',
+          agenda: 'See the full agenda',
+        },
+        moreTitle: 'Around the neighborhood',
         stats: {
           posts: 'Active listings',
           acteurs: 'Local professionals',
@@ -3832,6 +3846,7 @@ const resources = {
         exampleBadge: 'Ejemplo',
         exampleTitle: 'Contenido ficticio, mostrado para la demostración',
         notice: 'Versión de demostración: los contenidos marcados «Ejemplo» son ficticios y los pagos son simulados.',
+        noticeNoPayments: 'Versión de demostración: los contenidos marcados «Ejemplo» son ficticios.',
         publishNotice: 'En la demostración, su publicación se guarda solo en este dispositivo.',
         paymentSimulated: 'Pago simulado: no se realizará ningún cargo.',
       },
@@ -3988,6 +4003,12 @@ const resources = {
         heroAlt: 'Los muelles de Chartrons en Burdeos, a orillas del Garona',
         heroCredit: 'Quai des Chartrons — foto Marc Ryckaert, CC BY 3.0',
         heroSponsoredDefault: 'Publicidad',
+        today: {
+          title: 'Hoy en Chartrons',
+          empty: 'Nada anunciado en los próximos días.',
+          agenda: 'Ver toda la agenda',
+        },
+        moreTitle: 'En el barrio',
         stats: {
           posts: 'Anuncios activos',
           acteurs: 'Profesionales locales',
