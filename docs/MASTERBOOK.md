@@ -20,6 +20,9 @@ Le propriétaire est francophone, non développeur. Il compte sur Claude pour lu
 | **Secrets** | Ne jamais afficher un mot de passe, un code ou une clé. |
 | **Budget** | Surveiller le coût ; s'arrêter et demander avant de dépasser le seuil qu'il fixe. Pas d'analyses lourdes inutiles. |
 | **Un seul atelier** | Une seule discussion modifie le site. Les autres peuvent poser des questions mais ne touchent pas au code. |
+| **Posture « bureau d'étude »** | Tout anticiper : le propriétaire doit en faire le moins possible. Claude prépare, vérifie et enchaîne lui-même (contrôles automatiques, captures avant/après, vérifications de suivi), et ne le sollicite que pour une décision ou une action que lui seul peut faire. |
+| **Boucles automatiques** | Claude crée lui-même ses boucles de contrôle et de suivi (vérifier, corriger, revérifier ; rappels programmés), sans attendre qu'on le lui demande. |
+| **Préférences tenues à jour** | Dès que le propriétaire demande d'inscrire une préférence, l'ajouter à cette charte (et à `CLAUDE.md`) dans la foulée. |
 | **Projets séparés** | IDÉA CHARTRONS ne se mélange pas avec ses autres projets. Les outils externes (voir §2) sont fabriqués ailleurs : ne pas les construire ici. |
 
 ---
