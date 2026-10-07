@@ -20,6 +20,7 @@ export * from './logic/antiques.js';
 export * from './logic/agenda.js';
 export * from './logic/search.js';
 export * from './logic/searchIntent.js';
+export * from './logic/studioFeed.js';
 export * from './logic/poi.js';
 export * from './logic/geo.js';
 export * from './logic/demoEnv.js';

@@ -139,3 +139,39 @@ test('classifySearchIntent : questions et demandes rédigées vont au Concierge'
   assert.equal(classifySearchIntent('dónde comer cerca'), 'ai');
   assert.equal(classifySearchIntent('une idée de balade avec les enfants'), 'ai');
 });
+
+import { emptyStudioFeed, parseStudioFeed } from '../src/logic/studioFeed.js';
+
+test('parseStudioFeed : un flux absent ou invalide donne des emplacements vides', () => {
+  assert.deepEqual(parseStudioFeed(null), emptyStudioFeed());
+  assert.deepEqual(parseStudioFeed('n’importe quoi'), emptyStudioFeed());
+  assert.deepEqual(parseStudioFeed({ editorial: 'pas une liste' }), emptyStudioFeed());
+});
+
+test('parseStudioFeed : écarte les éléments douteux et assainit les liens', () => {
+  const feed = parseStudioFeed({
+    editorial: [
+      { id: 'a', title: '  Le marché  des Chartrons ', summary: 'Un récit', url: '/events', label: 'Éditorial' },
+      { title: '', summary: 'sans titre' },
+      { title: 'Lien dangereux', url: 'javascript:alert(1)', imageUrl: 'data:text/html,x' },
+      { title: 'Autre site déguisé', url: '//example.com/piege' },
+      { title: 'Lien externe', url: 'https://exemple.fr/article', imageUrl: 'https://exemple.fr/photo.jpg' },
+      42,
+    ],
+    proTools: [{ title: 'Kit affiche', summary: 'À imprimer' }],
+  });
+  assert.equal(feed.editorial.length, 4);
+  assert.equal(feed.editorial[0].title, 'Le marché des Chartrons');
+  assert.equal(feed.editorial[0].url, '/events');
+  assert.equal(feed.editorial[1].url, null);
+  assert.equal(feed.editorial[1].imageUrl, null);
+  assert.equal(feed.editorial[2].url, null);
+  assert.equal(feed.editorial[3].url, 'https://exemple.fr/article');
+  assert.equal(feed.proTools[0].title, 'Kit affiche');
+  assert.deepEqual(feed.proSpotlight, []);
+});
+
+test('parseStudioFeed : limite le nombre d’éléments par emplacement', () => {
+  const many = Array.from({ length: 12 }, (_, i) => ({ title: `Article ${i}` }));
+  assert.equal(parseStudioFeed({ editorial: many }).editorial.length, 5);
+});

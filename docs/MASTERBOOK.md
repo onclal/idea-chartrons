@@ -25,6 +25,7 @@ Le propriétaire est francophone, non développeur. Il compte sur Claude pour lu
 | **Préférences tenues à jour** | Dès que le propriétaire demande d'inscrire une préférence, l'ajouter à cette charte (et à `CLAUDE.md`) dans la foulée. |
 | **Contrôles autorisés (07/10)** | Le propriétaire autorise Claude à faire lui-même tous les contrôles en lecture seule. Pas de demande d'avis ni de permission pour cela : anticiper, et ne solliciter que pour une décision ou une action que lui seul peut faire. |
 | **Pas de commentaire d'actions (07/10)** | Ne pas raconter les commandes ou outils utilisés : donner seulement les résultats et ce qui est attendu de lui. |
+| **Administration en français (07/10)** | Le propriétaire est seul à administrer : l'administration reste en français, sans traduction. L'espagnol vise les pages publiques. |
 | **Projets séparés** | IDÉA CHARTRONS ne se mélange pas avec ses autres projets. Les outils externes (voir §2) sont fabriqués ailleurs : ne pas les construire ici. |
 
 ---
@@ -123,3 +124,21 @@ Attention : le « Lot 2 » de la PR #3 (vérification automatique, Vercel) **n'e
 2. Vérifier avec le propriétaire, pas à pas, les 3 points Supabase du §4.
 3. Bureau d'étude : inspecter le site en ligne et proposer **le plan d'exécution de la nouvelle version** (objectifs §3 + lots restants §5), découpé en étapes validables une par une.
 4. Exécuter étape par étape, chacune sur une branche, avec captures avant/après et accord du propriétaire avant la mise en ligne.
+
+---
+
+## 9. Avancement de l'exécution (07/10/2026, demande de fusion n° 7, en brouillon, rien en ligne)
+
+| Étape | État |
+|---|---|
+| 1. Paiement masqué, code conservé (`VITE_PAYMENTS_ENABLED`, éteint par défaut) | ✅ prête |
+| 2. Une seule barre de recherche (`classifySearchIntent`) | ✅ prête |
+| 3. En-tête allégé (226 px → 124 px sur mobile) | ✅ prête |
+| 4. Accueil épuré (« Aujourd'hui aux Chartrons », liens en bas) | ✅ prête |
+| 5. Emplacements STUDIO ALL (`docs/BRANCHEMENT-STUDIO-ALL.md`) | ✅ prête |
+| 6. Mode d'emploi de l'administration | ⏳ |
+| 7. Navigation (noms des 2 pages « conciergerie », favoris en double) | ⏳ décision du propriétaire |
+| 8. FAQ, tarifs, mentions légales, traduction espagnole des pages publiques restantes (fidélité, légal) | ⏳ décisions du propriétaire |
+
+Constats à traiter : lien « Espace admin » visible dans le pied de page (S2) ; traduction espagnole incomplète (463 textes sur 1385, surtout administration et Espace Pro, laissés en français volontairement).
+

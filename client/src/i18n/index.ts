@@ -44,6 +44,11 @@ const resources = {
         dismiss: 'Fermer',
         dismissAria: 'Masquer cette bannière pendant 24 heures',
       },
+      studioSlots: {
+        editorial: 'À la une du quartier',
+        proSpotlight: 'Offres des pros du quartier',
+        proTools: 'Outils pour votre commerce',
+      },
       upcomingEvents: {
         summary: '{{title}} + {{count}} autre(s) événement(s) à venir',
       },
@@ -1962,6 +1967,11 @@ const resources = {
         dismiss: 'Close',
         dismissAria: 'Hide this banner for 24 hours',
       },
+      studioSlots: {
+        editorial: 'Neighborhood highlights',
+        proSpotlight: 'Offers from local businesses',
+        proTools: 'Tools for your business',
+      },
       upcomingEvents: {
         summary: '{{title}} + {{count}} more upcoming event(s)',
       },
@@ -3876,6 +3886,11 @@ const resources = {
       smartBanner: {
         dismiss: 'Cerrar',
         dismissAria: 'Ocultar este aviso durante 24 horas',
+      },
+      studioSlots: {
+        editorial: 'Destacados del barrio',
+        proSpotlight: 'Ofertas de los comercios del barrio',
+        proTools: 'Herramientas para su comercio',
       },
       upcomingEvents: {
         summary: '{{title}} + {{count}} evento(s) más próximamente',

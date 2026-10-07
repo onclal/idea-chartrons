@@ -7,6 +7,7 @@ import { PageHelp } from '../components/PageHelp';
 import { PickupAlert } from '../components/PickupAlert';
 import { HeroCarousel } from '../components/HeroCarousel';
 import { TodayInChartrons } from '../components/TodayInChartrons';
+import { StudioSlot } from '../components/StudioSlot';
 import { SmartBanner } from '../components/SmartBanner';
 import { DemoNotice } from '../components/DemoNotice';
 import { FaqModal } from '../components/FaqModal';
@@ -108,7 +109,11 @@ export function HomePage() {
         <p className="text-[10px] text-chartrons-warm-gray/80 mt-1.5 px-1">{t('home.heroCredit')}</p>
       </section>
 
+      <StudioSlot slot="editorial" />
+
       <TodayInChartrons events={upcomingEvents} />
+
+      <StudioSlot slot="proSpotlight" />
 
       <section className="space-y-4 pt-2 border-t border-chartrons-beige">
         <h2 className="text-xs font-semibold uppercase tracking-wide text-chartrons-warm-gray">
