@@ -23,6 +23,8 @@ Le propriétaire est francophone, non développeur. Il compte sur Claude pour lu
 | **Posture « bureau d'étude »** | Tout anticiper : le propriétaire doit en faire le moins possible. Claude prépare, vérifie et enchaîne lui-même (contrôles automatiques, captures avant/après, vérifications de suivi), et ne le sollicite que pour une décision ou une action que lui seul peut faire. |
 | **Boucles automatiques** | Claude crée lui-même ses boucles de contrôle et de suivi (vérifier, corriger, revérifier ; rappels programmés), sans attendre qu'on le lui demande. |
 | **Préférences tenues à jour** | Dès que le propriétaire demande d'inscrire une préférence, l'ajouter à cette charte (et à `CLAUDE.md`) dans la foulée. |
+| **Contrôles autorisés (07/10)** | Le propriétaire autorise Claude à faire lui-même tous les contrôles en lecture seule. Pas de demande d'avis ni de permission pour cela : anticiper, et ne solliciter que pour une décision ou une action que lui seul peut faire. |
+| **Pas de commentaire d'actions (07/10)** | Ne pas raconter les commandes ou outils utilisés : donner seulement les résultats et ce qui est attendu de lui. |
 | **Projets séparés** | IDÉA CHARTRONS ne se mélange pas avec ses autres projets. Les outils externes (voir §2) sont fabriqués ailleurs : ne pas les construire ici. |
 
 ---
