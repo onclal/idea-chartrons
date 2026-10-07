@@ -175,3 +175,50 @@ test('parseStudioFeed : limite le nombre d’éléments par emplacement', () => 
   const many = Array.from({ length: 12 }, (_, i) => ({ title: `Article ${i}` }));
   assert.equal(parseStudioFeed({ editorial: many }).editorial.length, 5);
 });
+
+import { createSeedData, isExampleContent, purgeExampleContent, setIncludeDemoDataOverride, isPremiumProMerchant } from '../src/index.js';
+
+test('site vierge : les données de départ ne contiennent aucun contenu d’exemple', () => {
+  setIncludeDemoDataOverride(false);
+  const seed = createSeedData();
+  const everything = [
+    ...seed.postsAnnonces,
+    ...seed.acteursLocaux,
+    ...seed.agendaEvenements,
+    ...seed.antiqueItems,
+    ...seed.cartesFideliteScans,
+    ...seed.privilegeConsommations,
+    ...seed.civicReports,
+    ...seed.localRelais,
+  ];
+  assert.equal(everything.filter((item) => isExampleContent(item)).length, 0);
+  assert.equal(seed.postsAnnonces.length, 0);
+  assert.equal(seed.localRelais.length, 0);
+  assert.ok(seed.acteursLocaux.length > 300, 'l’annuaire réel est conservé');
+  assert.ok(seed.agendaEvenements.length > 0, 'les événements récurrents du quartier sont conservés');
+});
+
+test('site vierge : tous les pros sont en gratuit et les fiches rédigées à la main n’affichent aucune coordonnée non vérifiée', () => {
+  setIncludeDemoDataOverride(false);
+  const acteurs = createSeedData().acteursLocaux;
+  assert.equal(acteurs.filter((acteur) => isPremiumProMerchant(acteur)).length, 0);
+  const bistro = acteurs.find((acteur) => acteur.id === 'acteur-poi-rest-001');
+  assert.ok(bistro, 'la fiche existe toujours');
+  assert.equal(bistro.telephone, null);
+  assert.equal(bistro.merchantEmail, null);
+  assert.equal(bistro.openingHours, null);
+  assert.deepEqual(bistro.photos, []);
+  assert.equal(bistro.dailyMenuText, null);
+});
+
+test('purgeExampleContent retire les exemples et laisse les contenus réels', () => {
+  setIncludeDemoDataOverride(true);
+  const full = createSeedData();
+  setIncludeDemoDataOverride(false);
+  assert.ok(full.postsAnnonces.length > 0, 'en développement les exemples sont présents');
+  const { data, removed } = purgeExampleContent(full);
+  assert.ok(removed > 0);
+  assert.equal(data.postsAnnonces.length, 0);
+  assert.equal(data.acteursLocaux.filter((acteur) => isExampleContent(acteur)).length, 0);
+  assert.ok(data.acteursLocaux.length > 300);
+});

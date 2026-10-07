@@ -39,6 +39,8 @@ import {
   archiveExpiredAntiGaspiOffers,
   withoutRetiredStockPhotos,
   SEED_CATALOG_VERSION,
+  CURATED_ACTEUR_IDS,
+  purgeExampleContent,
   socialLinksEqual,
   LocalRelaisRetraitStatus,
   normalizeRelaisCreneauType,
@@ -142,6 +144,34 @@ function resolvePlatformSettings(data: DatabaseSchema): PlatformSettings {
 
 function mergeCatalogActeur(current: ActeurLocal | undefined, seedActeur: ActeurLocal): ActeurLocal {
   if (!current) return seedActeur;
+  // Fiches rédigées à la main : les détails non vérifiés retirés du catalogue le sont aussi sur les appareils déjà utilisés.
+  const curated = CURATED_ACTEUR_IDS.has(seedActeur.id) && !includeDemoData();
+  const merged = mergeCatalogActeurDetails(current, seedActeur);
+  if (!curated) return merged;
+  return {
+    ...merged,
+    telephone: seedActeur.telephone,
+    merchantEmail: seedActeur.merchantEmail,
+    socialLinks: seedActeur.socialLinks,
+    menu: seedActeur.menu,
+    openingHours: seedActeur.openingHours,
+    rating: seedActeur.rating,
+    reviewsCount: seedActeur.reviewsCount,
+    photos: seedActeur.photos,
+    qualifications: seedActeur.qualifications,
+    reputation: seedActeur.reputation,
+    catalog: seedActeur.catalog,
+    appointmentUrl: seedActeur.appointmentUrl,
+    phoneForOrders: seedActeur.phoneForOrders,
+    dailyMenuText: seedActeur.dailyMenuText,
+    dailyMenuImage: seedActeur.dailyMenuImage,
+    hasDelivery: seedActeur.hasDelivery,
+    wheelchairAccessible: seedActeur.wheelchairAccessible,
+    seniorFriendly: seedActeur.seniorFriendly,
+  };
+}
+
+function mergeCatalogActeurDetails(current: ActeurLocal, seedActeur: ActeurLocal): ActeurLocal {
   return {
     ...seedActeur,
     ...current,
@@ -373,7 +403,13 @@ class LocalDatabase {
       if (nextLieu !== event.lieu || nextLat !== event.latitude || nextLng !== event.longitude) {
         changed = true;
       }
-      return { ...event, lieu: nextLieu, latitude: nextLat, longitude: nextLng };
+      const recurring =
+        event.id.startsWith('event-marche-chartrons-') ||
+        event.id.startsWith('event-brocante-portal-') ||
+        event.id.startsWith('event-puces-dimanche-');
+      const nextImage = recurring ? null : event.image;
+      if (nextImage !== event.image) changed = true;
+      return { ...event, lieu: nextLieu, latitude: nextLat, longitude: nextLng, image: nextImage };
     });
 
     const knownEventIds = new Set(agendaEvenements.map((event) => event.id));
@@ -499,7 +535,7 @@ class LocalDatabase {
     }
     if (!data.antiqueItems) changed = true;
 
-    const migrated = {
+    let migrated: DatabaseSchema = {
       ...data,
       acteursLocaux,
       civicReports,
@@ -512,6 +548,14 @@ class LocalDatabase {
       localRelais,
       privilegeConsommations,
     };
+    // Site vierge : les contenus d'exemple déjà enregistrés sur cet appareil sont retirés.
+    if (!includeDemoData()) {
+      const purged = purgeExampleContent(migrated);
+      if (purged.removed > 0) {
+        migrated = purged.data;
+        changed = true;
+      }
+    }
     if (changed || catalogStale) this.persist(migrated);
     if (catalogStale || readSeedCatalogVersion() !== SEED_CATALOG_VERSION) {
       writeSeedCatalogVersion(SEED_CATALOG_VERSION);

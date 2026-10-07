@@ -1,4 +1,4 @@
-import { DEMO_DEVICE_ID } from '@idea-chartrons/shared';
+import { DEMO_DEVICE_ID, DEMO_RECEIPT_ID_PREFIX, includeDemoData } from '@idea-chartrons/shared';
 import { writeLocalStorage } from './storage';
 
 export const RECEIPTS_STORAGE_KEY = 'idea-chartrons-receipts';
@@ -101,14 +101,17 @@ export function loadReceipts(): ResidentReceipt[] {
     if (raw) {
       const parsed = JSON.parse(raw) as unknown;
       if (Array.isArray(parsed)) {
-        return parsed.filter(isReceipt).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+        return parsed
+          .filter(isReceipt)
+          .filter((receipt) => includeDemoData() || !receipt.id.startsWith(DEMO_RECEIPT_ID_PREFIX))
+          .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
       }
     }
   } catch {
     // private mode
   }
 
-  if (currentDeviceId() === DEMO_DEVICE_ID) {
+  if (includeDemoData() && currentDeviceId() === DEMO_DEVICE_ID) {
     const seeded = demoReceipts();
     persistReceipts(seeded);
     return seeded;

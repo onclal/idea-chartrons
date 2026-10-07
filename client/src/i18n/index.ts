@@ -13,7 +13,7 @@ const resources = {
         exampleBadge: 'Exemple',
         exampleTitle: 'Contenu fictif, affiché pour la démonstration',
         notice: 'Version de démonstration : les contenus marqués « Exemple » sont fictifs et les paiements sont simulés.',
-        noticeNoPayments: 'Version de démonstration : les contenus marqués « Exemple » sont fictifs.',
+        noticeNoPayments: 'Version de démonstration : ce que vous publiez reste enregistré sur votre appareil uniquement.',
         publishNotice: 'En démonstration, votre publication reste enregistrée sur cet appareil uniquement.',
         paymentSimulated: 'Paiement simulé — aucun débit ne sera effectué.',
       },
@@ -82,6 +82,7 @@ const resources = {
       confort: {
         toggle: '☀️ Mode Confort',
         toggleOn: '☀️ Mode Confort activé',
+        short: 'Confort',
         toggleAria: 'Activer le Mode Confort, gros caractères et fort contraste',
         toggleAriaOn: 'Désactiver le Mode Confort',
         listen: '🔊 Écouter',
@@ -1448,6 +1449,7 @@ const resources = {
       },
       footer: {
         copyright: '© IDÉA CHARTRONS — association de quartier',
+        publisher: 'Association loi 1901 I.D.E.S · 26 place Jean Jacques Rabaud · 33000 Bordeaux',
         cgv: 'CGU',
         faq: 'FAQ',
         faqCta: 'Consulter la FAQ complète',
@@ -1937,7 +1939,7 @@ const resources = {
         exampleBadge: 'Example',
         exampleTitle: 'Fictional content, shown for the demo',
         notice: 'Demo version: content marked “Example” is fictional and payments are simulated.',
-        noticeNoPayments: 'Demo version: content marked “Example” is fictional.',
+        noticeNoPayments: 'Demo version: what you publish stays saved on your device only.',
         publishNotice: 'In this demo, your post is saved on this device only.',
         paymentSimulated: 'Simulated payment — you will not be charged.',
       },
@@ -2006,6 +2008,7 @@ const resources = {
       confort: {
         toggle: '☀️ Comfort Mode',
         toggleOn: '☀️ Comfort Mode on',
+        short: 'Comfort',
         toggleAria: 'Turn on Comfort Mode, large type and high contrast',
         toggleAriaOn: 'Turn off Comfort Mode',
         listen: '🔊 Listen',
@@ -3369,6 +3372,7 @@ const resources = {
       },
       footer: {
         copyright: '© IDÉA CHARTRONS — neighborhood association',
+        publisher: 'I.D.E.S, association under the French law of 1901 · 26 place Jean Jacques Rabaud · 33000 Bordeaux',
         cgv: 'Terms of use',
         faq: 'FAQ',
         faqCta: 'Read the full FAQ',
@@ -3857,7 +3861,7 @@ const resources = {
         exampleBadge: 'Ejemplo',
         exampleTitle: 'Contenido ficticio, mostrado para la demostración',
         notice: 'Versión de demostración: los contenidos marcados «Ejemplo» son ficticios y los pagos son simulados.',
-        noticeNoPayments: 'Versión de demostración: los contenidos marcados «Ejemplo» son ficticios.',
+        noticeNoPayments: 'Versión de demostración: lo que publique queda guardado solo en su dispositivo.',
         publishNotice: 'En la demostración, su publicación se guarda solo en este dispositivo.',
         paymentSimulated: 'Pago simulado: no se realizará ningún cargo.',
       },
@@ -3926,6 +3930,7 @@ const resources = {
       confort: {
         toggle: '☀️ Modo Confort',
         toggleOn: '☀️ Modo Confort activado',
+        short: 'Confort',
         toggleAria: 'Activar el Modo Confort, letra grande y alto contraste',
         toggleAriaOn: 'Desactivar el Modo Confort',
         listen: '🔊 Escuchar',
@@ -4275,6 +4280,7 @@ const resources = {
       },
       footer: {
         copyright: '© IDÉA CHARTRONS — asociación de barrio',
+        publisher: 'Asociación I.D.E.S (ley francesa de 1901) · 26 place Jean Jacques Rabaud · 33000 Burdeos',
         cgv: 'Términos de uso',
         faq: 'FAQ',
         faqCta: 'Consultar la FAQ completa',

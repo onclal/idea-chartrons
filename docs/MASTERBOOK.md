@@ -146,3 +146,13 @@ Constats à traiter : lien « Espace admin » visible dans le pied de page (S2) 
 Annonces, agenda, bannières, rectangle d'accueil, fiches commerces, Local Relais, ardoises et signalements sont enregistrés dans le navigateur de l'appareil utilisé (`localStorage`, voir `client/src/lib/localDb.ts`). **Ce que le propriétaire modifie dans l'administration n'est pas vu par les autres visiteurs.** Seuls l'Espace Pro (Communication, « Dispo maintenant »), les codes d'accès commerçants et le code administrateur sont dans Supabase.
 Conséquence : pour administrer réellement le site en ligne, ces contenus devront être déplacés dans Supabase. À décider avec le propriétaire (étape à ajouter au plan).
 
+### Décisions du propriétaire (07/10/2026)
+- Objectif : **partir sur un site vierge** (aucun contenu inventé), en gardant les vraies bases de données (annuaire de 375 fiches, carte, patrimoine, textes) et en remettant tous les pros en gratuit.
+- Événements récurrents (Marché des Chartrons, Puces du dimanche, Brocante du Cours Portal) : gardés, sans photo, à vérifier.
+- Les fiches rédigées à la main (13) perdent téléphone, e-mail, horaires, carte, photo, qualifications et abonnement tant qu'ils ne sont pas vérifiés.
+- Lien « Espace admin » retiré du pied de page ; accès par `/admin`.
+- Éditeur : **Association loi 1901 I.D.E.S, 26 place Jean Jacques Rabaud, 33000 Bordeaux** (affiché en pied de page). Reste à fournir : numéro RNA et responsable de publication.
+- Prix de Premium Pro : **en réflexion**, à décider après la cartographie usagers / pros.
+- Administration partagée : en pause, à décider après la cartographie.
+- Ordre convenu : nettoyage → cartographie des fonctions usagers / pros → gratuit et payant → éditorial.
+

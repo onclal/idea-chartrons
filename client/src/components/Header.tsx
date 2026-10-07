@@ -130,9 +130,10 @@ export function Header() {
                   aria-pressed={false}
                   aria-label={t('confort.toggleAria')}
                   title={t('confort.toggleAria')}
-                  className={ICON_BUTTON}
+                  className="touch-target h-10 px-3 rounded-xl bg-white/10 text-white flex items-center justify-center gap-1.5 text-sm font-semibold hover:bg-white/20 transition-colors"
                 >
-                  ☀️
+                  <span aria-hidden>☀️</span>
+                  {t('confort.short')}
                 </button>
               )}
             </div>

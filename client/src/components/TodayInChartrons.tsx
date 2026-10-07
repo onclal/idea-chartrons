@@ -21,8 +21,10 @@ function formatEventDate(dateStr: string, locale: string): string {
  * alimenté automatiquement par l'agenda. C'est aussi la zone où viendront se brancher les
  * contenus éditoriaux (voir docs/MASTERBOOK.md, objectif 5).
  */
-export function TodayInChartrons({ events }: TodayInChartronsProps) {
+export function TodayInChartrons({ events: upcoming }: TodayInChartronsProps) {
   const { t, i18n } = useTranslation();
+  // Un événement récurrent (marché, puces) n'apparaît qu'une fois, à sa prochaine date.
+  const events = upcoming.filter((event, index) => upcoming.findIndex((other) => other.titre === event.titre) === index);
 
   return (
     <section aria-labelledby="today-title">
