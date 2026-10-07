@@ -117,3 +117,25 @@ test('recherche : insensible aux accents et à la casse', () => {
   assert.equal(matchesSearchQuery('Café des Chartrons', 'cafe'), true);
   assert.equal(matchesSearchQuery('Boulangerie', 'fromagerie'), false);
 });
+
+import { classifySearchIntent } from '../src/logic/searchIntent.js';
+
+test('classifySearchIntent : noms de commerce, métiers et rues vont à l’annuaire', () => {
+  const shops = ['Le Petit Marché des Chartrons', 'Boulangerie Notre-Dame'];
+  assert.equal(classifySearchIntent('', shops), 'directory');
+  assert.equal(classifySearchIntent('boulangerie', shops), 'directory');
+  assert.equal(classifySearchIntent('Boulangerie Notre-Dame', shops), 'directory');
+  assert.equal(classifySearchIntent('rue Notre-Dame', shops), 'directory');
+  assert.equal(classifySearchIntent('Le Petit Marché des Chartrons', shops), 'directory');
+  assert.equal(classifySearchIntent('petit marché', shops), 'directory');
+});
+
+test('classifySearchIntent : questions et demandes rédigées vont au Concierge', () => {
+  assert.equal(classifySearchIntent('Où manger ce soir ?'), 'ai');
+  assert.equal(classifySearchIntent('boulangerie ouverte ?'), 'ai');
+  assert.equal(classifySearchIntent('comment aller au marché'), 'ai');
+  assert.equal(classifySearchIntent('je cherche un caviste'), 'ai');
+  assert.equal(classifySearchIntent('where can I buy flowers'), 'ai');
+  assert.equal(classifySearchIntent('dónde comer cerca'), 'ai');
+  assert.equal(classifySearchIntent('une idée de balade avec les enfants'), 'ai');
+});

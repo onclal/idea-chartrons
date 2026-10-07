@@ -133,6 +133,7 @@ const resources = {
       },
       search: {
         placeholder: 'Rechercher un commerce, une annonce, un événement...',
+        placeholderUnified: 'Un commerce, une question, une idée de sortie…',
         placeholderAi: 'Une recette, un conseil, une adresse…',
         placeholderChineur: 'Un style, une époque, un meuble…',
         submit: 'Rechercher',
@@ -2043,6 +2044,7 @@ const resources = {
       },
       search: {
         placeholder: 'Search a shop, a listing, an event...',
+        placeholderUnified: 'A shop, a question, an idea for an outing…',
         placeholderAi: 'A recipe, a tip, a local address…',
         placeholderChineur: 'A style, an era, a piece of furniture…',
         submit: 'Search',
@@ -3950,6 +3952,7 @@ const resources = {
       },
       search: {
         placeholder: 'Buscar un comercio, un anuncio, un evento...',
+        placeholderUnified: 'Un comercio, una pregunta, una idea para salir…',
         placeholderAi: 'Una receta, un consejo, una dirección…',
         placeholderChineur: 'Un estilo, una época, un mueble…',
         submit: 'Buscar',

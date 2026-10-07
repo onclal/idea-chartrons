@@ -1,22 +1,17 @@
 import { matchesSearchQuery } from '@idea-chartrons/shared';
 import { createContext, useContext, useState, type ReactNode } from 'react';
 
-export type SearchMode = 'ai' | 'directory';
-
 interface SearchContextValue {
   query: string;
   setQuery: (query: string) => void;
-  mode: SearchMode;
-  setMode: (mode: SearchMode) => void;
 }
 
 const SearchContext = createContext<SearchContextValue | null>(null);
 
 export function SearchProvider({ children }: { children: ReactNode }) {
   const [query, setQuery] = useState('');
-  const [mode, setMode] = useState<SearchMode>('directory');
   return (
-    <SearchContext.Provider value={{ query, setQuery, mode, setMode }}>
+    <SearchContext.Provider value={{ query, setQuery }}>
       {children}
     </SearchContext.Provider>
   );

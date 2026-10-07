@@ -1,8 +1,10 @@
-import { type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useConciergePanel } from '../context/ConciergePanelContext';
-import { useSearch, type SearchMode } from '../context/SearchContext';
+import { classifySearchIntent } from '@idea-chartrons/shared';
+import { useSearch } from '../context/SearchContext';
+import { api } from '../lib/api';
 import { ConciergeBeretLoader } from './ConciergeBeretLoader';
 
 function SearchIcon() {
@@ -27,75 +29,45 @@ function SearchIcon() {
 export function HeroSearch() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { query, setQuery, mode, setMode } = useSearch();
+  const { query, setQuery } = useSearch();
   const { ask, pending, persona } = useConciergePanel();
+  const [shopNames, setShopNames] = useState<string[]>([]);
 
-  const submitDirectory = () => {
-    const q = query.trim();
-    if (!q) {
-      navigate('/recherche');
-      return;
-    }
-    navigate(`/recherche?q=${encodeURIComponent(q)}`);
+  useEffect(() => {
+    api
+      .getActeurs()
+      .then((acteurs) => setShopNames(acteurs.map((acteur) => acteur.nomCommerce)))
+      .catch(() => setShopNames([]));
+  }, []);
+
+  const isChineur = persona === 'chineur';
+
+  const submitDirectory = (q: string) => {
+    navigate(q ? `/recherche?q=${encodeURIComponent(q)}` : '/recherche');
   };
 
+  // Une seule barre : le site devine s'il s'agit d'un nom de commerce (annuaire) ou d'une question (Concierge).
+  // Sur la page Brocanteurs, tout part vers l'IA Chineur.
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const q = query.trim();
-    if (mode === 'ai') {
+    const intent = isChineur ? 'ai' : classifySearchIntent(q, shopNames);
+    if (intent === 'ai') {
       if (!q || pending) return;
       void ask(q);
       return;
     }
-    submitDirectory();
+    submitDirectory(q);
   };
 
-  const switchMode = (next: SearchMode) => {
-    setMode(next);
-  };
-
-  const placeholder = t('search.placeholder');
+  const placeholder = isChineur ? t('search.placeholderChineur') : t('search.placeholderUnified');
 
   return (
-    <div className="space-y-2">
-      <div
-        className="grid grid-cols-2 gap-1 p-1 rounded-2xl bg-white/12"
-        role="tablist"
-        aria-label={t('search.modeLabel')}
-      >
-        {([
-          { id: 'ai' as const, icon: '🤖', label: persona === 'chineur' ? t('search.modeChineur') : t('search.modeAi') },
-          { id: 'directory' as const, icon: '🔍', label: t('search.modeDirectory') },
-        ]).map((tab) => {
-          const active = mode === tab.id;
-          return (
-            <button
-              key={tab.id}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => switchMode(tab.id)}
-              className={`min-h-[44px] px-2 py-2 rounded-xl text-left transition-all border ${
-                active
-                  ? 'bg-white text-chartrons-bordeaux shadow-sm border-white'
-                  : 'bg-white/10 text-white border-white/25 hover:bg-white/20'
-              }`}
-            >
-              <span className="block font-semibold leading-tight text-[11px]">
-                <span aria-hidden className="mr-1">
-                  {tab.icon}
-                </span>
-                {tab.label}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
+    <div>
       <form onSubmit={handleSubmit} className="flex items-stretch" role="search">
         <div className="flex flex-1 min-w-0 items-stretch overflow-hidden bg-white shadow-sm focus-within:ring-2 rounded-2xl focus-within:ring-white/50">
           <span className="shrink-0 w-12 min-h-[48px] text-chartrons-olive-dark flex items-center justify-center">
-            {mode === 'ai' && pending ? (
+            {pending ? (
               <ConciergeBeretLoader size="sm" />
             ) : (
               <SearchIcon />
@@ -124,10 +96,10 @@ export function HeroSearch() {
           )}
           <button
             type="submit"
-            disabled={mode === 'ai' && pending}
+            disabled={pending}
             className="cursor-pointer shrink-0 touch-target px-3.5 text-xs font-bold inline-flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all disabled:opacity-60 min-h-[48px] bg-chartrons-green text-white hover:bg-chartrons-green-light"
           >
-            {mode === 'ai' ? t('search.askAi') : t('search.submit')}
+            {isChineur ? t('search.askAi') : t('search.submit')}
           </button>
         </div>
       </form>
