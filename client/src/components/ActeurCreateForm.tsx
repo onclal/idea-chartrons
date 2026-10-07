@@ -12,6 +12,7 @@ import {
 import { Button, Input, Modal, Select, Textarea } from './ui';
 import { EnhanceWithAiButton } from './EnhanceWithAiButton';
 import { useToast } from '../context/ToastContext';
+import { PAYMENTS_ENABLED } from '../config/payments';
 import { api } from '../lib/api';
 
 interface ActeurCreateFormProps {
@@ -76,7 +77,7 @@ export function ActeurCreateForm({ open, onClose, onCreated }: ActeurCreateFormP
         pointsRequisVip: 0,
         activerFidelite,
       });
-      const wantPro = subscribePro;
+      const wantPro = PAYMENTS_ENABLED && subscribePro;
       reset();
       onCreated(created, { subscribePro: wantPro });
       onClose();
@@ -202,6 +203,7 @@ export function ActeurCreateForm({ open, onClose, onCreated }: ActeurCreateFormP
           </span>
         </label>
 
+        {PAYMENTS_ENABLED && (
         <label className="flex items-start gap-3 p-3 rounded-xl bg-chartrons-brass/15 border border-chartrons-brass/30 cursor-pointer">
           <input
             type="checkbox"
@@ -218,6 +220,7 @@ export function ActeurCreateForm({ open, onClose, onCreated }: ActeurCreateFormP
             </span>
           </span>
         </label>
+        )}
 
         {error && <p className="text-xs text-chartrons-brick">{error}</p>}
 

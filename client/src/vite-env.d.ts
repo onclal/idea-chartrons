@@ -15,6 +15,8 @@ interface ImportMetaEnv {
    */
   readonly VITE_INCLUDE_DEMO_DATA?: string;
   readonly VITE_DEMO_NOTICE?: string;
+  /** Affiche le paiement en ligne et l'abonnement Premium Pro. Absent ou `false` : masqués. */
+  readonly VITE_PAYMENTS_ENABLED?: string;
 }
 
 declare module 'virtual:pwa-register' {

@@ -1547,7 +1547,7 @@ const resources = {
           title: 'Créer ma communication',
           subtitle: 'Rédigez une annonce, améliorez-la avec l’IA, publiez-la dans Idéa Chartrons et regroupez-la dans une campagne si besoin.',
           premiumRequired:
-            'La création de communications est réservée aux commerçants abonnés Premium Pro (20 €/mois).',
+            'La création de communications est réservée aux commerçants abonnés Premium Pro.',
           titlePlaceholder: 'Titre (facultatif)',
           bodyLabel: 'Votre message',
           bodyPlaceholder: 'Ex. Nouvelle collection en boutique cette semaine !',
@@ -1574,7 +1574,7 @@ const resources = {
           subtitle: 'Publiez vos objets pour apparaître dans l’IA Chineur et la vitrine Pépites.',
           quota: '{{count}} / {{max}} actives',
           premiumRequired:
-            'La publication de pépites est réservée aux brocanteurs abonnés Premium Pro (20 €/mois).',
+            'La publication de pépites est réservée aux brocanteurs abonnés Premium Pro.',
           discoverPremium: 'Découvrir Premium Pro',
           add: 'Ajouter une pépite',
           quotaReached: 'Quota atteint : marquez un objet comme vendu pour en publier un nouveau.',
@@ -3452,7 +3452,7 @@ const resources = {
           title: 'Create my communication',
           subtitle: 'Write a post, polish it with AI, publish it in Idéa Chartrons and group it into a campaign if you like.',
           premiumRequired:
-            'Creating communications is reserved for merchants subscribed to Premium Pro (€20/month).',
+            'Creating communications is reserved for merchants subscribed to Premium Pro.',
           titlePlaceholder: 'Title (optional)',
           bodyLabel: 'Your message',
           bodyPlaceholder: 'E.g. New collection in store this week!',

@@ -11,6 +11,7 @@ import { OwnerPostActions } from '../components/OwnerPostActions';
 import { PostCreateForm } from '../components/PostCreateForm';
 import { DepotSlotModal } from '../components/RelaisSlotPicker';
 import { CheckoutModal } from '../components/CheckoutModal';
+import { PAYMENTS_ENABLED } from '../config/payments';
 import { useToast } from '../context/ToastContext';
 import { matchesSearch, useSearch } from '../context/SearchContext';
 import { api } from '../lib/api';
@@ -261,7 +262,8 @@ export function PostsPage() {
                     </span>
                   </div>
                   <div className="space-y-2">
-                    {!isOwner &&
+                    {PAYMENTS_ENABLED &&
+                      !isOwner &&
                       post.type === PostType.Vente &&
                       post.prix !== null &&
                       post.statut !== 'Clôturé' &&

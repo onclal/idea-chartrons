@@ -23,6 +23,7 @@ import { AdminDeleteButton } from './AdminDeleteButton';
 import { AdminEnterProButton } from './AdminEnterProButton';
 import { QrCodeDisplay } from './QrCodeDisplay';
 import { VipOfferCard } from './VipOfferCard';
+import { PAYMENTS_ENABLED } from '../config/payments';
 import { getAverageRating } from '../services/reviewService';
 import { AudioReader } from './AudioReader';
 import { AccessibilityBadges } from './AccessibilityBadges';
@@ -136,7 +137,7 @@ export function MerchantCard({
         {vip && <DailyMenuSection acteur={acteur} />}
         <MerchantSocialSection acteur={acteur} onUpdated={onUpdated} />
         <MerchantActionButtons acteur={acteur} />
-        {!vip && onSubscribePro && (
+        {PAYMENTS_ENABLED && !vip && onSubscribePro && (
           <div className="mt-3" onClick={(event) => event.stopPropagation()}>
             <Button type="button" variant="gold" className="w-full" onClick={onSubscribePro}>
               {t('acteurs.premiumPro.cta')}
