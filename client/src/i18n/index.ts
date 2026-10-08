@@ -199,10 +199,11 @@ const resources = {
           carte: 'Carte interactive',
           decouvrir: 'Découvrir les Chartrons',
           pratique: 'Guide de bienvenue & infos pratiques',
-          conciergerie: 'Espace conciergerie',
-          tourisme: 'Tourisme & Conciergeries',
+          conciergerie: 'Espace gestionnaires',
+          tourisme: 'Séjourner aux Chartrons',
           favoris: 'Mes favoris',
           parcours: 'Mes parcours',
+          favorisParcours: 'Mes favoris & parcours',
           events: 'Consulter l\'agenda',
           faq: 'FAQ complète',
           antigaspi: 'Anti-Gaspi commerces',
@@ -635,7 +636,7 @@ const resources = {
         },
       },
       conciergerie: {
-        title: 'Espace conciergerie & partenaires',
+        title: 'Espace gestionnaires',
         subtitle: 'Pour les concierges et gestionnaires de locations saisonnières aux Chartrons',
         intro:
           'Un point d’entrée dédié aux professionnels de l’accueil : kit voyageurs, infos quartier et demande de devis.',
@@ -812,7 +813,7 @@ const resources = {
         download: 'Télécharger la fiche urgences',
       },
       tourisme: {
-        title: 'Tourisme & Conciergeries',
+        title: 'Séjourner aux Chartrons',
         subtitle: 'Visiteurs, voyageurs de passage et locations saisonnières',
         intro:
           'Retrouvez consignes, conciergeries et bonnes adresses pour accueillir vos voyageurs ou découvrir le quartier sans être habitant.',
@@ -1450,6 +1451,8 @@ const resources = {
       footer: {
         copyright: '© IDÉA CHARTRONS — association de quartier',
         publisher: 'Association loi 1901 A.I.D.É.S (Association Interactive à Double Éco-Système)\n26 place Jean Jacques Rabaud · 33000 Bordeaux · RNA W332029621 · SIREN 887 494 813\nResponsable de publication : Laïssaoui ALL',
+        explore: 'Explorer',
+        pros: 'Professionnels',
         cgv: 'CGU',
         faq: 'FAQ',
         faqCta: 'Consulter la FAQ complète',
@@ -1816,7 +1819,7 @@ const resources = {
           ],
         },
         tourisme: {
-          title: 'Tourisme & Conciergeries',
+          title: 'Séjourner aux Chartrons',
           purpose:
             'Cette rubrique s’adresse aux visiteurs, aux touristes de passage et aux gestionnaires de locations saisonnières : consignes, bonnes adresses et expériences locales.',
           steps: [
@@ -2125,10 +2128,11 @@ const resources = {
           carte: 'Interactive map',
           decouvrir: 'Discover the Chartrons',
           pratique: 'Welcome guide & practical info',
-          conciergerie: 'Concierge space',
-          tourisme: 'Tourism & Concierge',
+          conciergerie: 'Managers’ space',
+          tourisme: 'Stay in the Chartrons',
           favoris: 'My favorites',
           parcours: 'My routes',
+          favorisParcours: 'My favorites & routes',
           events: 'View calendar',
           faq: 'Full FAQ',
           antigaspi: 'Anti-Waste deals',
@@ -2559,7 +2563,7 @@ const resources = {
         },
       },
       conciergerie: {
-        title: 'Concierge & partner space',
+        title: 'Managers’ space',
         subtitle: 'For concierges and short-term rental managers in the Chartrons',
         intro:
           'A dedicated entry point for hospitality professionals: guest kit, neighborhood info and quote requests.',
@@ -2736,7 +2740,7 @@ const resources = {
         download: 'Download the emergency sheet',
       },
       tourisme: {
-        title: 'Tourism & Concierge',
+        title: 'Stay in the Chartrons',
         subtitle: 'Visitors, passing travelers and seasonal rentals',
         intro:
           'Find lockers, concierge services and local tips to welcome guests or explore the neighborhood as a visitor.',
@@ -3373,6 +3377,8 @@ const resources = {
       footer: {
         copyright: '© IDÉA CHARTRONS — neighborhood association',
         publisher: 'A.I.D.É.S, association under the French law of 1901 (Association Interactive à Double Éco-Système)\n26 place Jean Jacques Rabaud · 33000 Bordeaux · RNA W332029621 · SIREN 887 494 813\nPublication director: Laïssaoui ALL',
+        explore: 'Explore',
+        pros: 'For professionals',
         cgv: 'Terms of use',
         faq: 'FAQ',
         faqCta: 'Read the full FAQ',
@@ -3738,7 +3744,7 @@ const resources = {
           ],
         },
         tourisme: {
-          title: 'Tourism & Concierge',
+          title: 'Stay in the Chartrons',
           purpose:
             'This section is for visitors, passing tourists and seasonal rental hosts: lockers, useful addresses and local experiences.',
           steps: [
@@ -4047,10 +4053,11 @@ const resources = {
           carte: 'Mapa interactivo',
           decouvrir: 'Descubrir Chartrons',
           pratique: 'Guía de bienvenida e información práctica',
-          conciergerie: 'Espacio conserjería',
-          tourisme: 'Turismo y Conserjerías',
+          conciergerie: 'Espacio para gestores',
+          tourisme: 'Alojarse en Chartrons',
           favoris: 'Mis favoritos',
           parcours: 'Mis rutas',
+          favorisParcours: 'Mis favoritos y rutas',
           events: 'Ver la agenda',
           faq: 'FAQ completa',
           antigaspi: 'Anti-Desperdicio comercios',
@@ -4217,7 +4224,7 @@ const resources = {
         },
       },
       tourisme: {
-        title: 'Turismo y Conserjerías',
+        title: 'Alojarse en Chartrons',
         subtitle: 'Visitantes, viajeros de paso y alquileres de temporada',
         intro:
           'Encuentra consignas, conserjerías y buenas direcciones para recibir a tus viajeros o descubrir el barrio sin ser residente.',
@@ -4281,6 +4288,8 @@ const resources = {
       footer: {
         copyright: '© IDÉA CHARTRONS — asociación de barrio',
         publisher: 'A.I.D.É.S, asociación (ley francesa de 1901) (Association Interactive à Double Éco-Système)\n26 place Jean Jacques Rabaud · 33000 Burdeos · RNA W332029621 · SIREN 887 494 813\nResponsable de la publicación: Laïssaoui ALL',
+        explore: 'Explorar',
+        pros: 'Profesionales',
         cgv: 'Términos de uso',
         faq: 'FAQ',
         faqCta: 'Consultar la FAQ completa',
@@ -4321,7 +4330,7 @@ const resources = {
         call: 'Llamar',
       },
       conciergerie: {
-        title: 'Espacio conserjería y colaboradores',
+        title: 'Espacio para gestores',
         subtitle: 'Para conserjes y gestores de alquileres de temporada en Chartrons',
         intro:
           'Un punto de entrada dedicado a los profesionales de la acogida: kit para viajeros, información del barrio y solicitud de presupuesto.',
@@ -4897,7 +4906,7 @@ const resources = {
           ],
         },
         tourisme: {
-          title: 'Turismo y Conserjerías',
+          title: 'Alojarse en Chartrons',
           purpose: 'Esta sección está dirigida a visitantes, turistas de paso y gestores de alquileres vacacionales: consignas, buenas direcciones y experiencias locales.',
           steps: [
             'Consulte las consignas y el Local Relais para un depósito temporal.',

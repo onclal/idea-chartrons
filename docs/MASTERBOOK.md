@@ -26,6 +26,7 @@ Le propriétaire est francophone, non développeur. Il compte sur Claude pour lu
 | **Contrôles autorisés (07/10)** | Le propriétaire autorise Claude à faire lui-même tous les contrôles en lecture seule. Pas de demande d'avis ni de permission pour cela : anticiper, et ne solliciter que pour une décision ou une action que lui seul peut faire. |
 | **Pas de commentaire d'actions (07/10)** | Ne pas raconter les commandes ou outils utilisés : donner seulement les résultats et ce qui est attendu de lui. |
 | **Administration en français (07/10)** | Le propriétaire est seul à administrer : l'administration reste en français, sans traduction. L'espagnol vise les pages publiques. |
+| **Réponses binaires (08/10)** | Langage simple, jamais technique. Pas de reformulation de ce que le propriétaire a dit. Une seule question à la fois, de type oui/non ou A/B. Le détail n'est donné que s'il le demande. |
 | **Projets séparés** | IDÉA CHARTRONS ne se mélange pas avec ses autres projets. Les outils externes (voir §2) sont fabriqués ailleurs : ne pas les construire ici. |
 
 ---
