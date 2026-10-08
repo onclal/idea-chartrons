@@ -18,9 +18,9 @@ export function SiteFooter() {
         </Link>
       )}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-4 text-center">
-        <p className="text-[11px] text-chartrons-warm-gray leading-relaxed">
+        <p className="text-[11px] text-chartrons-warm-gray leading-relaxed whitespace-pre-line">
           {t('footer.copyright')}
-          <br />
+          {'\n'}
           {t('footer.publisher')}
         </p>
         <span className="hidden sm:inline text-chartrons-sand" aria-hidden>
