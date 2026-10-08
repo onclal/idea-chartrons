@@ -338,9 +338,9 @@ export function chartronsPoiToActeur(poi: ChartronsPoi, now: string): ActeurLoca
     wheelchairAccessible: Boolean(poi.wheelchairAccessible),
     seniorFriendly: Boolean(poi.seniorFriendly),
     isDemo,
-    dailyMenuText: poi.id === 'poi-rest-001' ? 'Plat du jour : magret de canard, jus au poivre' : null,
+    dailyMenuText: includeDemoData() && poi.id === 'poi-rest-001' ? 'Plat du jour : magret de canard, jus au poivre' : null,
     dailyMenuImage:
-      poi.id === 'poi-rest-001'
+      includeDemoData() && poi.id === 'poi-rest-001'
         ? 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80'
         : null,
     dailyMenuStatus: poi.id === 'poi-rest-001' ? ArdoiseStatus.Approved : ArdoiseStatus.Pending,
@@ -369,9 +369,34 @@ function menuFromPoi(poi: ChartronsPoi): CommerceMenuSection[] | null {
   return poi.hasMenu ? createCafeMarcheMenu() : null;
 }
 
+/** Identifiants des fiches « acteur » issues de la liste rédigée à la main (coordonnées non vérifiées). */
+export const CURATED_ACTEUR_IDS: ReadonlySet<string> = new Set(CHARTRONS_POIS.map((poi) => `acteur-${poi.id}`));
+
+/**
+ * Fiche rédigée à la main : on ne garde que ce qui est vérifiable (nom, adresse, position, catégorie,
+ * description). Téléphone, e-mail, réseaux, site, horaires, carte, avis, qualifications, photo et abonnement
+ * étaient des exemples : ils sont retirés tant qu'ils ne sont pas vérifiés par le propriétaire.
+ */
+function withoutUnverifiedDetails(poi: ChartronsPoiInput): ChartronsPoiInput {
+  return {
+    id: poi.id,
+    name: poi.name,
+    category: poi.category,
+    subcategory: poi.subcategory,
+    specialty: poi.specialty,
+    address: poi.address,
+    coordinates: poi.coordinates,
+    description: poi.description,
+    isMerchant: poi.isMerchant,
+    businessType: poi.businessType,
+    tier: 'free',
+  };
+}
+
 /** Fusion runtime : fiches curées d’abord, puis import OSM (`npm run fetch:pois`), puis démo si le flag est actif. */
 export function allChartronsPois(): ChartronsPoi[] {
-  const base: ChartronsPoiInput[] = [...CHARTRONS_POIS, ...OSM_CHARTRONS_POIS];
+  const curated = includeDemoData() ? CHARTRONS_POIS : CHARTRONS_POIS.map(withoutUnverifiedDetails);
+  const base: ChartronsPoiInput[] = [...curated, ...OSM_CHARTRONS_POIS];
   const withDemo = includeDemoData() ? [...base, ...DEMO_CHARTRONS_POIS] : base;
   return withDemo.map(hydrateChartronsPoi);
 }

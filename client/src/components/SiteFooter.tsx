@@ -18,8 +18,10 @@ export function SiteFooter() {
         </Link>
       )}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-4 text-center">
-        <p className="text-[11px] text-chartrons-warm-gray leading-relaxed">
+        <p className="text-[11px] text-chartrons-warm-gray leading-relaxed whitespace-pre-line">
           {t('footer.copyright')}
+          {'\n'}
+          {t('footer.publisher')}
         </p>
         <span className="hidden sm:inline text-chartrons-sand" aria-hidden>
           ·
@@ -39,15 +41,6 @@ export function SiteFooter() {
             className="inline-flex items-center justify-center min-h-[44px] px-3 text-xs font-semibold text-chartrons-bordeaux hover:underline"
           >
             {t('footer.cgv')}
-          </Link>
-          <span className="text-chartrons-sand" aria-hidden>
-            ·
-          </span>
-          <Link
-            to="/admin"
-            className="inline-flex items-center justify-center min-h-[44px] px-3 text-[11px] text-chartrons-warm-gray/70 hover:text-chartrons-bordeaux hover:underline"
-          >
-            {t('footer.admin')}
           </Link>
         </div>
       </div>

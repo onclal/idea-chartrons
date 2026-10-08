@@ -19,7 +19,7 @@ import { createDemoPosts } from './demoMerchants.js';
 import { includeDemoData, isDemoRecord } from '../logic/demoEnv.js';
 
 /** Bump when seed acteurs / Chartrons POIs / pépites change so localStorage upserts the catalog. */
-export const SEED_CATALOG_VERSION = 9;
+export const SEED_CATALOG_VERSION = 10;
 import { defaultRegleForCategory } from '../logic/fidelite.js';
 import {
   ActeurLocalCategory,
@@ -148,7 +148,7 @@ export const MARCHE_CHARTRONS = {
   lieu: 'Place du Marché des Chartrons, quais des Chartrons, 33000 Bordeaux',
   latitude: 44.85235,
   longitude: -0.56985,
-  image: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&h=300&fit=crop',
+  image: null,
 } as const;
 
 function nextMarcheStart(from: Date): Date {
@@ -209,7 +209,7 @@ export const COURS_PORTAL_BROCANTE = {
   lieu: 'Cours Portal, 33000 Bordeaux',
   latitude: 44.8539,
   longitude: -0.572,
-  image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop',
+  image: null,
 } as const;
 
 export const PUCES_DIMANCHE = {
@@ -219,7 +219,7 @@ export const PUCES_DIMANCHE = {
   lieu: 'Cours Portal, 33000 Bordeaux',
   latitude: 44.8539,
   longitude: -0.572,
-  image: 'https://images.unsplash.com/photo-1464146072230-91cabc968266?w=400&h=300&fit=crop',
+  image: null,
 } as const;
 
 function nextFirstSunday(from: Date): Date {
@@ -399,7 +399,7 @@ function createSeedAntiqueItems(now: string): AntiqueItem[] {
   ];
 }
 
-export function createSeedData(): DatabaseSchema {
+function buildSeedData(): DatabaseSchema {
   const now = new Date().toISOString();
   const today = localYmd(new Date());
   const tomorrowDate = new Date();
@@ -970,7 +970,7 @@ export function createSeedData(): DatabaseSchema {
   };
 }
 
-export const seedData = createSeedData();
+const fullSeedData = buildSeedData();
 
 /**
  * Contenus d'exemple livrés avec l'application (annonces, dépôts Relais, commerces fictifs,
@@ -978,13 +978,13 @@ export const seedData = createSeedData();
  * l'interface doit les signaler comme « Exemple » pour ne jamais passer pour du réel.
  */
 const SEED_EXAMPLE_IDS: ReadonlySet<string> = new Set<string>([
-  ...seedData.postsAnnonces.map((post) => post.id),
-  ...seedData.localRelais.map((relais) => relais.id),
-  ...seedData.acteursLocaux.filter((acteur) => !acteur.id.startsWith('acteur-poi-')).map((acteur) => acteur.id),
-  ...seedData.antiqueItems.map((item) => item.id),
-  ...seedData.cartesFideliteScans.map((scan) => scan.id),
-  ...seedData.privilegeConsommations.map((privilege) => privilege.id),
-  ...seedData.civicReports.map((report) => report.id),
+  ...fullSeedData.postsAnnonces.map((post) => post.id),
+  ...fullSeedData.localRelais.map((relais) => relais.id),
+  ...fullSeedData.acteursLocaux.filter((acteur) => !acteur.id.startsWith('acteur-poi-')).map((acteur) => acteur.id),
+  ...fullSeedData.antiqueItems.map((item) => item.id),
+  ...fullSeedData.cartesFideliteScans.map((scan) => scan.id),
+  ...fullSeedData.privilegeConsommations.map((privilege) => privilege.id),
+  ...fullSeedData.civicReports.map((report) => report.id),
   'event-1',
   'event-2',
   'event-atelier-1',
@@ -1000,3 +1000,50 @@ export function isExampleContent(item: { id?: string; isDemo?: boolean } | null 
   const id = item.id ?? '';
   return SEED_EXAMPLE_IDS.has(id) || id.startsWith(DEMO_RECEIPT_ID_PREFIX);
 }
+
+/**
+ * Retire tout contenu d'exemple (fiches, annonces, événements, pépites, relais, scans,
+ * consommations, signalements). Les fiches de l'annuaire réel et les événements récurrents
+ * du quartier ne sont pas touchés. Les contenus créés par le propriétaire non plus.
+ */
+export function purgeExampleContent(data: DatabaseSchema): { data: DatabaseSchema; removed: number } {
+  const exampleActeurIds = new Set((data.acteursLocaux ?? []).filter(isExampleContent).map((acteur) => acteur.id));
+  const keep = <T extends { id?: string; isDemo?: boolean }>(items: T[] | undefined): T[] =>
+    (items ?? []).filter((item) => !isExampleContent(item));
+  const next: DatabaseSchema = {
+    ...data,
+    postsAnnonces: keep(data.postsAnnonces).filter((post) => !exampleActeurIds.has(post.acteurId ?? '')),
+    acteursLocaux: keep(data.acteursLocaux),
+    agendaEvenements: keep(data.agendaEvenements),
+    antiqueItems: keep(data.antiqueItems).filter((item) => !exampleActeurIds.has(item.merchantId)),
+    cartesFideliteScans: keep(data.cartesFideliteScans),
+    privilegeConsommations: keep(data.privilegeConsommations),
+    civicReports: keep(data.civicReports),
+    localRelais: keep(data.localRelais),
+  };
+  const count = (schema: DatabaseSchema) =>
+    schema.postsAnnonces.length +
+    schema.acteursLocaux.length +
+    (schema.agendaEvenements ?? []).length +
+    (schema.antiqueItems ?? []).length +
+    (schema.cartesFideliteScans ?? []).length +
+    (schema.privilegeConsommations ?? []).length +
+    (schema.civicReports ?? []).length +
+    (schema.localRelais ?? []).length;
+  return { data: next, removed: count(data) - count(next) };
+}
+
+/** Données de départ : sans contenu d'exemple, sauf en développement (`includeDemoData`). */
+export function createSeedData(): DatabaseSchema {
+  const full = buildSeedData();
+  if (includeDemoData()) return full;
+  const { data: clean } = purgeExampleContent(full);
+  return {
+    ...clean,
+    relaisCreneaux: syncRelaisCreneauxWindow(clean.relaisCreneaux, clean.localRelais, new Date(), clean.relaisSettings?.[0]),
+  };
+}
+
+
+/** Données de départ prêtes à l'emploi (utilisées par le serveur de développement). */
+export const seedData: DatabaseSchema = createSeedData();

@@ -117,3 +117,108 @@ test('recherche : insensible aux accents et à la casse', () => {
   assert.equal(matchesSearchQuery('Café des Chartrons', 'cafe'), true);
   assert.equal(matchesSearchQuery('Boulangerie', 'fromagerie'), false);
 });
+
+import { classifySearchIntent } from '../src/logic/searchIntent.js';
+
+test('classifySearchIntent : noms de commerce, métiers et rues vont à l’annuaire', () => {
+  const shops = ['Le Petit Marché des Chartrons', 'Boulangerie Notre-Dame'];
+  assert.equal(classifySearchIntent('', shops), 'directory');
+  assert.equal(classifySearchIntent('boulangerie', shops), 'directory');
+  assert.equal(classifySearchIntent('Boulangerie Notre-Dame', shops), 'directory');
+  assert.equal(classifySearchIntent('rue Notre-Dame', shops), 'directory');
+  assert.equal(classifySearchIntent('Le Petit Marché des Chartrons', shops), 'directory');
+  assert.equal(classifySearchIntent('petit marché', shops), 'directory');
+});
+
+test('classifySearchIntent : questions et demandes rédigées vont au Concierge', () => {
+  assert.equal(classifySearchIntent('Où manger ce soir ?'), 'ai');
+  assert.equal(classifySearchIntent('boulangerie ouverte ?'), 'ai');
+  assert.equal(classifySearchIntent('comment aller au marché'), 'ai');
+  assert.equal(classifySearchIntent('je cherche un caviste'), 'ai');
+  assert.equal(classifySearchIntent('where can I buy flowers'), 'ai');
+  assert.equal(classifySearchIntent('dónde comer cerca'), 'ai');
+  assert.equal(classifySearchIntent('une idée de balade avec les enfants'), 'ai');
+});
+
+import { emptyStudioFeed, parseStudioFeed } from '../src/logic/studioFeed.js';
+
+test('parseStudioFeed : un flux absent ou invalide donne des emplacements vides', () => {
+  assert.deepEqual(parseStudioFeed(null), emptyStudioFeed());
+  assert.deepEqual(parseStudioFeed('n’importe quoi'), emptyStudioFeed());
+  assert.deepEqual(parseStudioFeed({ editorial: 'pas une liste' }), emptyStudioFeed());
+});
+
+test('parseStudioFeed : écarte les éléments douteux et assainit les liens', () => {
+  const feed = parseStudioFeed({
+    editorial: [
+      { id: 'a', title: '  Le marché  des Chartrons ', summary: 'Un récit', url: '/events', label: 'Éditorial' },
+      { title: '', summary: 'sans titre' },
+      { title: 'Lien dangereux', url: 'javascript:alert(1)', imageUrl: 'data:text/html,x' },
+      { title: 'Autre site déguisé', url: '//example.com/piege' },
+      { title: 'Lien externe', url: 'https://exemple.fr/article', imageUrl: 'https://exemple.fr/photo.jpg' },
+      42,
+    ],
+    proTools: [{ title: 'Kit affiche', summary: 'À imprimer' }],
+  });
+  assert.equal(feed.editorial.length, 4);
+  assert.equal(feed.editorial[0].title, 'Le marché des Chartrons');
+  assert.equal(feed.editorial[0].url, '/events');
+  assert.equal(feed.editorial[1].url, null);
+  assert.equal(feed.editorial[1].imageUrl, null);
+  assert.equal(feed.editorial[2].url, null);
+  assert.equal(feed.editorial[3].url, 'https://exemple.fr/article');
+  assert.equal(feed.proTools[0].title, 'Kit affiche');
+  assert.deepEqual(feed.proSpotlight, []);
+});
+
+test('parseStudioFeed : limite le nombre d’éléments par emplacement', () => {
+  const many = Array.from({ length: 12 }, (_, i) => ({ title: `Article ${i}` }));
+  assert.equal(parseStudioFeed({ editorial: many }).editorial.length, 5);
+});
+
+import { createSeedData, isExampleContent, purgeExampleContent, setIncludeDemoDataOverride, isPremiumProMerchant } from '../src/index.js';
+
+test('site vierge : les données de départ ne contiennent aucun contenu d’exemple', () => {
+  setIncludeDemoDataOverride(false);
+  const seed = createSeedData();
+  const everything = [
+    ...seed.postsAnnonces,
+    ...seed.acteursLocaux,
+    ...seed.agendaEvenements,
+    ...seed.antiqueItems,
+    ...seed.cartesFideliteScans,
+    ...seed.privilegeConsommations,
+    ...seed.civicReports,
+    ...seed.localRelais,
+  ];
+  assert.equal(everything.filter((item) => isExampleContent(item)).length, 0);
+  assert.equal(seed.postsAnnonces.length, 0);
+  assert.equal(seed.localRelais.length, 0);
+  assert.ok(seed.acteursLocaux.length > 300, 'l’annuaire réel est conservé');
+  assert.ok(seed.agendaEvenements.length > 0, 'les événements récurrents du quartier sont conservés');
+});
+
+test('site vierge : tous les pros sont en gratuit et les fiches rédigées à la main n’affichent aucune coordonnée non vérifiée', () => {
+  setIncludeDemoDataOverride(false);
+  const acteurs = createSeedData().acteursLocaux;
+  assert.equal(acteurs.filter((acteur) => isPremiumProMerchant(acteur)).length, 0);
+  const bistro = acteurs.find((acteur) => acteur.id === 'acteur-poi-rest-001');
+  assert.ok(bistro, 'la fiche existe toujours');
+  assert.equal(bistro.telephone, null);
+  assert.equal(bistro.merchantEmail, null);
+  assert.equal(bistro.openingHours, null);
+  assert.deepEqual(bistro.photos, []);
+  assert.equal(bistro.dailyMenuText, null);
+});
+
+test('purgeExampleContent retire les exemples et laisse les contenus réels', () => {
+  setIncludeDemoDataOverride(true);
+  const full = createSeedData();
+  setIncludeDemoDataOverride(false);
+  assert.ok(full.postsAnnonces.length > 0, 'en développement les exemples sont présents');
+  const { data, removed } = purgeExampleContent(full);
+  assert.ok(removed > 0);
+  assert.equal(data.postsAnnonces.length, 0);
+  assert.equal(data.acteursLocaux.filter((acteur) => isExampleContent(acteur)).length, 0);
+  assert.ok(data.acteursLocaux.length > 300);
+});

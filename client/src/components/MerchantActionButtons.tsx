@@ -12,6 +12,7 @@ import { WebsiteButton } from './WebsiteButton';
 import { OrderModal, type OrderIntent } from './OrderModal';
 import { CheckoutModal, type CheckoutItem } from './CheckoutModal';
 import { useToast } from '../context/ToastContext';
+import { PAYMENTS_ENABLED } from '../config/payments';
 
 interface MerchantActionButtonsProps {
   acteur: ActeurLocal;
@@ -86,6 +87,11 @@ export function MerchantActionButtons({ acteur }: MerchantActionButtonsProps) {
               : details.intent === 'appointment'
                 ? 'acteurs.appointment.title'
                 : 'acteurs.clickCollect.title';
+          // Paiement masqué : la demande est confirmée directement, sans écran de carte bancaire.
+          if (!PAYMENTS_ENABLED) {
+            showToast(t('toast.purchaseConfirmed', { orderId: `CMD-CHARTRONS-${String(Date.now()).slice(-4)}` }));
+            return;
+          }
           setCheckoutItem({
             id: `${acteur.id}-${details.intent}-${Date.now()}`,
             title: t(titleKey, { name: acteur.nomCommerce }),

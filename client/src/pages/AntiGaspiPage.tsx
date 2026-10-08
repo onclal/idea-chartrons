@@ -12,6 +12,7 @@ import { PageHelp } from '../components/PageHelp';
 import { toTelHref } from '../lib/phone';
 import { AntiGaspiCreateForm } from '../components/AntiGaspiCreateForm';
 import { CheckoutModal } from '../components/CheckoutModal';
+import { PAYMENTS_ENABLED } from '../config/payments';
 import { AdminDeleteButton } from '../components/AdminDeleteButton';
 import { OwnerPostActions } from '../components/OwnerPostActions';
 import { useToast } from '../context/ToastContext';
@@ -156,7 +157,7 @@ export function AntiGaspiPage() {
                   </div>
                   {active && !isOwner && (
                     <div className="space-y-2">
-                      {post.prix != null && post.prix > 0 && (
+                      {PAYMENTS_ENABLED && post.prix != null && post.prix > 0 && (
                         <Button
                           variant="bordeaux"
                           size="md"

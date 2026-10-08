@@ -19,6 +19,7 @@ import { ProLoginScreen } from '../components/ProLoginScreen';
 import { QRCodeGenerator } from '../components/QRCodeGenerator';
 import { RestaurantMenuEditor } from '../components/RestaurantMenuEditor';
 import { Badge, Button, Card, EmptyState, Loading } from '../components/ui';
+import { StudioSlot } from '../components/StudioSlot';
 import { useProAccess } from '../context/ProAccessContext';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
@@ -395,6 +396,8 @@ export function ProDashboardPage() {
           />
         </Card>
       )}
+
+      <StudioSlot slot="proTools" />
     </div>
   );
 }

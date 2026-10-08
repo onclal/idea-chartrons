@@ -23,6 +23,9 @@ Le propriétaire est francophone, non développeur. Il compte sur Claude pour lu
 | **Posture « bureau d'étude »** | Tout anticiper : le propriétaire doit en faire le moins possible. Claude prépare, vérifie et enchaîne lui-même (contrôles automatiques, captures avant/après, vérifications de suivi), et ne le sollicite que pour une décision ou une action que lui seul peut faire. |
 | **Boucles automatiques** | Claude crée lui-même ses boucles de contrôle et de suivi (vérifier, corriger, revérifier ; rappels programmés), sans attendre qu'on le lui demande. |
 | **Préférences tenues à jour** | Dès que le propriétaire demande d'inscrire une préférence, l'ajouter à cette charte (et à `CLAUDE.md`) dans la foulée. |
+| **Contrôles autorisés (07/10)** | Le propriétaire autorise Claude à faire lui-même tous les contrôles en lecture seule. Pas de demande d'avis ni de permission pour cela : anticiper, et ne solliciter que pour une décision ou une action que lui seul peut faire. |
+| **Pas de commentaire d'actions (07/10)** | Ne pas raconter les commandes ou outils utilisés : donner seulement les résultats et ce qui est attendu de lui. |
+| **Administration en français (07/10)** | Le propriétaire est seul à administrer : l'administration reste en français, sans traduction. L'espagnol vise les pages publiques. |
 | **Projets séparés** | IDÉA CHARTRONS ne se mélange pas avec ses autres projets. Les outils externes (voir §2) sont fabriqués ailleurs : ne pas les construire ici. |
 
 ---
@@ -121,3 +124,40 @@ Attention : le « Lot 2 » de la PR #3 (vérification automatique, Vercel) **n'e
 2. Vérifier avec le propriétaire, pas à pas, les 3 points Supabase du §4.
 3. Bureau d'étude : inspecter le site en ligne et proposer **le plan d'exécution de la nouvelle version** (objectifs §3 + lots restants §5), découpé en étapes validables une par une.
 4. Exécuter étape par étape, chacune sur une branche, avec captures avant/après et accord du propriétaire avant la mise en ligne.
+
+---
+
+## 9. Avancement de l'exécution (07/10/2026, demande de fusion n° 7, en brouillon, rien en ligne)
+
+| Étape | État |
+|---|---|
+| 1. Paiement masqué, code conservé (`VITE_PAYMENTS_ENABLED`, éteint par défaut) | ✅ prête |
+| 2. Une seule barre de recherche (`classifySearchIntent`) | ✅ prête |
+| 3. En-tête allégé (226 px → 124 px sur mobile) | ✅ prête |
+| 4. Accueil épuré (« Aujourd'hui aux Chartrons », liens en bas) | ✅ prête |
+| 5. Emplacements STUDIO ALL (`docs/BRANCHEMENT-STUDIO-ALL.md`) | ✅ prête |
+| 6. Mode d'emploi de l'administration (page `/admin/aide`, en français) | ✅ prête |
+| 7. Navigation (noms des 2 pages « conciergerie », favoris en double) | ⏳ décision du propriétaire |
+| 8. FAQ, tarifs, mentions légales, traduction espagnole des pages publiques restantes (fidélité, légal) | ⏳ décisions du propriétaire |
+
+Constats à traiter : lien « Espace admin » visible dans le pied de page (S2) ; traduction espagnole incomplète (463 textes sur 1385, surtout administration et Espace Pro, laissés en français volontairement).
+
+### Constat important de l'étape 6 : l'administration n'est pas partagée
+Annonces, agenda, bannières, rectangle d'accueil, fiches commerces, Local Relais, ardoises et signalements sont enregistrés dans le navigateur de l'appareil utilisé (`localStorage`, voir `client/src/lib/localDb.ts`). **Ce que le propriétaire modifie dans l'administration n'est pas vu par les autres visiteurs.** Seuls l'Espace Pro (Communication, « Dispo maintenant »), les codes d'accès commerçants et le code administrateur sont dans Supabase.
+Conséquence : pour administrer réellement le site en ligne, ces contenus devront être déplacés dans Supabase. À décider avec le propriétaire (étape à ajouter au plan).
+
+### Décisions du propriétaire (07/10/2026)
+- Objectif : **partir sur un site vierge** (aucun contenu inventé), en gardant les vraies bases de données (annuaire de 375 fiches, carte, patrimoine, textes) et en remettant tous les pros en gratuit.
+- Événements récurrents (Marché des Chartrons, Puces du dimanche, Brocante du Cours Portal) : gardés, sans photo, à vérifier.
+- Les fiches rédigées à la main (13) perdent téléphone, e-mail, horaires, carte, photo, qualifications et abonnement tant qu'ils ne sont pas vérifiés.
+- Lien « Espace admin » retiré du pied de page ; accès par `/admin`.
+- Éditeur : **Association loi 1901 A.I.D.É.S (Association Interactive à Double Éco-Système), 26 place Jean Jacques Rabaud, 33000 Bordeaux, RNA W332029621, SIREN 887 494 813** (affiché en pied de page). Responsable de publication : Laïssaoui ALL.
+- Prix de Premium Pro : **en réflexion**, à décider après la cartographie usagers / pros.
+- Administration partagée : en pause, à décider après la cartographie.
+- Ordre convenu : nettoyage → cartographie des fonctions usagers / pros → gratuit et payant → éditorial.
+
+### Cartographie des fonctions
+`docs/CARTOGRAPHIE-FONCTIONS.md` (08/10/2026) : 22 fonctions usagers, 17 fonctions pros, 6 constats (dont : Communication Pro sans lecteur public, réservations non transmises aux commerçants, code d'accès commerce réclamable par tous), pistes pour le gratuit / payant.
+- Bandeau « Version de démonstration » : **conservé** (option A) tant que les publications des visiteurs ne sont pas partagées.
+- Fusion de la demande n° 7 dans `main` : **autorisée par le propriétaire** le 08/10/2026.
+

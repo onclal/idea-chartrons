@@ -13,6 +13,7 @@ const resources = {
         exampleBadge: 'Exemple',
         exampleTitle: 'Contenu fictif, affiché pour la démonstration',
         notice: 'Version de démonstration : les contenus marqués « Exemple » sont fictifs et les paiements sont simulés.',
+        noticeNoPayments: 'Version de démonstration : ce que vous publiez reste enregistré sur votre appareil uniquement.',
         publishNotice: 'En démonstration, votre publication reste enregistrée sur cet appareil uniquement.',
         paymentSimulated: 'Paiement simulé — aucun débit ne sera effectué.',
       },
@@ -42,6 +43,11 @@ const resources = {
       smartBanner: {
         dismiss: 'Fermer',
         dismissAria: 'Masquer cette bannière pendant 24 heures',
+      },
+      studioSlots: {
+        editorial: 'À la une du quartier',
+        proSpotlight: 'Offres des pros du quartier',
+        proTools: 'Outils pour votre commerce',
       },
       upcomingEvents: {
         summary: '{{title}} + {{count}} autre(s) événement(s) à venir',
@@ -76,6 +82,7 @@ const resources = {
       confort: {
         toggle: '☀️ Mode Confort',
         toggleOn: '☀️ Mode Confort activé',
+        short: 'Confort',
         toggleAria: 'Activer le Mode Confort, gros caractères et fort contraste',
         toggleAriaOn: 'Désactiver le Mode Confort',
         listen: '🔊 Écouter',
@@ -133,6 +140,7 @@ const resources = {
       },
       search: {
         placeholder: 'Rechercher un commerce, une annonce, un événement...',
+        placeholderUnified: 'Un commerce, une question, une idée de sortie…',
         placeholderAi: 'Une recette, un conseil, une adresse…',
         placeholderChineur: 'Un style, une époque, un meuble…',
         submit: 'Rechercher',
@@ -168,6 +176,12 @@ const resources = {
         heroAlt: 'Les quais des Chartrons à Bordeaux, le long de la Garonne',
         heroCredit: 'Quai des Chartrons — photo Marc Ryckaert, CC BY 3.0',
         heroSponsoredDefault: 'Publicité',
+        today: {
+          title: 'Aujourd’hui aux Chartrons',
+          empty: 'Rien d’annoncé dans les prochains jours.',
+          agenda: 'Voir tout l’agenda',
+        },
+        moreTitle: 'Dans le quartier',
         stats: {
           posts: 'Annonces actives',
           acteurs: 'Professionnels locaux',
@@ -1104,6 +1118,7 @@ const resources = {
           heroSlides: 'Rectangle Accueil',
           qr: 'Kit QR',
           pepiteTags: 'Étiquettes Chineur',
+          help: 'Mode d’emploi',
         },
         pepiteTags: {
           title: 'Étiquettes Chineur',
@@ -1434,6 +1449,7 @@ const resources = {
       },
       footer: {
         copyright: '© IDÉA CHARTRONS — association de quartier',
+        publisher: 'Association loi 1901 A.I.D.É.S (Association Interactive à Double Éco-Système)\n26 place Jean Jacques Rabaud · 33000 Bordeaux · RNA W332029621 · SIREN 887 494 813\nResponsable de publication : Laïssaoui ALL',
         cgv: 'CGU',
         faq: 'FAQ',
         faqCta: 'Consulter la FAQ complète',
@@ -1547,7 +1563,7 @@ const resources = {
           title: 'Créer ma communication',
           subtitle: 'Rédigez une annonce, améliorez-la avec l’IA, publiez-la dans Idéa Chartrons et regroupez-la dans une campagne si besoin.',
           premiumRequired:
-            'La création de communications est réservée aux commerçants abonnés Premium Pro (20 €/mois).',
+            'La création de communications est réservée aux commerçants abonnés Premium Pro.',
           titlePlaceholder: 'Titre (facultatif)',
           bodyLabel: 'Votre message',
           bodyPlaceholder: 'Ex. Nouvelle collection en boutique cette semaine !',
@@ -1574,7 +1590,7 @@ const resources = {
           subtitle: 'Publiez vos objets pour apparaître dans l’IA Chineur et la vitrine Pépites.',
           quota: '{{count}} / {{max}} actives',
           premiumRequired:
-            'La publication de pépites est réservée aux brocanteurs abonnés Premium Pro (20 €/mois).',
+            'La publication de pépites est réservée aux brocanteurs abonnés Premium Pro.',
           discoverPremium: 'Découvrir Premium Pro',
           add: 'Ajouter une pépite',
           quotaReached: 'Quota atteint : marquez un objet comme vendu pour en publier un nouveau.',
@@ -1923,6 +1939,7 @@ const resources = {
         exampleBadge: 'Example',
         exampleTitle: 'Fictional content, shown for the demo',
         notice: 'Demo version: content marked “Example” is fictional and payments are simulated.',
+        noticeNoPayments: 'Demo version: what you publish stays saved on your device only.',
         publishNotice: 'In this demo, your post is saved on this device only.',
         paymentSimulated: 'Simulated payment — you will not be charged.',
       },
@@ -1952,6 +1969,11 @@ const resources = {
       smartBanner: {
         dismiss: 'Close',
         dismissAria: 'Hide this banner for 24 hours',
+      },
+      studioSlots: {
+        editorial: 'Neighborhood highlights',
+        proSpotlight: 'Offers from local businesses',
+        proTools: 'Tools for your business',
       },
       upcomingEvents: {
         summary: '{{title}} + {{count}} more upcoming event(s)',
@@ -1986,6 +2008,7 @@ const resources = {
       confort: {
         toggle: '☀️ Comfort Mode',
         toggleOn: '☀️ Comfort Mode on',
+        short: 'Comfort',
         toggleAria: 'Turn on Comfort Mode, large type and high contrast',
         toggleAriaOn: 'Turn off Comfort Mode',
         listen: '🔊 Listen',
@@ -2043,6 +2066,7 @@ const resources = {
       },
       search: {
         placeholder: 'Search a shop, a listing, an event...',
+        placeholderUnified: 'A shop, a question, an idea for an outing…',
         placeholderAi: 'A recipe, a tip, a local address…',
         placeholderChineur: 'A style, an era, a piece of furniture…',
         submit: 'Search',
@@ -2078,6 +2102,12 @@ const resources = {
         heroAlt: 'The Quais des Chartrons in Bordeaux, along the Garonne',
         heroCredit: 'Quai des Chartrons — photo Marc Ryckaert, CC BY 3.0',
         heroSponsoredDefault: 'Publicité',
+        today: {
+          title: 'Today in the Chartrons',
+          empty: 'Nothing announced in the coming days.',
+          agenda: 'See the full agenda',
+        },
+        moreTitle: 'Around the neighborhood',
         stats: {
           posts: 'Active listings',
           acteurs: 'Local professionals',
@@ -3342,6 +3372,7 @@ const resources = {
       },
       footer: {
         copyright: '© IDÉA CHARTRONS — neighborhood association',
+        publisher: 'A.I.D.É.S, association under the French law of 1901 (Association Interactive à Double Éco-Système)\n26 place Jean Jacques Rabaud · 33000 Bordeaux · RNA W332029621 · SIREN 887 494 813\nPublication director: Laïssaoui ALL',
         cgv: 'Terms of use',
         faq: 'FAQ',
         faqCta: 'Read the full FAQ',
@@ -3452,7 +3483,7 @@ const resources = {
           title: 'Create my communication',
           subtitle: 'Write a post, polish it with AI, publish it in Idéa Chartrons and group it into a campaign if you like.',
           premiumRequired:
-            'Creating communications is reserved for merchants subscribed to Premium Pro (€20/month).',
+            'Creating communications is reserved for merchants subscribed to Premium Pro.',
           titlePlaceholder: 'Title (optional)',
           bodyLabel: 'Your message',
           bodyPlaceholder: 'E.g. New collection in store this week!',
@@ -3830,6 +3861,7 @@ const resources = {
         exampleBadge: 'Ejemplo',
         exampleTitle: 'Contenido ficticio, mostrado para la demostración',
         notice: 'Versión de demostración: los contenidos marcados «Ejemplo» son ficticios y los pagos son simulados.',
+        noticeNoPayments: 'Versión de demostración: lo que publique queda guardado solo en su dispositivo.',
         publishNotice: 'En la demostración, su publicación se guarda solo en este dispositivo.',
         paymentSimulated: 'Pago simulado: no se realizará ningún cargo.',
       },
@@ -3859,6 +3891,11 @@ const resources = {
       smartBanner: {
         dismiss: 'Cerrar',
         dismissAria: 'Ocultar este aviso durante 24 horas',
+      },
+      studioSlots: {
+        editorial: 'Destacados del barrio',
+        proSpotlight: 'Ofertas de los comercios del barrio',
+        proTools: 'Herramientas para su comercio',
       },
       upcomingEvents: {
         summary: '{{title}} + {{count}} evento(s) más próximamente',
@@ -3893,6 +3930,7 @@ const resources = {
       confort: {
         toggle: '☀️ Modo Confort',
         toggleOn: '☀️ Modo Confort activado',
+        short: 'Confort',
         toggleAria: 'Activar el Modo Confort, letra grande y alto contraste',
         toggleAriaOn: 'Desactivar el Modo Confort',
         listen: '🔊 Escuchar',
@@ -3950,6 +3988,7 @@ const resources = {
       },
       search: {
         placeholder: 'Buscar un comercio, un anuncio, un evento...',
+        placeholderUnified: 'Un comercio, una pregunta, una idea para salir…',
         placeholderAi: 'Una receta, un consejo, una dirección…',
         placeholderChineur: 'Un estilo, una época, un mueble…',
         submit: 'Buscar',
@@ -3985,6 +4024,12 @@ const resources = {
         heroAlt: 'Los muelles de Chartrons en Burdeos, a orillas del Garona',
         heroCredit: 'Quai des Chartrons — foto Marc Ryckaert, CC BY 3.0',
         heroSponsoredDefault: 'Publicidad',
+        today: {
+          title: 'Hoy en Chartrons',
+          empty: 'Nada anunciado en los próximos días.',
+          agenda: 'Ver toda la agenda',
+        },
+        moreTitle: 'En el barrio',
         stats: {
           posts: 'Anuncios activos',
           acteurs: 'Profesionales locales',
@@ -4235,6 +4280,7 @@ const resources = {
       },
       footer: {
         copyright: '© IDÉA CHARTRONS — asociación de barrio',
+        publisher: 'A.I.D.É.S, asociación (ley francesa de 1901) (Association Interactive à Double Éco-Système)\n26 place Jean Jacques Rabaud · 33000 Burdeos · RNA W332029621 · SIREN 887 494 813\nResponsable de la publicación: Laïssaoui ALL',
         cgv: 'Términos de uso',
         faq: 'FAQ',
         faqCta: 'Consultar la FAQ completa',

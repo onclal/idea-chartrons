@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isExampleContent, isResidentFeedPost, isUpcomingEvent } from '@idea-chartrons/shared';
 import type { AgendaEvenement, LocalRelais, PostAnnonce } from '@idea-chartrons/shared';
-import { Badge, Card, Loading } from '../components/ui';
+import { Badge, Loading } from '../components/ui';
 import { PageHelp } from '../components/PageHelp';
 import { PickupAlert } from '../components/PickupAlert';
 import { HeroCarousel } from '../components/HeroCarousel';
-import { UpcomingEventsBanner } from '../components/UpcomingEventsBanner';
+import { TodayInChartrons } from '../components/TodayInChartrons';
+import { StudioSlot } from '../components/StudioSlot';
+import { SmartBanner } from '../components/SmartBanner';
+import { DemoNotice } from '../components/DemoNotice';
 import { FaqModal } from '../components/FaqModal';
 import { ConfortDashboard } from '../components/ConfortDashboard';
 import { useConfort } from '../context/ConfortContext';
@@ -29,7 +31,6 @@ function isUpcomingSoon(event: AgendaEvenement, now: Date): boolean {
 export function HomePage() {
   const { t } = useTranslation();
   const { isConfortMode } = useConfort();
-  const [stats, setStats] = useState({ posts: 0, acteurs: 0, events: 0 });
   const [relaisList, setRelaisList] = useState<LocalRelais[]>([]);
   const [posts, setPosts] = useState<PostAnnonce[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<AgendaEvenement[]>([]);
@@ -47,21 +48,8 @@ export function HomePage() {
   }, []);
 
   useEffect(() => {
-    Promise.all([
-      api.getPosts(),
-      api.getActeurs(),
-      api.getEvents(),
-      api.getRelais(),
-    ])
-      .then(([postsData, acteurs, events, relais]) => {
-        setStats({
-          // Annonces réelles uniquement, comme pour les professionnels : les exemples ne sont pas comptés.
-          posts: postsData.filter((p) => p.statut === 'Disponible' && isResidentFeedPost(p) && !isExampleContent(p)).length,
-          // Commerces réels uniquement : les fiches d'exemple de la démonstration ne sont pas comptées.
-          acteurs: acteurs.filter((acteur) => !isExampleContent(acteur)).length,
-          // Même règle que l'Agenda et le bandeau « à venir » : tous les événements non terminés.
-          events: events.filter((event) => isUpcomingEvent(event)).length,
-        });
+    Promise.all([api.getPosts(), api.getEvents(), api.getRelais()])
+      .then(([postsData, events, relais]) => {
         setRelaisList(relais);
         setPosts(postsData);
         const now = new Date();
@@ -89,32 +77,21 @@ export function HomePage() {
 
   if (loading) return <Loading message={t('common.loading')} />;
 
-  const ctaLinks = [
-    { to: '/relais', label: t('home.cta.relais'), icon: '📦', gradient: 'from-chartrons-brass to-chartrons-olive' },
-    { to: '/carnet', label: t('nav.carnet'), icon: '📔', gradient: 'from-chartrons-bordeaux to-chartrons-olive-dark' },
-    { to: '/decouvrir', label: t('home.cta.decouvrir'), icon: '🚶', gradient: 'from-chartrons-olive to-chartrons-olive-light' },
-    { to: '/pratique', label: t('home.cta.pratique'), icon: 'ℹ️', gradient: 'from-chartrons-brass to-chartrons-olive' },
-    { to: '/conciergerie', label: t('home.cta.conciergerie'), icon: '🔑', gradient: 'from-chartrons-brass to-chartrons-olive' },
-    { to: '/favoris', label: t('home.cta.favoris'), icon: '♥', gradient: 'from-chartrons-bordeaux to-chartrons-olive-dark' },
-    { to: '/favoris#parcours', label: t('home.cta.parcours'), icon: '🗺️', gradient: 'from-chartrons-brass to-chartrons-bordeaux' },
-    { to: '/tourisme', label: t('home.cta.tourisme'), icon: '🧳', gradient: 'from-chartrons-olive-dark to-chartrons-brass' },
+  // Liens secondaires : toujours accessibles, mais en bas de page pour laisser la place au contenu.
+  const moreLinks = [
+    { to: '/relais', label: t('home.cta.relais') },
+    { to: '/carnet', label: t('nav.carnet') },
+    { to: '/decouvrir', label: t('home.cta.decouvrir') },
+    { to: '/pratique', label: t('home.cta.pratique') },
+    { to: '/conciergerie', label: t('home.cta.conciergerie') },
+    { to: '/favoris', label: t('home.cta.favoris') },
+    { to: '/favoris#parcours', label: t('home.cta.parcours') },
+    { to: '/tourisme', label: t('home.cta.tourisme') },
   ];
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <Link
-        to="/pro?tab=kit"
-        className="flex items-center justify-between gap-3 min-h-[52px] px-4 py-3 rounded-2xl bg-chartrons-brass/15 border border-chartrons-brass/50"
-      >
-        <span className="text-sm font-semibold text-chartrons-olive-dark">
-          {t('home.proBanner.text')} <span className="underline">{t('home.proBanner.cta')}</span>
-        </span>
-        <span aria-hidden className="text-lg text-chartrons-olive-dark">→</span>
-      </Link>
-
       <PickupAlert relaisList={relaisList} posts={posts} ownedPostIds={ownedPostIds} />
-
-      <UpcomingEventsBanner events={upcomingEvents} />
 
       <section className="relative">
         <div className="absolute top-2 right-2 z-10">
@@ -130,53 +107,58 @@ export function HomePage() {
           extraSlides={heroSlides}
         />
         <p className="text-[10px] text-chartrons-warm-gray/80 mt-1.5 px-1">{t('home.heroCredit')}</p>
-        <div className="flex items-center justify-center gap-2 mt-3 flex-wrap">
+      </section>
+
+      <StudioSlot slot="editorial" />
+
+      <TodayInChartrons events={upcomingEvents} />
+
+      <StudioSlot slot="proSpotlight" />
+
+      <section className="space-y-4 pt-2 border-t border-chartrons-beige">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-chartrons-warm-gray">
+          {t('home.moreTitle')}
+        </h2>
+        <nav aria-label={t('home.moreTitle')}>
+          <ul className="grid grid-cols-2 gap-x-3 gap-y-1">
+            {moreLinks.map(({ to, label }) => (
+              <li key={to}>
+                <Link
+                  to={to}
+                  className="flex items-center min-h-[44px] text-sm font-medium text-chartrons-olive-dark hover:underline touch-target"
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <Link
+          to="/pro?tab=kit"
+          className="flex items-center justify-between gap-3 min-h-[44px] text-sm font-semibold text-chartrons-olive-dark touch-target"
+        >
+          <span>
+            {t('home.proBanner.text')} <span className="underline">{t('home.proBanner.cta')}</span>
+          </span>
+          <span aria-hidden>→</span>
+        </Link>
+
+        <div className="flex items-center gap-2 flex-wrap">
           <Badge variant="brass" icon="🙋">{t('guest.badge')}</Badge>
           <p className="text-xs text-chartrons-warm-gray">{t('guest.noAccount')}</p>
         </div>
         <button
           type="button"
           onClick={() => setFaqOpen(true)}
-          className="mt-2 mx-auto block text-xs font-semibold text-chartrons-green underline-offset-2 hover:underline"
+          className="text-xs font-semibold text-chartrons-green underline-offset-2 hover:underline min-h-[44px] touch-target"
         >
           {t('faq.comparisonTitle')}
         </button>
-      </section>
 
-      <section className="grid grid-cols-3 gap-3">
-        {[
-          { value: stats.posts, label: t('home.stats.posts'), color: 'text-chartrons-bordeaux' },
-          { value: stats.acteurs, label: t('home.stats.acteurs'), color: 'text-chartrons-olive' },
-          { value: stats.events, label: t('home.stats.events'), color: 'text-chartrons-brick' },
-        ].map(({ value, label, color }) => (
-          <Card key={label} className="text-center !p-4">
-            <p className={`text-2xl font-bold ${color}`}>{value}</p>
-            <p className="text-[10px] text-chartrons-warm-gray mt-1 leading-tight font-medium uppercase tracking-wide">
-              {label}
-            </p>
-          </Card>
-        ))}
-      </section>
-
-      <section className="space-y-3">
-        {ctaLinks.map(({ to, label, icon, gradient }) => (
-          <Link key={to} to={to}>
-            <Card className="flex items-center gap-4 !p-4 hover:shadow-card-hover">
-              <div
-                className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white text-xl shadow-sm`}
-              >
-                {icon}
-              </div>
-              <span className="font-semibold text-chartrons-olive-dark">{label}</span>
-              <span className="ml-auto text-chartrons-warm-gray text-lg">→</span>
-            </Card>
-          </Link>
-        ))}
-      </section>
-
-      <section className="rounded-2xl bg-gradient-to-br from-chartrons-bordeaux to-chartrons-olive-dark p-5 text-white shadow-card">
-        <p className="text-sm font-medium opacity-95">{t('app.tagline')}</p>
-        <p className="text-xs opacity-60 mt-1.5">{t('home.areaHint')}</p>
+        <SmartBanner />
+        <DemoNotice className="" />
+        <p className="text-[11px] text-chartrons-warm-gray">{t('app.tagline')} · {t('home.areaHint')}</p>
       </section>
 
       <FaqModal open={faqOpen} onClose={() => setFaqOpen(false)} />

@@ -1,16 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import { SHOW_DEMO_NOTICE } from '../config/demo';
+import { PAYMENTS_ENABLED } from '../config/payments';
 
 /** Bandeau discret rappelant que le site est une démonstration (contenus d'exemple, paiements simulés). */
-export function DemoNotice() {
+export function DemoNotice({ className = 'mb-4' }: { className?: string }) {
   const { t } = useTranslation();
   if (!SHOW_DEMO_NOTICE) return null;
   return (
     <p
       role="note"
-      className="mb-4 rounded-xl bg-chartrons-beige/70 ring-1 ring-chartrons-sand/50 px-3 py-2 text-[11px] leading-snug text-chartrons-warm-gray"
+      className={`${className} rounded-xl bg-chartrons-beige/70 ring-1 ring-chartrons-sand/50 px-3 py-2 text-[11px] leading-snug text-chartrons-warm-gray`}
     >
-      {t('demo.notice')}
+      {t(PAYMENTS_ENABLED ? 'demo.notice' : 'demo.noticeNoPayments')}
     </p>
   );
 }
