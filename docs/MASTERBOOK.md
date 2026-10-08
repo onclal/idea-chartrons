@@ -151,10 +151,13 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 - Événements récurrents (Marché des Chartrons, Puces du dimanche, Brocante du Cours Portal) : gardés, sans photo, à vérifier.
 - Les fiches rédigées à la main (13) perdent téléphone, e-mail, horaires, carte, photo, qualifications et abonnement tant qu'ils ne sont pas vérifiés.
 - Lien « Espace admin » retiré du pied de page ; accès par `/admin`.
-- Éditeur : **Association loi 1901 A.I.D.É.S (Association Interactive à Double Éco-Système), 26 place Jean Jacques Rabaud, 33000 Bordeaux, RNA W332029621, SIREN 887 494 813** (affiché en pied de page). Reste à fournir : le responsable de publication.
+- Éditeur : **Association loi 1901 A.I.D.É.S (Association Interactive à Double Éco-Système), 26 place Jean Jacques Rabaud, 33000 Bordeaux, RNA W332029621, SIREN 887 494 813** (affiché en pied de page). Responsable de publication : Laïssaoui ALL.
 - Prix de Premium Pro : **en réflexion**, à décider après la cartographie usagers / pros.
 - Administration partagée : en pause, à décider après la cartographie.
 - Ordre convenu : nettoyage → cartographie des fonctions usagers / pros → gratuit et payant → éditorial.
 
 ### Cartographie des fonctions
 `docs/CARTOGRAPHIE-FONCTIONS.md` (08/10/2026) : 22 fonctions usagers, 17 fonctions pros, 6 constats (dont : Communication Pro sans lecteur public, réservations non transmises aux commerçants, code d'accès commerce réclamable par tous), pistes pour le gratuit / payant.
+- Bandeau « Version de démonstration » : **conservé** (option A) tant que les publications des visiteurs ne sont pas partagées.
+- Fusion de la demande n° 7 dans `main` : **autorisée par le propriétaire** le 08/10/2026.
+
