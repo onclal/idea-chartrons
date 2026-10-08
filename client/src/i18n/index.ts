@@ -1449,8 +1449,7 @@ const resources = {
       },
       footer: {
         copyright: '© IDÉA CHARTRONS — association de quartier',
-        publisher: 'Association loi 1901 A.I.D.É.S (Association Interactive à Double Éco-Système)
-26 place Jean Jacques Rabaud · 33000 Bordeaux · RNA W332029621 · SIREN 887 494 813',
+        publisher: 'Association loi 1901 A.I.D.É.S (Association Interactive à Double Éco-Système)\n26 place Jean Jacques Rabaud · 33000 Bordeaux · RNA W332029621 · SIREN 887 494 813',
         cgv: 'CGU',
         faq: 'FAQ',
         faqCta: 'Consulter la FAQ complète',
@@ -3373,8 +3372,7 @@ const resources = {
       },
       footer: {
         copyright: '© IDÉA CHARTRONS — neighborhood association',
-        publisher: 'A.I.D.É.S, association under the French law of 1901 (Association Interactive à Double Éco-Système)
-26 place Jean Jacques Rabaud · 33000 Bordeaux · RNA W332029621 · SIREN 887 494 813',
+        publisher: 'A.I.D.É.S, association under the French law of 1901 (Association Interactive à Double Éco-Système)\n26 place Jean Jacques Rabaud · 33000 Bordeaux · RNA W332029621 · SIREN 887 494 813',
         cgv: 'Terms of use',
         faq: 'FAQ',
         faqCta: 'Read the full FAQ',
@@ -4282,8 +4280,7 @@ const resources = {
       },
       footer: {
         copyright: '© IDÉA CHARTRONS — asociación de barrio',
-        publisher: 'A.I.D.É.S, asociación (ley francesa de 1901) (Association Interactive à Double Éco-Système)
-26 place Jean Jacques Rabaud · 33000 Burdeos · RNA W332029621 · SIREN 887 494 813',
+        publisher: 'A.I.D.É.S, asociación (ley francesa de 1901) (Association Interactive à Double Éco-Système)\n26 place Jean Jacques Rabaud · 33000 Burdeos · RNA W332029621 · SIREN 887 494 813',
         cgv: 'Términos de uso',
         faq: 'FAQ',
         faqCta: 'Consultar la FAQ completa',
