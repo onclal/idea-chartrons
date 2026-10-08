@@ -127,16 +127,16 @@ Attention : le « Lot 2 » de la PR #3 (vérification automatique, Vercel) **n'e
 
 ---
 
-## 9. Avancement de l'exécution (07/10/2026, demande de fusion n° 7, en brouillon, rien en ligne)
+## 9. Avancement de l'exécution (mis à jour le 08/10/2026) — demande n° 7 **fusionnée dans `main`**, publiée par Vercel
 
 | Étape | État |
 |---|---|
-| 1. Paiement masqué, code conservé (`VITE_PAYMENTS_ENABLED`, éteint par défaut) | ✅ prête |
-| 2. Une seule barre de recherche (`classifySearchIntent`) | ✅ prête |
-| 3. En-tête allégé (226 px → 124 px sur mobile) | ✅ prête |
-| 4. Accueil épuré (« Aujourd'hui aux Chartrons », liens en bas) | ✅ prête |
-| 5. Emplacements STUDIO ALL (`docs/BRANCHEMENT-STUDIO-ALL.md`) | ✅ prête |
-| 6. Mode d'emploi de l'administration (page `/admin/aide`, en français) | ✅ prête |
+| 1. Paiement masqué, code conservé (`VITE_PAYMENTS_ENABLED`, éteint par défaut) | ✅ en ligne |
+| 2. Une seule barre de recherche (`classifySearchIntent`) | ✅ en ligne |
+| 3. En-tête allégé (226 px → 124 px sur mobile) | ✅ en ligne |
+| 4. Accueil épuré (« Aujourd'hui aux Chartrons », liens en bas) | ✅ en ligne |
+| 5. Emplacements STUDIO ALL (`docs/BRANCHEMENT-STUDIO-ALL.md`) | ✅ en ligne |
+| 6. Mode d'emploi de l'administration (page `/admin/aide`, en français) | ✅ en ligne |
 | 7. Navigation (noms des 2 pages « conciergerie », favoris en double) | ⏳ décision du propriétaire |
 | 8. FAQ, tarifs, mentions légales, traduction espagnole des pages publiques restantes (fidélité, légal) | ⏳ décisions du propriétaire |
 
@@ -160,4 +160,11 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 `docs/CARTOGRAPHIE-FONCTIONS.md` (08/10/2026) : 22 fonctions usagers, 17 fonctions pros, 6 constats (dont : Communication Pro sans lecteur public, réservations non transmises aux commerçants, code d'accès commerce réclamable par tous), pistes pour le gratuit / payant.
 - Bandeau « Version de démonstration » : **conservé** (option A) tant que les publications des visiteurs ne sont pas partagées.
 - Fusion de la demande n° 7 dans `main` : **autorisée par le propriétaire** le 08/10/2026.
+
+### Point de reprise (08/10/2026)
+- **En ligne** (fusion n° 7 du 08/10) : étapes 1 à 6, site vierge (aucun contenu inventé, tous les pros en gratuit, 375 fiches réelles), association A.I.D.É.S affichée en pied de page.
+- **À faire par le propriétaire** : exécuter dans Supabase la requête de comptage des lignes de test (`shop_access`, `dispo_signals`, `pro_contents`, `pro_campaigns`) et envoyer une capture ; puis décider du nettoyage de ces lignes.
+- **À décider** : frontière gratuit / payant (voir `docs/CARTOGRAPHIE-FONCTIONS.md`), prix de Premium Pro, frais de 1 € et commission Anti-Gaspi 5 %, noms des deux pages « conciergerie », administration partagée dans Supabase (agenda, bannières, rectangle d'accueil), sécurisation de `claim_shop_access_code`, vérification des 13 fiches rédigées à la main.
+- **Prochaines étapes côté code** : étape 7 (navigation : noms des pages, favoris en double), étape 8 (FAQ, tarifs, mentions légales, espagnol des pages publiques restantes), lien « Espace admin » désormais absent du pied de page (accès par `/admin`).
+- Piège rencontré : ne jamais enchaîner commit et push après une compilation en échec (commande `;` au lieu de `&&`).
 
