@@ -163,7 +163,7 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 
 ### Point de reprise (08/10/2026)
 - **En ligne** (fusion n° 7 du 08/10) : étapes 1 à 6, site vierge (aucun contenu inventé, tous les pros en gratuit, 375 fiches réelles), association A.I.D.É.S affichée en pied de page.
-- **À faire par le propriétaire** : exécuter dans Supabase la requête de comptage des lignes de test (`shop_access`, `dispo_signals`, `pro_contents`, `pro_campaigns`) et envoyer une capture ; puis décider du nettoyage de ces lignes.
+- **Supabase nettoyé le 08/10/2026** : les 10 commerces de test (`acteur-1` à `acteur-10`) et les 2 signaux « Dispo maintenant » de test ont été supprimés ; `pro_contents` et `pro_campaigns` étaient déjà vides. La base ne contient plus que le code administrateur (`idea_admin_access`) et les tables de l'autre outil (`ideeprod_*`, à ne pas toucher).
 - **À décider** : frontière gratuit / payant (voir `docs/CARTOGRAPHIE-FONCTIONS.md`), prix de Premium Pro, frais de 1 € et commission Anti-Gaspi 5 %, noms des deux pages « conciergerie », administration partagée dans Supabase (agenda, bannières, rectangle d'accueil), sécurisation de `claim_shop_access_code`, vérification des 13 fiches rédigées à la main.
 - **Prochaines étapes côté code** : étape 7 (navigation : noms des pages, favoris en double), étape 8 (FAQ, tarifs, mentions légales, espagnol des pages publiques restantes), lien « Espace admin » désormais absent du pied de page (accès par `/admin`).
 - Piège rencontré : ne jamais enchaîner commit et push après une compilation en échec (commande `;` au lieu de `&&`).
