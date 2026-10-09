@@ -53,7 +53,18 @@ Le paiement est masqué : **aucun professionnel ne peut devenir Premium Pro** au
 2. **Place de l'édito (STUDIO ALL)** : sur l'accueil, juste sous la photo et le slogan, avant « Aujourd'hui aux Chartrons ». ✅ (STUDIO ALL : autre projet du propriétaire, « fabrique de contenu » pour l'éditorial et le marketing des pros ; IDÉA CHARTRONS s'y branchera plus tard.)
 3. **Délégation** : le professionnel s'organise dans son propre espace, avec les droits Premium Pro ; l'administrateur garde l'accès partout. ✅
 
-## G. À trancher ensuite, une question à la fois
+## G. Fonctions supplémentaires : décisions une par une
 
-Pour chaque fonction supplémentaire de la partie C : réservée Premium Pro, ou offerte à tous ?
-Puis les prix, puis l'organisation de l'administration.
+| # | Fonction | Décision |
+|---|---|---|
+| 1 | Lien vers le site web du commerce | **Offert à tous** (changement par rapport au code actuel, où il est réservé Premium Pro) ✅ |
+| 2 | Priorité dans le Concierge IA, fiche mise en avant, badge | à décider |
+| 3 | Réservation de table, rendez-vous, Click & Collect | à décider |
+| 4 | Ardoise du jour (affichage public) | à décider |
+| 5 | Lien de prise de rendez-vous (affichage public) | à décider |
+| 6 | Communication (annonces, aide IA, campagnes) | à décider |
+| 7 | Pépites et arrivages des brocanteurs + badge Notre-Dame | à décider |
+| 8 | Emplacements STUDIO ALL (offres, outils marketing) | à décider |
+| 9 | Diffusion vers les réseaux (« Super Pro » évoqué) | à décider |
+
+Ensuite : les prix, puis l'organisation de l'administration.
