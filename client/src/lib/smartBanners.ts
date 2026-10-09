@@ -2,6 +2,7 @@ import type { LocaleText } from './locale';
 import { loc } from './locale';
 import { loadConciergeUsage } from './conciergeSettings';
 import { writeLocalStorage } from './storage';
+import { notifyShared, registerShared } from './sharedContent';
 
 /**
  * Smart notification banners (`smart_banners`).
@@ -343,6 +344,7 @@ export function saveSmartBannerStore(store: SmartBannerStore): SmartBannerStore 
     // Session-only if storage is full.
   }
   emitChange();
+  notifyShared('banners');
   return next;
 }
 
@@ -490,3 +492,20 @@ export function bannersForDisplay(
   const items = visibleSmartBanners(audience, now);
   return { banners: items, emergency: items.some(isAlertBanner) };
 }
+
+registerShared('banners', {
+  collect: () => loadSmartBannerStore().banners,
+  apply: (items) => {
+    const store = loadSmartBannerStore();
+    const next: SmartBannerStore = {
+      ...store,
+      banners: items.map((item) => normalizeSmartBanner(item as Partial<SmartBanner>)),
+    };
+    try {
+      writeLocalStorage(SMART_BANNERS_KEY, JSON.stringify(next));
+    } catch {
+      // Stockage plein : le contenu partagé sera rechargé à la prochaine visite.
+    }
+    emitChange();
+  },
+});

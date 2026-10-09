@@ -178,3 +178,9 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 
 - **Recherche IA confirmée en ligne par le propriétaire (09/10/2026)** après la fusion de la demande n° 10. Tests plus poussés prévus une fois l'ensemble en ligne.
 - **À trancher plus tard (adresse)** : l'adresse du Local Relais s'écrit « Jaques » dans le site (10 occurrences) ; l'adresse officielle de l'association est « Jacques ».
+
+### Administration partagée — tranche 1 (09/10/2026, préparée, pas en ligne)
+- **Quoi** : agenda, bannières et rectangle d'accueil modifiés dans l'administration sont enregistrés dans Supabase (table `idea_shared_content`) et vus par tous les visiteurs. Le reste (fiches commerces, Local Relais, signalements) reste local : tranches suivantes.
+- **Sécurité** : lecture publique ; écriture uniquement par la fonction `idea_admin_save_content`, qui vérifie le code administrateur côté base.
+- **Script à exécuter dans Supabase** : `docs/sql/004_contenus_partages.sql` (par le propriétaire, guidé pas à pas) ; tant qu'il n'est pas exécuté, le site garde son fonctionnement actuel.
+- **Contrôles faits** : compilation, 21 tests, types, essais navigateur simulés (visiteur voit le contenu partagé ; table absente = accueil normal ; modification admin envoie le contenu avec le code).

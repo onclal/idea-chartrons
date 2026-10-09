@@ -12,6 +12,7 @@ import { ConfortProvider } from './context/ConfortContext';
 import { Layout } from './components/Layout';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AdminLayout } from './components/admin/AdminLayout';
+import { SharedSyncNotice } from './components/admin/SharedSyncNotice';
 import { HomePage } from './pages/HomePage';
 import { PostsPage } from './pages/PostsPage';
 import { AntiGaspiPage } from './pages/AntiGaspiPage';
@@ -46,6 +47,7 @@ export function App() {
     <AdminProvider>
     <ProAccessProvider>
       <ToastProvider>
+        <SharedSyncNotice />
         <PwaProvider>
         <FavoritesProvider>
         <RoutesProvider>

@@ -78,6 +78,12 @@ const LEGACY_ACTEUR_CATEGORIES: Record<string, ActeurLocalCategory> = {
   Association: ActeurLocalCategory.StartupsB2B,
 };
 
+const RECURRING_EVENT_PREFIXES = ['event-marche-chartrons-', 'event-brocante-portal-', 'event-puces-dimanche-'];
+
+function isRecurringEventId(id: string): boolean {
+  return RECURRING_EVENT_PREFIXES.some((prefix) => id.startsWith(prefix));
+}
+
 function isHeavyPhoto(url: string): boolean {
   return url.startsWith('data:');
 }
@@ -947,6 +953,17 @@ class LocalDatabase {
     if (!this.remove('agendaEvenements', eventId)) {
       throw new Error('Event not found');
     }
+  }
+
+  /** Événements créés dans l'administration (les rendez-vous récurrents sont recalculés localement). */
+  getAdminEvents(): AgendaEvenement[] {
+    return this.getAll('agendaEvenements').filter((event) => !isRecurringEventId(event.id));
+  }
+
+  /** Applique l'agenda partagé : remplace les événements d'administration, garde les récurrents. */
+  replaceAdminEvents(events: AgendaEvenement[]): void {
+    const recurring = this.getAll('agendaEvenements').filter((event) => isRecurringEventId(event.id));
+    this.persist({ ...this.data, agendaEvenements: [...recurring, ...events] });
   }
 
   getAntiqueItems(): AntiqueItem[] {
