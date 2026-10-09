@@ -1118,6 +1118,7 @@ const resources = {
           relais: 'Local Relais',
           banners: 'Bannières',
           heroSlides: 'Rectangle Accueil',
+          pricing: 'Tarifs',
           qr: 'Kit QR',
           pepiteTags: 'Étiquettes Chineur',
           help: 'Mode d’emploi',

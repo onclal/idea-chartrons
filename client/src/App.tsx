@@ -12,6 +12,7 @@ import { ConfortProvider } from './context/ConfortContext';
 import { Layout } from './components/Layout';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AdminLayout } from './components/admin/AdminLayout';
+import { SharedSyncNotice } from './components/admin/SharedSyncNotice';
 import { HomePage } from './pages/HomePage';
 import { PostsPage } from './pages/PostsPage';
 import { AntiGaspiPage } from './pages/AntiGaspiPage';
@@ -36,6 +37,7 @@ import { AdminRelaisPage } from './pages/admin/AdminRelaisPage';
 import { AdminBannersPage } from './pages/admin/AdminBannersPage';
 import { AdminHeroSlidesPage } from './pages/admin/AdminHeroSlidesPage';
 import { AdminQrPage } from './pages/admin/AdminQrPage';
+import { AdminPricingPage } from './pages/admin/AdminPricingPage';
 import { AdminPepiteTagsPage } from './pages/admin/AdminPepiteTagsPage';
 import { AdminHelpPage } from './pages/admin/AdminHelpPage';
 import { ProDashboardPage } from './pages/ProDashboardPage';
@@ -46,6 +48,7 @@ export function App() {
     <AdminProvider>
     <ProAccessProvider>
       <ToastProvider>
+        <SharedSyncNotice />
         <PwaProvider>
         <FavoritesProvider>
         <RoutesProvider>
@@ -62,6 +65,7 @@ export function App() {
                 <Route path="relais" element={<AdminRelaisPage />} />
                 <Route path="banners" element={<AdminBannersPage />} />
                 <Route path="hero" element={<AdminHeroSlidesPage />} />
+                <Route path="tarifs" element={<AdminPricingPage />} />
                 <Route path="qr" element={<AdminQrPage />} />
                 <Route path="tags-chineur" element={<AdminPepiteTagsPage />} />
                 <Route path="aide" element={<AdminHelpPage />} />

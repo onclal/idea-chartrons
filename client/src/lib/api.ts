@@ -28,6 +28,7 @@ import type {
   ProContentStatus,
 } from '@idea-chartrons/shared';
 import { localDb, withDelay, resetLocalDb } from './localDb';
+import { notifyShared, registerShared } from './sharedContent';
 import { getMenus, updateMenus, upsertAppointmentLink } from './gbp';
 import { loadContactMessages, saveContactMessage, type ContactMessage } from './contact';
 import { getActiveDispoSignals, createDispoSignal, getShopDispoSignals } from './reseauPro';
@@ -137,13 +138,22 @@ export const api = {
     dateFin: string;
     image: string | null;
     type: EventType;
-  }) => withDelay(() => localDb.createEvent(data)),
+  }) => withDelay(() => {
+    const created = localDb.createEvent(data);
+    notifyShared('agenda');
+    return created;
+  }),
   updateEvent: (
     eventId: string,
     patch: Partial<Omit<AgendaEvenement, 'id' | 'createdAt'>>,
-  ) => withDelay(() => localDb.updateEvent(eventId, patch)),
+  ) => withDelay(() => {
+    const updated = localDb.updateEvent(eventId, patch);
+    notifyShared('agenda');
+    return updated;
+  }),
   deleteEvent: (eventId: string) => withDelay(() => {
     localDb.deleteEvent(eventId);
+    notifyShared('agenda');
     return { ok: true };
   }),
   getAntiqueItems: () => withDelay(() => localDb.getAntiqueItems()),
@@ -234,3 +244,8 @@ export const api = {
   createProCampaign: (shopId: string, code: string, name: string): Promise<ProCampaign> =>
     createProCampaign(shopId, code, name),
 };
+
+registerShared('agenda', {
+  collect: () => localDb.getAdminEvents(),
+  apply: (items) => localDb.replaceAdminEvents(items as AgendaEvenement[]),
+});

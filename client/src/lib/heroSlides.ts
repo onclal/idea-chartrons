@@ -1,5 +1,6 @@
 import type { LocaleText } from './locale';
 import { writeLocalStorage } from './storage';
+import { notifyShared, registerShared } from './sharedContent';
 
 /**
  * Hero slides (`hero_slides`) : visuels temporaires diffuses dans le rectangle
@@ -114,6 +115,7 @@ function saveHeroSlides(slides: HeroSlide[]): HeroSlide[] {
     // Session-only if storage is full.
   }
   emitChange();
+  notifyShared('hero');
   return next;
 }
 
@@ -169,3 +171,18 @@ function inSchedule(slide: HeroSlide, now: Date): boolean {
 export function activeHeroSlides(now: Date = new Date()): HeroSlide[] {
   return loadHeroSlides().filter((slide) => slide.isActive && slide.imageUrl && inSchedule(slide, now));
 }
+
+registerShared('hero', {
+  collect: () => loadHeroSlides(),
+  apply: (items) => {
+    try {
+      writeLocalStorage(
+        HERO_SLIDES_KEY,
+        JSON.stringify(items.map((item) => normalizeHeroSlide(item as Partial<HeroSlide>))),
+      );
+    } catch {
+      // Stockage plein : le contenu partagé sera rechargé à la prochaine visite.
+    }
+    emitChange();
+  },
+});
