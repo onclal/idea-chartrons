@@ -138,8 +138,8 @@ Attention : le « Lot 2 » de la PR #3 (vérification automatique, Vercel) **n'e
 | 4. Accueil épuré (« Aujourd'hui aux Chartrons », liens en bas) | ✅ en ligne |
 | 5. Emplacements STUDIO ALL (`docs/BRANCHEMENT-STUDIO-ALL.md`) | ✅ en ligne |
 | 6. Mode d'emploi de l'administration (page `/admin/aide`, en français) | ✅ en ligne |
-| 7. Navigation (noms des 2 pages « conciergerie », favoris en double) | ⏳ décision du propriétaire |
-| 8. FAQ, tarifs, mentions légales, traduction espagnole des pages publiques restantes (fidélité, légal) | ⏳ décisions du propriétaire |
+| 7. Navigation (noms des 2 pages « conciergerie », favoris en double) | ✅ en ligne (09/10) |
+| 8. FAQ, tarifs, mentions légales, traduction espagnole des pages publiques restantes (fidélité, légal) | ⏳ préparée sur la branche `claude/etape-8` (demande en brouillon), pas en ligne. Prix et commission 5 % retirés des textes (« à définir ») : la stratégie des prix se travaille plus tard, sans bloquer la construction. FAQ, tableau gratuit/Premium, conditions d'utilisation et fidélité traduits en espagnol. |
 
 Constats à traiter : lien « Espace admin » visible dans le pied de page (S2) ; traduction espagnole incomplète (463 textes sur 1385, surtout administration et Espace Pro, laissés en français volontairement).
 
@@ -174,3 +174,6 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 - **Boucle à rejouer avant toute mise en ligne** : (1) `npm test` (tests « recherche IA » : 17 demandes de pros doivent aller au Concierge et trouver au moins un professionnel) ; (2) essai dans le navigateur de 15 demandes de pros, qui doivent toutes ouvrir le panneau du Concierge avec des résultats ; (3) si un échec apparaît : corriger, puis recommencer au (1) jusqu'à 0 échec.
 - **Règle** : la recherche IA ne doit jamais être supprimée ni masquée. Toute modification de la barre de recherche rejoue cette boucle.
 
+
+- **Recherche IA confirmée en ligne par le propriétaire (09/10/2026)** après la fusion de la demande n° 10. Tests plus poussés prévus une fois l'ensemble en ligne.
+- **À trancher plus tard (adresse)** : l'adresse du Local Relais s'écrit « Jaques » dans le site (10 occurrences) ; l'adresse officielle de l'association est « Jacques ».

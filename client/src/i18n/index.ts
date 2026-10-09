@@ -1658,7 +1658,7 @@ const resources = {
             'Statistiques de passage et de crédits',
             'Visibilité prioritaire dans l’annuaire et le fil du quartier',
           ],
-          price: 'Tarif futur : 39 €/mois — Offert actuellement',
+          price: 'Tarif à définir — Offert actuellement',
           close: 'Compris',
         },
         boost: {
@@ -3585,7 +3585,7 @@ const resources = {
             'Visit and credit statistics',
             'Priority visibility in the directory and neighborhood feed',
           ],
-          price: 'Future price: €39/month — Currently free',
+          price: 'Price to be announced — Currently free',
           close: 'Got it',
         },
         boost: {
@@ -4320,6 +4320,58 @@ const resources = {
         relaisTitle: '¿Necesitas ayuda con un depósito o una recogida?',
         relaisHint: 'Los voluntarios del Local Relais pueden responderte sobre las franjas horarias, el código QR o un objeto pendiente.',
       },
+      legal: {
+        kicker: 'Asociación de barrio',
+        title: 'Condiciones generales de uso',
+        updated: 'Última actualización: 14 de agosto de 2026',
+        article: 'Artículo {{n}}',
+        intro:
+          'Las presentes condiciones generales de uso regulan el acceso a la plataforma IDÉA CHARTRONS, editada por la asociación de barrio del mismo nombre, para los vecinos, comerciantes y voluntarios del barrio de los Chartrons, en Burdeos.',
+        disclaimer:
+          'Este texto es un marco básico pensado para una asociación de barrio. Podrá completarse o adaptarse con asesoramiento jurídico a medida que evolucione el proyecto.',
+        articles: [
+          {
+            title: 'Editor y objeto',
+            body: 'IDÉA CHARTRONS es una asociación de barrio cuyo objeto es favorecer la ayuda mutua local, los intercambios entre vecinos, el comercio de proximidad y la vida del barrio de los Chartrons (Burdeos).\n\nLa plataforma digital permite publicar anuncios, utilizar el Local Relais situado en 26 place Jean Jaques Rabaud, descubrir a los actores locales y consultar la agenda del barrio.',
+          },
+          {
+            title: 'Aceptación',
+            body: 'Utilizar la aplicación implica aceptar estas condiciones. Si no está de acuerdo, le rogamos que no utilice el servicio.\n\nLa asociación puede actualizar estas condiciones; la fecha de la última actualización figura al principio de esta página.',
+          },
+          {
+            title: 'Acceso al servicio',
+            body: 'El servicio está destinado a los vecinos, comerciantes, artesanos, asociaciones y voluntarios del barrio. El acceso es gratuito.\n\nCada usuario se compromete a facilitar información veraz, respetar a los demás miembros y utilizar la plataforma con espíritu de buena vecindad e interés local.',
+          },
+          {
+            title: 'Anuncios e intercambios entre vecinos',
+            body: 'Los anuncios (regalos, ventas, servicios, pequeños trabajos) se publican bajo la responsabilidad de su autor. IDÉA CHARTRONS no es parte en las transacciones entre usuarios y no actúa como vendedor.\n\nQueda prohibido el contenido ilícito, engañoso, ofensivo o ajeno al tema. La asociación puede retirar un anuncio en caso de incumplimiento.',
+          },
+          {
+            title: 'Local Relais',
+            body: 'El Local Relais es un lugar físico para depositar y recoger objetos vinculados a un anuncio. El usuario reserva una franja horaria, deposita el objeto y se genera un código QR de validación.\n\nLa recogida se hace presentando este código QR en el horario de apertura. La asociación y sus voluntarios ofrecen una labor de acogida; no son depositarios profesionales y su responsabilidad se limita a un cuidado razonable.',
+          },
+          {
+            title: 'Comercios socios y fidelidad',
+            body: 'Las fichas de comercios y las ofertas VIP se facilitan a título informativo. Los puntos de fidelidad son un sistema de la asociación sin valor monetario, no transferibles ni reembolsables.\n\nLas ventajas VIP las concede cada comercio socio en sus propias condiciones.',
+          },
+          {
+            title: 'Responsabilidad',
+            body: 'La asociación se esfuerza por ofrecer un servicio fiable, sin garantizar un funcionamiento ininterrumpido ni libre de errores. No puede ser considerada responsable de los litigios entre usuarios ni de los daños a un objeto depositado, salvo falta probada.\n\nCada usuario sigue siendo responsable de sus contenidos y de sus intercambios.',
+          },
+          {
+            title: 'Datos personales',
+            body: 'Los datos recogidos (identidad, datos de contacto, historial de anuncios o de fidelidad) se utilizan únicamente para el funcionamiento del servicio del barrio.\n\nDe conformidad con el RGPD, puede solicitar el acceso, la rectificación o la supresión de sus datos poniéndose en contacto con la asociación. Ningún dato se vende a terceros.',
+          },
+          {
+            title: 'Propiedad intelectual',
+            body: 'Los contenidos de la plataforma (el nombre IDÉA CHARTRONS, los textos y los elementos gráficos) están protegidos. Queda prohibida su reproducción no autorizada.\n\nAl publicar un anuncio o una foto, usted autoriza a la asociación a mostrarlos en la plataforma durante el tiempo necesario para el servicio.',
+          },
+          {
+            title: 'Contacto',
+            body: 'Para cualquier pregunta sobre estas condiciones, el Local Relais o sus datos: asociación IDÉA CHARTRONS, barrio de los Chartrons, Burdeos — Local Relais: 26 place Jean Jaques Rabaud.',
+          },
+        ],
+      },
       common: {
         loading: 'Cargando...',
         error: 'Se ha producido un error.',
@@ -4712,6 +4764,34 @@ const resources = {
           title: 'Puntos de encuentro del barrio',
         },
         download: 'Descargar la ficha de emergencias',
+      },
+      fidelite: {
+        title: 'Tarjeta de fidelidad',
+        subtitle: 'Escanee el QR del escaparate de los socios que han activado la fidelidad',
+        yourPoints: 'Sus puntos',
+        level: 'Nivel de fidelidad',
+        scanning: 'Escaneando…',
+        scanHint: 'Simule el escaneo de un código QR de escaparate',
+        selectMerchant: 'Elegir un socio',
+        selectMerchantPlaceholder: 'Seleccione un comercio o un servicio',
+        noPartners: 'Ningún socio ha activado todavía la fidelidad.',
+        scanButton: 'Escanear el código QR',
+        success: '+{{points}} pts en {{commerce}}.',
+        history: 'Historial de escaneos',
+        noHistory: 'Ningún escaneo por el momento.',
+        unlocked: 'Desbloqueado',
+        pointsNeeded: 'Faltan {{count}} pts para desbloquear',
+        vipUnlocked: 'Oferta VIP desbloqueada: {{offer}}',
+        levels: {
+          Bronze: 'Bronce',
+          Argent: 'Plata',
+          Or: 'Oro',
+        },
+        breakdown: {
+          base: 'Base',
+          first: '1.er escaneo',
+          verified: 'Verificado',
+        },
       },
       events: {
         title: 'Agenda del barrio',
