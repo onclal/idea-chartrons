@@ -188,3 +188,4 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 
 - **Script Supabase exécuté (09/10/2026)** : `docs/sql/004_contenus_partages.sql` passé par le propriétaire, résultat « Success », contrôle = 0 ligne (attendu). La table `idea_shared_content` et la fonction `idea_admin_save_content` existent.
 - **Reste à faire** : test sur le vrai site (ajouter un événement bidon dans l'agenda de l'administration, le voir depuis un autre appareil, puis le supprimer). Reporté par le propriétaire.
+- **Décision du propriétaire (09/10/2026)** : vérification du site en ligne (adresse probable `idea-chartrons.vercel.app`, contrôle de la ligne « A.I.D.É.S » en pied de page) et réglages Supabase / Vercel **reportés à la prise en main** du site. Pas d'urgence.
