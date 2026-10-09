@@ -63,7 +63,7 @@ Le paiement est masqué : **aucun professionnel ne peut devenir Premium Pro** au
 | 4 | Ardoise du jour (affichage public) | **Réservé Premium Pro** ✅ (reste à décider : la saisie par un pro gratuit, voir constat 2 de la cartographie) |
 | 5 | Lien de prise de rendez-vous (affichage public) | **Réservé Premium Pro** ✅ |
 | 6 | Communication (annonces, aide IA, campagnes) | **Réservé Premium Pro** ✅ (à construire : aucune page publique n'affiche encore ces annonces) |
-| 7 | Pépites et arrivages des brocanteurs + badge Notre-Dame | à décider |
+| 7 | Pépites et arrivages des brocanteurs + badge Notre-Dame | **Réservé Premium Pro** ✅ (la fiche du brocanteur reste gratuite) |
 | 8 | Emplacements STUDIO ALL (offres, outils marketing) | à décider |
 | 9 | Diffusion vers les réseaux (« Super Pro » évoqué) | à décider |
 
