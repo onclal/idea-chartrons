@@ -64,7 +64,9 @@ Le paiement est masqué : **aucun professionnel ne peut devenir Premium Pro** au
 | 5 | Lien de prise de rendez-vous (affichage public) | **Réservé Premium Pro** ✅ |
 | 6 | Communication (annonces, aide IA, campagnes) | **Réservé Premium Pro** ✅ (à construire : aucune page publique n'affiche encore ces annonces) |
 | 7 | Pépites et arrivages des brocanteurs + badge Notre-Dame | **Réservé Premium Pro** ✅ (la fiche du brocanteur reste gratuite) |
-| 8 | Emplacements STUDIO ALL (offres, outils marketing) | à décider |
+| 8 | Emplacements STUDIO ALL (offres, outils marketing) | **Sous-catégorie à part, accès séparé** ✅ : pour l'instant réservé à l'administrateur seul (seul à maîtriser l'outil, en construction avec Claude et Codex) ; ouverture plus tard à des connaisseurs, puis éventuellement aux pros |
 | 9 | Diffusion vers les réseaux (« Super Pro » évoqué) | à décider |
+
+Catégorie ajoutée à la liste du §F : **accès STUDIO ALL** (sous-catégorie à part, administrateur seul pour commencer).
 
 Ensuite : les prix, puis l'organisation de l'administration.
