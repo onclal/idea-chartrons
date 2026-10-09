@@ -120,24 +120,25 @@ test('recherche : insensible aux accents et à la casse', () => {
 
 import { classifySearchIntent } from '../src/logic/searchIntent.js';
 
-test('classifySearchIntent : noms de commerce, métiers et rues vont à l’annuaire', () => {
-  const shops = ['Le Petit Marché des Chartrons', 'Boulangerie Notre-Dame'];
+test('classifySearchIntent : seul un nom de commerce précis va à l’annuaire', () => {
+  const shops = ['Le Petit Marché des Chartrons', 'Boulangerie Notre-Dame', 'Boulangerie L’Amour du Pain', 'Boulangerie Rue Raze', 'Boulangerie Sicard', 'Ananda', 'Bistro des Chartrons'];
   assert.equal(classifySearchIntent('', shops), 'directory');
-  assert.equal(classifySearchIntent('boulangerie', shops), 'directory');
   assert.equal(classifySearchIntent('Boulangerie Notre-Dame', shops), 'directory');
-  assert.equal(classifySearchIntent('rue Notre-Dame', shops), 'directory');
   assert.equal(classifySearchIntent('Le Petit Marché des Chartrons', shops), 'directory');
   assert.equal(classifySearchIntent('petit marché', shops), 'directory');
+  assert.equal(classifySearchIntent('Ananda', shops), 'directory');
+  assert.equal(classifySearchIntent('bistro des chartrons', shops), 'directory');
 });
 
-test('classifySearchIntent : questions et demandes rédigées vont au Concierge', () => {
-  assert.equal(classifySearchIntent('Où manger ce soir ?'), 'ai');
-  assert.equal(classifySearchIntent('boulangerie ouverte ?'), 'ai');
-  assert.equal(classifySearchIntent('comment aller au marché'), 'ai');
-  assert.equal(classifySearchIntent('je cherche un caviste'), 'ai');
-  assert.equal(classifySearchIntent('where can I buy flowers'), 'ai');
-  assert.equal(classifySearchIntent('dónde comer cerca'), 'ai');
-  assert.equal(classifySearchIntent('une idée de balade avec les enfants'), 'ai');
+test('classifySearchIntent : les demandes de pros et les questions vont au Concierge IA', () => {
+  const shops = ['Boulangerie Notre-Dame', 'Boulangerie L’Amour du Pain', 'Boulangerie Rue Raze', 'Boulangerie Sicard', 'Plomberie Service Urgence'];
+  for (const q of [
+    'boulangerie', 'un plombier', 'plombier', 'coiffeur', 'pharmacie', 'restaurant pas cher', 'recette de canelés',
+    'trouver un électricien', 'médecin généraliste', 'boulangerie ouverte', 'Où manger ce soir ?', 'comment aller au marché',
+    'je cherche un caviste', 'where can I buy flowers', 'dónde comer cerca', 'une idée de balade avec les enfants', 'pizzeria',
+  ]) {
+    assert.equal(classifySearchIntent(q, shops), 'ai', q);
+  }
 });
 
 import { emptyStudioFeed, parseStudioFeed } from '../src/logic/studioFeed.js';
@@ -221,4 +222,31 @@ test('purgeExampleContent retire les exemples et laisse les contenus réels', ()
   assert.equal(data.postsAnnonces.length, 0);
   assert.equal(data.acteursLocaux.filter((acteur) => isExampleContent(acteur)).length, 0);
   assert.ok(data.acteursLocaux.length > 300);
+});
+
+import { runConciergeEngine } from '../src/index.js';
+
+test('recherche IA : avec les vraies fiches, chaque demande de pro va au Concierge et trouve des résultats', () => {
+  setIncludeDemoDataOverride(false);
+  const seed = createSeedData();
+  const shopNames = seed.acteursLocaux.map((acteur) => acteur.nomCommerce);
+  const demandes = [
+    'un plombier', 'boulangerie ouverte', 'coiffeur', 'pharmacie', 'médecin généraliste', 'restaurant pas cher',
+    'trouver un électricien', 'je cherche un restaurant italien', 'où acheter du pain', 'caviste', 'fleuriste', 'librairie',
+    'dentiste', 'pizzeria', 'bar à vin', 'où boire un café', 'Où manger ce soir ?',
+  ];
+  for (const demande of demandes) {
+    assert.equal(classifySearchIntent(demande, shopNames), 'ai', `${demande} doit aller au Concierge`);
+    const result = runConciergeEngine({
+      message: demande,
+      history: [],
+      posts: seed.postsAnnonces,
+      antiqueItems: seed.antiqueItems,
+      acteurs: seed.acteursLocaux,
+      lang: 'fr',
+      maxResults: 5,
+      origin: null,
+    } as never);
+    assert.ok(result.recommendations.length > 0, `${demande} doit trouver au moins un professionnel`);
+  }
 });

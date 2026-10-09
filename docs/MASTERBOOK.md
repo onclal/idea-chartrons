@@ -26,6 +26,7 @@ Le propriétaire est francophone, non développeur. Il compte sur Claude pour lu
 | **Contrôles autorisés (07/10)** | Le propriétaire autorise Claude à faire lui-même tous les contrôles en lecture seule. Pas de demande d'avis ni de permission pour cela : anticiper, et ne solliciter que pour une décision ou une action que lui seul peut faire. |
 | **Pas de commentaire d'actions (07/10)** | Ne pas raconter les commandes ou outils utilisés : donner seulement les résultats et ce qui est attendu de lui. |
 | **Administration en français (07/10)** | Le propriétaire est seul à administrer : l'administration reste en français, sans traduction. L'espagnol vise les pages publiques. |
+| **Réponses binaires (08/10)** | Langage simple, jamais technique. Pas de reformulation de ce que le propriétaire a dit. Une seule question à la fois, de type oui/non ou A/B. Le détail n'est donné que s'il le demande. |
 | **Projets séparés** | IDÉA CHARTRONS ne se mélange pas avec ses autres projets. Les outils externes (voir §2) sont fabriqués ailleurs : ne pas les construire ici. |
 
 ---
@@ -167,4 +168,9 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 - **À décider** : frontière gratuit / payant (voir `docs/CARTOGRAPHIE-FONCTIONS.md`), prix de Premium Pro, frais de 1 € et commission Anti-Gaspi 5 %, noms des deux pages « conciergerie », administration partagée dans Supabase (agenda, bannières, rectangle d'accueil), sécurisation de `claim_shop_access_code`, vérification des 13 fiches rédigées à la main.
 - **Prochaines étapes côté code** : étape 7 (navigation : noms des pages, favoris en double), étape 8 (FAQ, tarifs, mentions légales, espagnol des pages publiques restantes), lien « Espace admin » désormais absent du pied de page (accès par `/admin`).
 - Piège rencontré : ne jamais enchaîner commit et push après une compilation en échec (commande `;` au lieu de `&&`).
+
+### Boucle de contrôle de la recherche IA (09/10/2026)
+- **Incident** : depuis l'étape 2, 14 demandes de pros sur 24 (« un plombier », « coiffeur », « boulangerie ouverte »…) partaient vers l'annuaire au lieu du Concierge IA. Cause : règle de décision trop favorable à l'annuaire. **Réparé** : le Concierge IA est le chemin par défaut ; l'annuaire n'est choisi que pour un nom de commerce précis. Deux sorties de secours : lien « Voir aussi dans l'annuaire » dans le panneau du Concierge, bouton « Demander au Concierge IA » sur la page de résultats.
+- **Boucle à rejouer avant toute mise en ligne** : (1) `npm test` (tests « recherche IA » : 17 demandes de pros doivent aller au Concierge et trouver au moins un professionnel) ; (2) essai dans le navigateur de 15 demandes de pros, qui doivent toutes ouvrir le panneau du Concierge avec des résultats ; (3) si un échec apparaît : corriger, puis recommencer au (1) jusqu'à 0 échec.
+- **Règle** : la recherche IA ne doit jamais être supprimée ni masquée. Toute modification de la barre de recherche rejoue cette boucle.
 
