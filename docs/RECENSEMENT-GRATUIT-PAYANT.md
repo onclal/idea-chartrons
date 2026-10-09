@@ -47,10 +47,13 @@ Recherche unique (annuaire + Concierge IA) · annuaire de 375 fiches · carte ·
 
 Le paiement est masqué : **aucun professionnel ne peut devenir Premium Pro** aujourd'hui, sauf par l'administrateur. Tous les professionnels sont donc en gratuit.
 
-## F. Questions pour l'étape suivante (catégories)
+## F. Décisions du propriétaire (09/10/2026)
 
-À trancher ensemble, une par une :
-1. Quelles catégories d'utilisateurs ? (aujourd'hui : usager, professionnel gratuit, professionnel Premium Pro, administrateur)
-2. Où placer la partie éditoriale (STUDIO ALL) dans l'espace gagné sur l'accueil ?
-3. Quelles fonctions de la partie C passent dans quelle catégorie ?
-4. Quels droits pour chaque catégorie dans l'administration, et quelle délégation ?
+1. **Catégories d'utilisateurs** : usager, professionnel gratuit, professionnel Premium Pro, administrateur. ✅
+2. **Place de l'édito (STUDIO ALL)** : sur l'accueil, juste sous la photo et le slogan, avant « Aujourd'hui aux Chartrons ». ✅ (STUDIO ALL : autre projet du propriétaire, « fabrique de contenu » pour l'éditorial et le marketing des pros ; IDÉA CHARTRONS s'y branchera plus tard.)
+3. **Délégation** : le professionnel s'organise dans son propre espace, avec les droits Premium Pro ; l'administrateur garde l'accès partout. ✅
+
+## G. À trancher ensuite, une question à la fois
+
+Pour chaque fonction supplémentaire de la partie C : réservée Premium Pro, ou offerte à tous ?
+Puis les prix, puis l'organisation de l'administration.
