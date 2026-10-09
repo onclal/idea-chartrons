@@ -178,3 +178,13 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 
 - **Recherche IA confirmée en ligne par le propriétaire (09/10/2026)** après la fusion de la demande n° 10. Tests plus poussés prévus une fois l'ensemble en ligne.
 - **À trancher plus tard (adresse)** : l'adresse du Local Relais s'écrit « Jaques » dans le site (10 occurrences) ; l'adresse officielle de l'association est « Jacques ».
+
+### Décisions gratuit / payant et catégories (09/10/2026)
+Détail dans `docs/RECENSEMENT-GRATUIT-PAYANT.md`.
+- **Catégories** : usager, professionnel gratuit, professionnel Premium Pro, administrateur. Accès STUDIO ALL : sous-catégorie à part (administrateur seul pour commencer).
+- **Délégation** : le pro s'organise dans son espace avec les droits Premium Pro ; l'administrateur garde l'accès partout.
+- **Édito (STUDIO ALL)** : sur l'accueil, sous la photo et le slogan, avant « Aujourd'hui aux Chartrons ».
+- **Offert à tous** : lien vers le site web du commerce (changement par rapport au code actuel).
+- **Réservé Premium Pro** : priorité Concierge IA et badge, réservation / rendez-vous / Click & Collect, ardoise du jour, lien de prise de rendez-vous, Communication, pépites des brocanteurs.
+- **Accès à part, propriétaire seul pour commencer** : STUDIO ALL et diffusion vers les réseaux ; ce qui est publié s'affiche pour tous.
+- **Prochaines étapes** : prix, puis organisation de l'administration (qui peut quoi, où). Brouillon n° 12 (administration partagée, tranche 1) en attente.

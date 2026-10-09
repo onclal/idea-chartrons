@@ -1,0 +1,81 @@
+# Recensement des fonctions — de base et supplémentaires
+
+Établi le 09/10/2026 à partir de la cartographie du 08/10 (`docs/CARTOGRAPHIE-FONCTIONS.md`) et du code du site en ligne.
+Étape 1 du plan : recenser. Étape 2 : définir les catégories. Étape 3 : définir les prix. Étape 4 : organiser l'administration.
+**Rien n'est décidé ici : c'est un état des lieux.**
+
+## A. Ce que voit tout le monde, gratuitement, de base (usagers, sans compte)
+
+Recherche unique (annuaire + Concierge IA) · annuaire de 375 fiches · carte · agenda du quartier · annonces et entraide · Anti-Gaspi (consultation) · Local Relais · Marché des Brocanteurs et IA Chineur (fiches) · Découvrir les Chartrons · Guide pratique · Tourisme · favoris et parcours · carnet habitant · alertes d'événements · signalements civiques · urgences et « je vais bien » · Mode Confort · trois langues · installation sur téléphone · « Dispo maintenant » (bandeau) · FAQ, CGV, contact.
+
+## B. Ce que reçoit un professionnel gratuitement, de base
+
+| Fonction | Remarque |
+|---|---|
+| Fiche dans l'annuaire et sur la carte | Tous les commerces, sans condition |
+| Téléphone, e-mail, réseaux sociaux cliquables | Coordonnées à fournir |
+| Référencer son commerce et obtenir un code d'accès | Point de sécurité à traiter plus tard |
+| Espace Pro (connexion par code) | |
+| Kit Vitrine : QR et flyer | |
+| « Dispo maintenant » : annoncer « je suis disponible » | |
+| Carte fidélité : règle de points, QR, créditer en caisse | |
+| Publier une annonce, une offre Anti-Gaspi, un événement | |
+| Être aidé par l'administrateur (« Prendre la main ») | |
+
+## C. Fonctions supplémentaires (réservées Premium Pro dans le code actuel)
+
+| Fonction | Ce que le public voit | Remarque |
+|---|---|---|
+| Lien vers le site web du commerce | Lien cliquable sur la fiche | Fonctionne |
+| Priorité dans le Concierge IA (Top 5) et fiche mise en avant, badge « Premium Pro » | Fiche en tête, badge | Fonctionne |
+| Réservation de table, rendez-vous, Click & Collect | Boutons sur la fiche | Aucune commande n'est transmise au commerçant |
+| Ardoise du jour (menu du jour) | Affichage public | Saisie gratuite, affichage payant : à clarifier |
+| Lien de prise de rendez-vous | Affichage public | Saisie gratuite, affichage payant : à clarifier |
+| Communication : rédiger une annonce, aide IA, campagnes | Rien aujourd'hui | Aucune page publique ne l'affiche |
+| Pépites et arrivages pour brocanteurs (jusqu'à 10) + badge Notre-Dame | Vitrine « pépites » | Reste sur l'appareil |
+| Emplacements STUDIO ALL (offres des pros, outils marketing) | À venir | Branchement prévu, prix à définir |
+| Diffusion vers Google, Facebook, Instagram, WhatsApp, TikTok (« Super Pro » évoqué) | À venir | Rien n'est décidé |
+
+## D. Ce que l'administrateur fait aujourd'hui
+
+- Un seul rôle existe dans le code : **administrateur général**, avec toutes les capacités (annuaire, modération des annonces, des signalements et des ardoises, passage d'un commerce en gratuit / Premium Pro, FAQ).
+- Il n'existe **aucune délégation** : pas d'autre rôle, pas d'accès partiel.
+- Il entre dans l'Espace Pro d'un commerçant par « Prendre la main ».
+- Agenda, bannières et rectangle d'accueil : modifiés dans l'administration, mais visibles seulement sur l'appareil de l'administrateur (tranche 1 préparée dans la demande n° 12, en attente).
+
+## E. Situation actuelle du site en ligne
+
+Le paiement est masqué : **aucun professionnel ne peut devenir Premium Pro** aujourd'hui, sauf par l'administrateur. Tous les professionnels sont donc en gratuit.
+
+## F. Décisions du propriétaire (09/10/2026)
+
+1. **Catégories d'utilisateurs** : usager, professionnel gratuit, professionnel Premium Pro, administrateur. ✅
+2. **Place de l'édito (STUDIO ALL)** : sur l'accueil, juste sous la photo et le slogan, avant « Aujourd'hui aux Chartrons ». ✅ (STUDIO ALL : autre projet du propriétaire, « fabrique de contenu » pour l'éditorial et le marketing des pros ; IDÉA CHARTRONS s'y branchera plus tard.)
+3. **Délégation** : le professionnel s'organise dans son propre espace, avec les droits Premium Pro ; l'administrateur garde l'accès partout. ✅
+
+## G. Fonctions supplémentaires : décisions une par une
+
+| # | Fonction | Décision |
+|---|---|---|
+| 1 | Lien vers le site web du commerce | **Offert à tous** (changement par rapport au code actuel, où il est réservé Premium Pro) ✅ |
+| 2 | Priorité dans le Concierge IA, fiche mise en avant, badge | **Réservé Premium Pro** ✅ (si tout le monde était prioritaire, la priorité n'aurait plus de sens) |
+| 3 | Réservation de table, rendez-vous, Click & Collect | **Réservé Premium Pro** ✅ (à construire : les commandes n'arrivent pas encore au commerçant) |
+| 4 | Ardoise du jour (affichage public) | **Réservé Premium Pro** ✅ (reste à décider : la saisie par un pro gratuit, voir constat 2 de la cartographie) |
+| 5 | Lien de prise de rendez-vous (affichage public) | **Réservé Premium Pro** ✅ |
+| 6 | Communication (annonces, aide IA, campagnes) | **Réservé Premium Pro** ✅ (à construire : aucune page publique n'affiche encore ces annonces) |
+| 7 | Pépites et arrivages des brocanteurs + badge Notre-Dame | **Réservé Premium Pro** ✅ (la fiche du brocanteur reste gratuite) |
+| 8 | Emplacements STUDIO ALL (offres, outils marketing) | **Sous-catégorie à part, accès séparé** ✅ : pour l'instant réservé à l'administrateur seul (seul à maîtriser l'outil, en construction avec Claude et Codex) ; ouverture plus tard à des connaisseurs, puis éventuellement aux pros |
+| 9 | Diffusion vers les réseaux (« Super Pro » évoqué) | **Même bloc que 8 (STUDIO ALL)** ✅ : lié à l'espace édito sous la photo de l'accueil ; fabriquer et diffuser = administrateur seul pour commencer ; ce qui est publié s'affiche pour tous |
+
+Catégorie ajoutée à la liste du §F : **accès STUDIO ALL** (sous-catégorie à part, administrateur seul pour commencer).
+
+Ensuite : les prix, puis l'organisation de l'administration.
+
+## H. Prix (en cours)
+
+| Sujet | Décision |
+|---|---|
+| Formule Premium Pro | Abonnement **au mois ou à l'année** ✅ |
+| Prix mensuel | à décider (20 € et 39 € ont figuré dans le site) |
+| Prix annuel | à décider |
+| Frais de 1 €, commission Anti-Gaspi 5 % | à décider plus tard |
