@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { FAQ_COMPARISON } from '../data/faqData';
 import { loc } from '../lib/locale';
+import { pricingLabel, usePricing } from '../lib/pricing';
 
 export function FaqComparisonTable() {
   const { i18n } = useTranslation();
   const lang = i18n.language;
+  const pricing = usePricing();
 
   return (
     <section className="rounded-2xl border border-chartrons-beige overflow-hidden bg-white shadow-card">
@@ -30,7 +32,7 @@ export function FaqComparisonTable() {
               <tr key={row.id} className="border-t border-chartrons-beige/80">
                 <td className="px-3 py-2.5 font-medium text-chartrons-olive-dark">{loc(lang, row.feature)}</td>
                 <td className="px-3 py-2.5 text-chartrons-warm-gray">{loc(lang, row.free)}</td>
-                <td className="px-3 py-2.5 text-chartrons-green-dark font-medium">{loc(lang, row.premium)}</td>
+                <td className="px-3 py-2.5 text-chartrons-green-dark font-medium">{row.id === 'price' ? pricingLabel(pricing, lang) : loc(lang, row.premium)}</td>
               </tr>
             ))}
           </tbody>

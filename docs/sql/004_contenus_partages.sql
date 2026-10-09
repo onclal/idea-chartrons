@@ -1,4 +1,4 @@
--- Administration partagée, tranche 1 : agenda, bannières, rectangle d'accueil.
+-- Administration partagée, tranche 1 : agenda, bannières, rectangle d'accueil, tarifs.
 --
 -- Avant : ce que l'administrateur modifiait restait dans son navigateur.
 -- Après : le contenu est enregistré ici, lisible par tous les visiteurs, et
@@ -8,7 +8,7 @@
 -- mise en ligne du site qui l'utilise, sans rien casser. Nécessite 003a (idea_verify_admin).
 
 create table if not exists public.idea_shared_content (
-  kind text primary key check (kind in ('agenda', 'banners', 'hero')),
+  kind text primary key check (kind in ('agenda', 'banners', 'hero', 'pricing')),
   items jsonb not null default '[]'::jsonb,
   updated_at timestamptz not null default now()
 );
@@ -33,7 +33,7 @@ begin
   if not public.idea_verify_admin(p_code) then
     raise exception 'forbidden' using errcode = '42501';
   end if;
-  if p_kind not in ('agenda', 'banners', 'hero') then
+  if p_kind not in ('agenda', 'banners', 'hero', 'pricing') then
     raise exception 'invalid kind' using errcode = '22023';
   end if;
   if jsonb_typeof(p_items) <> 'array' then

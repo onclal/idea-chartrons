@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { to: '/admin/relais', icon: '📦', key: 'relais', end: false },
   { to: '/admin/banners', icon: '📢', key: 'banners', end: false },
   { to: '/admin/hero', icon: '🖼️', key: 'heroSlides', end: false },
+  { to: '/admin/tarifs', icon: '💶', key: 'pricing', end: false },
   { to: '/admin/qr', icon: '▦', key: 'qr', end: false },
   { to: '/admin/aide', icon: '📖', key: 'help', end: false },
 ] as const;

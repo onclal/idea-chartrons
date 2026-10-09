@@ -27,6 +27,7 @@ const OCCASIONAL: Task[] = [
   { where: 'Rectangle Accueil', to: '/admin/hero', what: 'Programmer un visuel temporaire dans le grand rectangle photo de l’accueil.' },
   { where: 'Panneau › Commerces & POI', to: '/admin/panneau', what: 'Chercher, corriger ou supprimer une fiche de commerce ; la passer en Gratuit ou Premium Pro.' },
   { where: 'Panneau › Concierge IA', to: '/admin/panneau', what: 'Ajouter des consignes au Concierge (par exemple « mettre en avant la rue Notre-Dame ce week-end »).' },
+  { where: 'Tarifs', to: '/admin/tarifs', what: 'Fixer le prix mensuel et le prix annuel du Premium Pro. Case vide : le site affiche « à définir ».' },
   { where: 'Kit QR', to: '/admin/qr', what: 'Fabriquer un flyer A6 ou un QR code vers la vitrine, l’agenda ou le Concierge.' },
 ];
 

@@ -7,7 +7,7 @@ import { supabase } from './supabaseClient';
  * Lecture : publique. Écriture : uniquement avec le code administrateur, vérifié par la base.
  * Sans Supabase, ou tant que la table n'existe pas, le site garde son fonctionnement local.
  */
-export type SharedKind = 'agenda' | 'banners' | 'hero';
+export type SharedKind = 'agenda' | 'banners' | 'hero' | 'pricing';
 
 interface SharedHandler {
   collect: () => unknown[];
