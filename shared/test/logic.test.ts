@@ -172,6 +172,19 @@ test('parseStudioFeed : écarte les éléments douteux et assainit les liens', (
   assert.deepEqual(feed.proSpotlight, []);
 });
 
+test('parseStudioFeed : accepte une vidéo http(s) et écarte les autres adresses', () => {
+  const feed = parseStudioFeed({
+    editorial: [
+      { title: 'Vidéo', videoUrl: 'https://exemple.fr/video.mp4' },
+      { title: 'Vidéo piégée', videoUrl: 'javascript:alert(1)' },
+      { title: 'Sans vidéo' },
+    ],
+  });
+  assert.equal(feed.editorial[0].videoUrl, 'https://exemple.fr/video.mp4');
+  assert.equal(feed.editorial[1].videoUrl, null);
+  assert.equal(feed.editorial[2].videoUrl, null);
+});
+
 test('parseStudioFeed : limite le nombre d’éléments par emplacement', () => {
   const many = Array.from({ length: 12 }, (_, i) => ({ title: `Article ${i}` }));
   assert.equal(parseStudioFeed({ editorial: many }).editorial.length, 5);
