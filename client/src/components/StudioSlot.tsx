@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { StudioFeedItem, StudioSlotId } from '@idea-chartrons/shared';
 import { Card } from './ui';
 import { useStudioFeed } from '../lib/studioFeed';
+import { useVideoLike, useVideoLikesEnabled } from '../lib/videoLikes';
 
 interface StudioSlotProps {
   slot: StudioSlotId;
@@ -33,6 +34,9 @@ function ItemBody({ item }: { item: StudioFeedItem }) {
  * Le format (vertical ou horizontal) s'adapte automatiquement à la vidéo.
  */
 function EditorialVideo({ item }: { item: StudioFeedItem }) {
+  const { t } = useTranslation();
+  const likesEnabled = useVideoLikesEnabled();
+  const { liked, toggle } = useVideoLike(item.id);
   const titleId = 'studio-slot-editorial-video';
   return (
     <section
@@ -54,6 +58,17 @@ function EditorialVideo({ item }: { item: StudioFeedItem }) {
             <span className="block text-[10px] font-semibold uppercase tracking-wide text-chartrons-brass">{item.label}</span>
           ) : null}
           <h2 id={titleId} className="text-sm font-semibold text-chartrons-olive-dark leading-snug">{item.title}</h2>
+          {likesEnabled ? (
+            <button
+              type="button"
+              onClick={toggle}
+              aria-pressed={liked}
+              className="touch-target mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-chartrons-bordeaux"
+            >
+              <span aria-hidden="true">{liked ? '❤️' : '🤍'}</span>
+              {liked ? t('studioSlots.unlikeVideo') : t('studioSlots.likeVideo')}
+            </button>
+          ) : null}
         </div>
       </div>
     </section>

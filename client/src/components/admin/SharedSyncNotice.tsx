@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useToast } from '../../context/ToastContext';
 import { SHARED_SYNC_EVENT, type SharedSyncDetail } from '../../lib/sharedContent';
 
-const LABELS = { agenda: 'agenda', banners: 'bannières', hero: 'rectangle d’accueil', pricing: 'tarifs' } as const;
+const LABELS = { agenda: 'agenda', banners: 'bannières', hero: 'rectangle d’accueil', pricing: 'tarifs', settings: 'réglages' } as const;
 
 /** Prévient l'administrateur que sa modification est (ou n'est pas) visible par tous les visiteurs. */
 export function SharedSyncNotice() {
