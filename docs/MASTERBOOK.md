@@ -27,6 +27,7 @@ Le propriétaire est francophone, non développeur. Il compte sur Claude pour lu
 | **Pas de commentaire d'actions (07/10)** | Ne pas raconter les commandes ou outils utilisés : donner seulement les résultats et ce qui est attendu de lui. |
 | **Administration en français (07/10)** | Le propriétaire est seul à administrer : l'administration reste en français, sans traduction. L'espagnol vise les pages publiques. |
 | **Réponses binaires (08/10)** | Langage simple, jamais technique. Pas de reformulation de ce que le propriétaire a dit. Une seule question à la fois, de type oui/non ou A/B. Le détail n'est donné que s'il le demande. |
+| **Réponses courtes et ciblées (09/10)** | Réponses courtes, centrées sur ce qui concerne directement le propriétaire. Rien de plus tant qu'il ne le demande pas. Règle permanente, à ne jamais relâcher (pas de rapports, de listes de détails ni d'explications non demandées). |
 | **Projets séparés** | IDÉA CHARTRONS ne se mélange pas avec ses autres projets. Les outils externes (voir §2) sont fabriqués ailleurs : ne pas les construire ici. |
 
 ---
