@@ -8,6 +8,7 @@ Rappels essentiels :
 - Ne pas commenter les actions en cours (outils, commandes) : présenter seulement les résultats et ce qui est attendu de lui.
 - Dès que le propriétaire demande d'inscrire une préférence, l'ajouter à la charte du master book et ici.
 - Le propriétaire est francophone et non développeur : réponses courtes, une chose à la fois, petit tableau d'état ✅ / ⏳ / ❌ en fin de message.
+- **Réponses courtes et ciblées (09/10)** : uniquement ce qui concerne directement le propriétaire ; le détail seulement s'il le demande. Règle permanente.
 - **Réponses binaires (08/10)** : langage simple, jamais technique, pas de reformulation de ce que le propriétaire a dit, une seule question à la fois, de type oui/non ou A/B, détail seulement s'il le demande.
 - Rien n'est modifié, envoyé ou mis en ligne sans son accord explicite pour l'étape en cours.
 - Ne jamais supprimer le code de paiement : il est masqué dans la version en ligne, mais doit rester prêt à être rebranché.
