@@ -140,7 +140,8 @@ const resources = {
       },
       search: {
         placeholder: 'Rechercher un commerce, une annonce, un événement...',
-        placeholderUnified: 'Un commerce, une question, une idée de sortie…',
+        placeholderUnified: 'Concierge IA : un plombier, une adresse, une idée…',
+        askConcierge: 'Demander au Concierge IA',
         placeholderAi: 'Une recette, un conseil, une adresse…',
         placeholderChineur: 'Un style, une époque, un meuble…',
         submit: 'Rechercher',
@@ -1492,6 +1493,7 @@ const resources = {
         noAccount: 'Cherchez, parcourez et publiez sans créer de compte.',
       },
       conciergePanel: {
+        seeDirectory: 'Voir aussi dans l’annuaire',
         title: 'Concierge IA',
         close: 'Fermer le panneau',
         collapse: 'Réduire le panneau',
@@ -2069,7 +2071,8 @@ const resources = {
       },
       search: {
         placeholder: 'Search a shop, a listing, an event...',
-        placeholderUnified: 'A shop, a question, an idea for an outing…',
+        placeholderUnified: 'AI Concierge: a plumber, an address, an idea…',
+        askConcierge: 'Ask the AI Concierge',
         placeholderAi: 'A recipe, a tip, a local address…',
         placeholderChineur: 'A style, an era, a piece of furniture…',
         submit: 'Search',
@@ -3418,6 +3421,7 @@ const resources = {
         noAccount: 'Search, browse and post without creating an account.',
       },
       conciergePanel: {
+        seeDirectory: 'Also see the directory',
         title: 'AI Concierge',
         close: 'Close panel',
         collapse: 'Collapse panel',
@@ -3994,7 +3998,8 @@ const resources = {
       },
       search: {
         placeholder: 'Buscar un comercio, un anuncio, un evento...',
-        placeholderUnified: 'Un comercio, una pregunta, una idea para salir…',
+        placeholderUnified: 'Concierge IA: un fontanero, una dirección, una idea…',
+        askConcierge: 'Preguntar al Concierge IA',
         placeholderAi: 'Una receta, un consejo, una dirección…',
         placeholderChineur: 'Un estilo, una época, un mueble…',
         submit: 'Buscar',
@@ -5117,6 +5122,7 @@ const resources = {
         noAccount: 'Busque, explore y publique sin crear una cuenta.',
       },
       conciergePanel: {
+        seeDirectory: 'Ver también en el directorio',
         title: 'Concierge IA',
         close: 'Cerrar el panel',
         collapse: 'Reducir el panel',

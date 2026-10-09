@@ -2,15 +2,17 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LOCAL_RELAIS_PHONE, STATIC_MAP_POIS, isActiveAntiGaspiOffer, isCommunityEvent, isFleaMarketEvent, isResidentFeedPost, type ActeurLocal, type AgendaEvenement, type PostAnnonce } from '@idea-chartrons/shared';
-import { Badge, Card, EmptyState, Loading } from '../components/ui';
+import { Badge, Button, Card, EmptyState, Loading } from '../components/ui';
 import { PhoneLink } from '../components/PhoneLink';
 import { DistanceBadge } from '../components/DistanceBadge';
 import { matchesSearch, useSearch } from '../context/SearchContext';
 import { api } from '../lib/api';
+import { useConciergePanel } from '../context/ConciergePanelContext';
 
 export function SearchPage() {
   const { t } = useTranslation();
   const { query, setQuery } = useSearch();
+  const { ask, pending } = useConciergePanel();
   const [params] = useSearchParams();
   const [posts, setPosts] = useState<PostAnnonce[]>([]);
   const [acteurs, setActeurs] = useState<ActeurLocal[]>([]);
@@ -122,6 +124,11 @@ export function SearchPage() {
           <p className="text-sm text-chartrons-warm-gray mt-1">
             {t('search.results', { count: total, query: q })}
           </p>
+        ) : null}
+        {q ? (
+          <Button type="button" variant="secondary" size="sm" className="mt-2" disabled={pending} onClick={() => void ask(q)}>
+            🤖 {t('search.askConcierge')}
+          </Button>
         ) : (
           <p className="text-sm text-chartrons-warm-gray mt-1">{t('search.emptyHint')}</p>
         )}

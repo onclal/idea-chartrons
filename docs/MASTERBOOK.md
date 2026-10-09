@@ -169,3 +169,8 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 - **Prochaines étapes côté code** : étape 7 (navigation : noms des pages, favoris en double), étape 8 (FAQ, tarifs, mentions légales, espagnol des pages publiques restantes), lien « Espace admin » désormais absent du pied de page (accès par `/admin`).
 - Piège rencontré : ne jamais enchaîner commit et push après une compilation en échec (commande `;` au lieu de `&&`).
 
+### Boucle de contrôle de la recherche IA (09/10/2026)
+- **Incident** : depuis l'étape 2, 14 demandes de pros sur 24 (« un plombier », « coiffeur », « boulangerie ouverte »…) partaient vers l'annuaire au lieu du Concierge IA. Cause : règle de décision trop favorable à l'annuaire. **Réparé** : le Concierge IA est le chemin par défaut ; l'annuaire n'est choisi que pour un nom de commerce précis. Deux sorties de secours : lien « Voir aussi dans l'annuaire » dans le panneau du Concierge, bouton « Demander au Concierge IA » sur la page de résultats.
+- **Boucle à rejouer avant toute mise en ligne** : (1) `npm test` (tests « recherche IA » : 17 demandes de pros doivent aller au Concierge et trouver au moins un professionnel) ; (2) essai dans le navigateur de 15 demandes de pros, qui doivent toutes ouvrir le panneau du Concierge avec des résultats ; (3) si un échec apparaît : corriger, puis recommencer au (1) jusqu'à 0 échec.
+- **Règle** : la recherche IA ne doit jamais être supprimée ni masquée. Toute modification de la barre de recherche rejoue cette boucle.
+

@@ -111,6 +111,16 @@ export function AISidePanel() {
             </div>
           )}
 
+          {!pending && lastUser && (
+            <Link
+              to={`/recherche?q=${encodeURIComponent(lastUser.content)}`}
+              onClick={closePanel}
+              className="inline-flex items-center min-h-[44px] text-sm font-semibold text-chartrons-green underline-offset-2 hover:underline"
+            >
+              🔍 {t('conciergePanel.seeDirectory')}
+            </Link>
+          )}
+
           {!pending && lastAssistant && (
             <Card className="!p-3 bg-chartrons-stone/70 space-y-3">
               <p className="text-sm text-chartrons-olive-dark leading-relaxed whitespace-pre-wrap">
