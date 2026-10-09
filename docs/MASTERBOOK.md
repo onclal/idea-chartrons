@@ -185,3 +185,6 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 - **Script à exécuter dans Supabase** : `docs/sql/004_contenus_partages.sql` (par le propriétaire, guidé pas à pas) ; tant qu'il n'est pas exécuté, le site garde son fonctionnement actuel.
 - **Contrôles faits** : compilation, 21 tests, types, essais navigateur simulés (visiteur voit le contenu partagé ; table absente = accueil normal ; modification admin envoie le contenu avec le code).
 - **Tarifs (09/10/2026)** : le propriétaire fixe lui-même le prix du Premium Pro (mensuel et annuel) dans l'administration, page « Tarifs » ; case vide = « à définir » sur le site. Affiché dans le tableau Gratuit / Premium Pro de la FAQ. Enregistré avec le contenu partagé (script `docs/sql/004_contenus_partages.sql`, qui inclut maintenant les tarifs). Le code de paiement n'est pas modifié.
+
+- **Script Supabase exécuté (09/10/2026)** : `docs/sql/004_contenus_partages.sql` passé par le propriétaire, résultat « Success », contrôle = 0 ligne (attendu). La table `idea_shared_content` et la fonction `idea_admin_save_content` existent.
+- **Reste à faire** : test sur le vrai site (ajouter un événement bidon dans l'agenda de l'administration, le voir depuis un autre appareil, puis le supprimer). Reporté par le propriétaire.
