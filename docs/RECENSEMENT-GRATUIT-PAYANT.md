@@ -60,7 +60,7 @@ Le paiement est masqué : **aucun professionnel ne peut devenir Premium Pro** au
 | 1 | Lien vers le site web du commerce | **Offert à tous** (changement par rapport au code actuel, où il est réservé Premium Pro) ✅ |
 | 2 | Priorité dans le Concierge IA, fiche mise en avant, badge | **Réservé Premium Pro** ✅ (si tout le monde était prioritaire, la priorité n'aurait plus de sens) |
 | 3 | Réservation de table, rendez-vous, Click & Collect | **Réservé Premium Pro** ✅ (à construire : les commandes n'arrivent pas encore au commerçant) |
-| 4 | Ardoise du jour (affichage public) | à décider |
+| 4 | Ardoise du jour (affichage public) | **Réservé Premium Pro** ✅ (reste à décider : la saisie par un pro gratuit, voir constat 2 de la cartographie) |
 | 5 | Lien de prise de rendez-vous (affichage public) | à décider |
 | 6 | Communication (annonces, aide IA, campagnes) | à décider |
 | 7 | Pépites et arrivages des brocanteurs + badge Notre-Dame | à décider |
