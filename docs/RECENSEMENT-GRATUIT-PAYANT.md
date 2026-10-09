@@ -70,3 +70,12 @@ Le paiement est masqué : **aucun professionnel ne peut devenir Premium Pro** au
 Catégorie ajoutée à la liste du §F : **accès STUDIO ALL** (sous-catégorie à part, administrateur seul pour commencer).
 
 Ensuite : les prix, puis l'organisation de l'administration.
+
+## H. Prix (en cours)
+
+| Sujet | Décision |
+|---|---|
+| Formule Premium Pro | Abonnement **au mois ou à l'année** ✅ |
+| Prix mensuel | à décider (20 € et 39 € ont figuré dans le site) |
+| Prix annuel | à décider |
+| Frais de 1 €, commission Anti-Gaspi 5 % | à décider plus tard |
