@@ -48,6 +48,7 @@ import {
   PostType,
   RelaisCreneauType,
   syncRelaisCreneauxWindow,
+  mergeSharedRelais,
   slotFromId,
   type ActeurLocal,
   type AgendaEvenement,
@@ -220,10 +221,13 @@ function syncCatalogActeurs(existing: ActeurLocal[], seedActeurs: ActeurLocal[])
   return [...synced, ...custom];
 }
 
+/** Dépôts du Local Relais partagés par Supabase (non enregistrés sur l'appareil), voir sharedRelais.ts. */
+let sharedRelaisOverlay: LocalRelais[] = [];
+
 function syncSlots(data: DatabaseSchema, from = new Date()): RelaisCreneau[] {
   return syncRelaisCreneauxWindow(
     data.relaisCreneaux ?? [],
-    data.localRelais ?? [],
+    mergeSharedRelais(data.localRelais ?? [], sharedRelaisOverlay),
     from,
     resolveRelaisSettings(data),
   );
@@ -1036,12 +1040,43 @@ class LocalDatabase {
   // ── Relais ──
 
   getRelais(): LocalRelais[] {
-    return this.getAll('localRelais');
+    return mergeSharedRelais(this.getAll('localRelais'), sharedRelaisOverlay);
   }
 
   getRelaisByPosts(postIds: string[]): LocalRelais[] {
     const owned = new Set(postIds);
-    return this.getAll('localRelais').filter((r) => owned.has(r.postId));
+    return this.getRelais().filter((r) => owned.has(r.postId));
+  }
+
+  /** Dépôts partagés lus sur Supabase : servent à l'affichage et au comptage des places, sans être enregistrés. */
+  setSharedRelais(list: LocalRelais[]): void {
+    sharedRelaisOverlay = list;
+    this.refreshCreneaux();
+  }
+
+  /** Garde sur cet appareil un dépôt partagé (déposant ou personne qui retire) avec son code de retrait. */
+  saveSharedRelaisCopy(relais: LocalRelais, postStatut?: PostStatus): LocalRelais {
+    const saved = this.getById('localRelais', relais.id)
+      ? (this.update('localRelais', relais.id, relais) as LocalRelais)
+      : this.create('localRelais', relais);
+    if (postStatut && this.getById('postsAnnonces', relais.postId)) {
+      this.update('postsAnnonces', relais.postId, { statut: postStatut });
+    }
+    return saved;
+  }
+
+  /** Réglages du Local Relais reçus de l'administrateur (contenu partagé) : horaires, capacité, créneaux bloqués. */
+  applySharedRelaisConfig(settings: Partial<RelaisSettings> | null, blockedIds: string[]): void {
+    if (settings) {
+      this.data = { ...this.data, relaisSettings: [normalizeRelaisSettings({ ...this.getRelaisSettings(), ...settings })] };
+    }
+    const blocked = new Set(blockedIds);
+    this.refreshCreneaux();
+    this.data = {
+      ...this.data,
+      relaisCreneaux: this.data.relaisCreneaux.map((slot) => ({ ...slot, blocked: blocked.has(slot.id) })),
+    };
+    this.persist();
   }
 
   getRelaisSettings(): RelaisSettings {

@@ -29,8 +29,9 @@ export function RelaisPage() {
       .then(([relais, postsData]) => {
         setRelaisList(relais);
         setPosts(postsData);
-        const ready = relais.find((r) => r.statutRetrait === 'Disponible_Au_Local');
-        setSelectedQr(ready?.codeQrValidation ?? relais[0]?.codeQrValidation ?? null);
+        const withCode = relais.filter((r) => r.codeQrValidation);
+        const ready = withCode.find((r) => r.statutRetrait === 'Disponible_Au_Local');
+        setSelectedQr(ready?.codeQrValidation ?? withCode[0]?.codeQrValidation ?? null);
       })
       .catch(console.error)
       .finally(() => setLoading(false));

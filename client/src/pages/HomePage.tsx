@@ -9,7 +9,6 @@ import { HeroCarousel } from '../components/HeroCarousel';
 import { TodayInChartrons } from '../components/TodayInChartrons';
 import { StudioSlot } from '../components/StudioSlot';
 import { SmartBanner } from '../components/SmartBanner';
-import { DemoNotice } from '../components/DemoNotice';
 import { ConfortDashboard } from '../components/ConfortDashboard';
 import { useConfort } from '../context/ConfortContext';
 import { quaisChartronsPhotoSrc } from '../lib/media';
@@ -107,7 +106,6 @@ export function HomePage() {
 
       <section className="space-y-3">
         <SmartBanner />
-        <DemoNotice className="" />
       </section>
     </div>
   );

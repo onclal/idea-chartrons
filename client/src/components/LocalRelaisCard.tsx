@@ -77,17 +77,17 @@ export function LocalRelaisCard({
                     className={`rounded-xl border transition-colors ${
                       ready
                         ? 'border-chartrons-gold bg-chartrons-gold/10 ring-2 ring-chartrons-gold/30'
-                        : selectedQr === relais.codeQrValidation
+                        : relais.codeQrValidation && selectedQr === relais.codeQrValidation
                           ? 'border-chartrons-green bg-chartrons-green/5'
                           : 'border-chartrons-gold/15'
                     }`}
                   >
                     <button
-                      onClick={() =>
-                        onSelectQr?.(
-                          selectedQr === relais.codeQrValidation ? null : relais.codeQrValidation,
-                        )
-                      }
+                      onClick={() => {
+                        // Code de retrait connu seulement du déposant, de la personne qui retire et de l'administrateur.
+                        if (!relais.codeQrValidation) return;
+                        onSelectQr?.(selectedQr === relais.codeQrValidation ? null : relais.codeQrValidation);
+                      }}
                       className="w-full text-left p-3"
                     >
                       <div className="flex items-center justify-between gap-2">

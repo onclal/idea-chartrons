@@ -5,6 +5,7 @@ import { Badge, Button, Card, Input, Textarea } from './ui';
 import { useToast } from '../context/ToastContext';
 import { buildCivicReportText, CIVIC_CHANNELS, CIVIC_REPORT_CATEGORIES } from '../data/civic';
 import { api } from '../lib/api';
+import { LocalPublishNotice } from './DemoNotice';
 import { loc } from '../lib/locale';
 import { toTelHref } from '../lib/phone';
 
@@ -197,6 +198,7 @@ export function CivicReporting() {
             📞 {t('civic.form.call', { phone: channel.phone })}
           </a>
         </div>
+        <LocalPublishNotice />
       </Card>
     </section>
   );

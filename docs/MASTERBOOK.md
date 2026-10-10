@@ -208,3 +208,10 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 - **Premium Pro** : le professionnel signe et valide son abonnement ; les **engagements de chacun** y seront inscrits (conditions à rédiger avec le propriétaire).
 - **Plus tard** : filtre automatique de mots et expressions interdits.
 - **Pour les nouveaux développements** : toute nouvelle publication de visiteur ou de pro suit cette politique (validation seulement pour l'éditorial, l'agenda, la vie de quartier et les annonces de particuliers).
+
+### Local Relais partagé + bandeau — tranche 3 (10/10/2026, préparée, pas en ligne)
+- **Quoi** : dépôts, places des créneaux et retraits du Local Relais enregistrés dans Supabase (table `idea_shared_relais`) ; horaires, capacité et créneaux bloqués fixés par l'administrateur et partagés (contenu partagé « relais »).
+- **Sécurité** : le code de retrait n'est jamais lisible publiquement (seuls le déposant, la personne qui réserve le retrait et l'administrateur le reçoivent) ; seul l'auteur d'une publication peut la déposer ; les places sont comptées par la base.
+- **Bandeau « Version de démonstration »** retiré du site. Une petite mention reste sur les formulaires encore enregistrés sur l'appareil (signalements civiques, pépites des brocanteurs).
+- **Script à exécuter par le propriétaire, guidé pas à pas : `docs/sql/007_local_relais_partage.sql`** (après 004 et 006). Tant qu'il n'est pas exécuté, le Local Relais garde son fonctionnement local.
+- **Contrôles** : compilation, 27 tests, types, essai navigateur avec faux serveur (dépôt partagé visible, code caché, réservation du retrait, code reçu par la personne qui réserve).
