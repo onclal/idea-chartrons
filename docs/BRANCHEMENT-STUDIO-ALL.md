@@ -43,6 +43,7 @@ Pour débrancher : supprimer la variable et redéployer.
 - `title` est obligatoire ; sans titre, l'élément est ignoré.
 - `url` : chemin interne du site (`/decouvrir`) ou adresse `http(s)`. Tout autre lien (`javascript:`, `//autre-site`) est supprimé.
 - `imageUrl` : adresse `http(s)` uniquement.
+- `videoUrl` (éditorial seulement) : adresse `http(s)` d'une vidéo. La première vidéo du flux s'affiche **dans la zone à gauche de l'accueil** sur grand écran (elle reste visible au défilement), et dans la page sur téléphone. Format vertical ou horizontal : automatique. Contrôle sans STUDIO ALL : ajouter `?apercu=video` à l'adresse du site pour voir une vidéo d'essai (`client/public/demo-editorial.mp4`).
 - Textes limités : titre 120 caractères, résumé 280, étiquette 30. Aucun HTML n'est interprété.
 
 ## Où est le code

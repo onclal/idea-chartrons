@@ -76,7 +76,7 @@ export function HomePage() {
   if (loading) return <Loading message={t('common.loading')} />;
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in relative">
       <PickupAlert relaisList={relaisList} posts={posts} ownedPostIds={ownedPostIds} />
 
       <section className="relative">

@@ -48,6 +48,8 @@ const resources = {
         editorial: 'À la une du quartier',
         proSpotlight: 'Offres des pros du quartier',
         proTools: 'Outils pour votre commerce',
+        likeVideo: 'J’aime',
+        unlikeVideo: 'Retirer mon j’aime',
       },
       upcomingEvents: {
         summary: '{{title}} + {{count}} autre(s) événement(s) à venir',
@@ -1119,6 +1121,7 @@ const resources = {
           banners: 'Bannières',
           heroSlides: 'Rectangle Accueil',
           pricing: 'Tarifs',
+          settings: 'Réglages',
           qr: 'Kit QR',
           pepiteTags: 'Étiquettes Chineur',
           help: 'Mode d’emploi',
@@ -1980,6 +1983,8 @@ const resources = {
         editorial: 'Neighborhood highlights',
         proSpotlight: 'Offers from local businesses',
         proTools: 'Tools for your business',
+        likeVideo: 'Like',
+        unlikeVideo: 'Remove my like',
       },
       upcomingEvents: {
         summary: '{{title}} + {{count}} more upcoming event(s)',
@@ -3907,6 +3912,8 @@ const resources = {
         editorial: 'Destacados del barrio',
         proSpotlight: 'Ofertas de los comercios del barrio',
         proTools: 'Herramientas para su comercio',
+        likeVideo: 'Me gusta',
+        unlikeVideo: 'Quitar mi me gusta',
       },
       upcomingEvents: {
         summary: '{{title}} + {{count}} evento(s) más próximamente',

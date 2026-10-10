@@ -4,6 +4,26 @@ import { emptyStudioFeed, parseStudioFeed, type StudioFeed } from '@idea-chartro
 const FEED_URL = import.meta.env.VITE_STUDIO_FEED_URL?.trim() || '';
 const FEED_TIMEOUT_MS = 5000;
 
+/** Vidéo d'essai, visible seulement avec « ?apercu=video » dans l'adresse (contrôle du propriétaire). */
+const DEMO_EDITORIAL = {
+  id: 'apercu-video',
+  title: 'Vidéo d’essai de l’espace éditorial',
+  summary: 'Aperçu de l’emplacement. Le contenu réel viendra de STUDIO ALL.',
+  url: null,
+  imageUrl: null,
+  videoUrl: '/demo-editorial.mp4',
+  label: 'Éditorial',
+  publishedAt: null,
+};
+
+function wantsVideoPreview(): boolean {
+  try {
+    return new URLSearchParams(window.location.search).get('apercu') === 'video';
+  } catch {
+    return false;
+  }
+}
+
 let cached: Promise<StudioFeed> | null = null;
 
 /**
@@ -30,7 +50,8 @@ export function useStudioFeed(): StudioFeed {
   useEffect(() => {
     let active = true;
     void loadStudioFeed().then((next) => {
-      if (active) setFeed(next);
+      if (!active) return;
+      setFeed(wantsVideoPreview() ? { ...next, editorial: [DEMO_EDITORIAL, ...next.editorial] } : next);
     });
     return () => {
       active = false;

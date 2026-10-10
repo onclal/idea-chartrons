@@ -14,6 +14,8 @@ export interface StudioFeedItem {
   /** Lien externe ou chemin interne du site (commençant par « / »). */
   url: string | null;
   imageUrl: string | null;
+  /** Vidéo de l'éditorial (adresse http(s)) ; le format vertical ou horizontal est géré automatiquement à l'affichage. */
+  videoUrl: string | null;
   /** Étiquette courte affichée au-dessus du titre (ex. « Éditorial », « Offre pro »). */
   label: string | null;
   publishedAt: string | null;
@@ -54,6 +56,7 @@ function parseItem(raw: unknown, index: number): StudioFeedItem | null {
     summary: cleanText(item.summary, 280),
     url: cleanLink(item.url),
     imageUrl: sanitizeExternalUrl(typeof item.imageUrl === 'string' ? item.imageUrl : null),
+    videoUrl: sanitizeExternalUrl(typeof item.videoUrl === 'string' ? item.videoUrl : null),
     label: cleanText(item.label, 30) || null,
     publishedAt: published ? (item.publishedAt as string) : null,
   };

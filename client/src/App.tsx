@@ -38,6 +38,7 @@ import { AdminBannersPage } from './pages/admin/AdminBannersPage';
 import { AdminHeroSlidesPage } from './pages/admin/AdminHeroSlidesPage';
 import { AdminQrPage } from './pages/admin/AdminQrPage';
 import { AdminPricingPage } from './pages/admin/AdminPricingPage';
+import { AdminReglagesPage } from './pages/admin/AdminReglagesPage';
 import { AdminPepiteTagsPage } from './pages/admin/AdminPepiteTagsPage';
 import { AdminHelpPage } from './pages/admin/AdminHelpPage';
 import { ProDashboardPage } from './pages/ProDashboardPage';
@@ -66,6 +67,7 @@ export function App() {
                 <Route path="banners" element={<AdminBannersPage />} />
                 <Route path="hero" element={<AdminHeroSlidesPage />} />
                 <Route path="tarifs" element={<AdminPricingPage />} />
+                <Route path="reglages" element={<AdminReglagesPage />} />
                 <Route path="qr" element={<AdminQrPage />} />
                 <Route path="tags-chineur" element={<AdminPepiteTagsPage />} />
                 <Route path="aide" element={<AdminHelpPage />} />
