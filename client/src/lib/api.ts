@@ -31,6 +31,13 @@ import { localDb, withDelay, resetLocalDb } from './localDb';
 import { notifyShared, registerShared } from './sharedContent';
 import { deleteSharedPost, fetchSharedPosts, submitSharedPost, updateSharedPost, withSharedPosts } from './sharedPosts';
 import { isAdminSession } from './adminSession';
+import {
+  advanceSharedRelais,
+  notifyRelaisConfigChanged,
+  proposeSharedDepot,
+  refreshSharedRelais,
+  reserveSharedRetrait,
+} from './sharedRelais';
 import { getMenus, updateMenus, upsertAppointmentLink } from './gbp';
 import { loadContactMessages, saveContactMessage, type ContactMessage } from './contact';
 import { getActiveDispoSignals, createDispoSignal, getShopDispoSignals } from './reseauPro';
@@ -97,8 +104,9 @@ export const api = {
     commerceNom?: string | null;
     expiresAt?: string | null;
   }) =>
-    withDelay(() => localDb.createPost(data)).then((created) => {
-      void submitSharedPost(created);
+    withDelay(() => localDb.createPost(data)).then(async (created) => {
+      // Attendue : un dépôt au Local Relais peut suivre immédiatement et suppose la publication partagée.
+      await submitSharedPost(created);
       return created;
     }),
   updatePost: async (postId: string, patch: Partial<Omit<PostAnnonce, 'id' | 'createdAt'>>) => {
@@ -200,25 +208,54 @@ export const api = {
     localDb.deleteAntiqueItem(itemId);
     return { ok: true };
   }),
-  getRelais: () => withDelay(() => localDb.getRelais()),
-  getRelaisByPosts: (postIds: string[]) => withDelay(() => localDb.getRelaisByPosts(postIds)),
-  getCreneaux: (type?: RelaisCreneauType) =>
-    withDelay(() => localDb.getCreneaux(type)),
-  getAllCreneaux: () => withDelay((): RelaisCreneau[] => localDb.getAllCreneaux()),
+  getRelais: async () => {
+    await refreshSharedRelais();
+    return withDelay(() => localDb.getRelais());
+  },
+  getRelaisByPosts: async (postIds: string[]) => {
+    await refreshSharedRelais();
+    return withDelay(() => localDb.getRelaisByPosts(postIds));
+  },
+  getCreneaux: async (type?: RelaisCreneauType) => {
+    await refreshSharedRelais();
+    return withDelay(() => localDb.getCreneaux(type));
+  },
+  getAllCreneaux: async () => {
+    await refreshSharedRelais();
+    return withDelay((): RelaisCreneau[] => localDb.getAllCreneaux());
+  },
   getRelaisSettings: () => withDelay((): RelaisSettings => localDb.getRelaisSettings()),
   getPlatformSettings: () => withDelay((): PlatformSettings => localDb.getPlatformSettings()),
   updatePlatformSettings: (patch: Partial<Omit<PlatformSettings, 'id'>>) =>
     withDelay(() => localDb.updatePlatformSettings(patch)),
   updateRelaisSettings: (patch: Partial<Omit<RelaisSettings, 'id'>>) =>
-    withDelay(() => localDb.updateRelaisSettings(patch)),
+    withDelay(() => localDb.updateRelaisSettings(patch)).then((saved) => {
+      notifyRelaisConfigChanged();
+      return saved;
+    }),
   setCreneauBlocked: (creneauId: string, blocked: boolean) =>
-    withDelay(() => localDb.setCreneauBlocked(creneauId, blocked)),
-  proposeDepotLocal: (data: { postId: string; deposantNom?: string | null; creneauDepotId: string }) =>
-    withDelay(() => localDb.proposeDepotLocal(data)),
-  reserverRetrait: (relaisId: string, creneauRetraitId: string) =>
-    withDelay(() => localDb.reserverRetrait(relaisId, creneauRetraitId)),
-  avancerStatutRelais: (relaisId: string) =>
-    withDelay(() => localDb.avancerStatutRelais(relaisId)),
+    withDelay(() => localDb.setCreneauBlocked(creneauId, blocked)).then((slot) => {
+      notifyRelaisConfigChanged();
+      return slot;
+    }),
+  proposeDepotLocal: async (data: { postId: string; deposantNom?: string | null; creneauDepotId: string }) => {
+    await refreshSharedRelais();
+    const shared = await proposeSharedDepot(data);
+    return shared ?? withDelay(() => localDb.proposeDepotLocal(data));
+  },
+  reserverRetrait: async (relaisId: string, creneauRetraitId: string) => {
+    const shared = await reserveSharedRetrait(relaisId, creneauRetraitId);
+    return shared ?? withDelay(() => localDb.reserverRetrait(relaisId, creneauRetraitId));
+  },
+  avancerStatutRelais: async (relaisId: string) => {
+    const shared = await advanceSharedRelais(relaisId);
+    if (shared) {
+      // Copie locale éventuelle (déposant sur l'appareil de l'administrateur) mise au même statut.
+      if (localDb.getById('localRelais', relaisId)) localDb.saveSharedRelaisCopy({ ...shared });
+      return shared;
+    }
+    return withDelay(() => localDb.avancerStatutRelais(relaisId));
+  },
   scanFidelite: (data: { deviceId: string; commerceId: string; qrCode: string }) =>
     withDelay(() => localDb.scanFidelite(data)),
   awardFidelite: (data: { commerceId: string; carnetToken: string; montant?: number }) =>

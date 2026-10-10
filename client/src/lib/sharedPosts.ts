@@ -27,6 +27,11 @@ function loadTokens(): Record<string, string> {
   }
 }
 
+/** Clé secrète de l'auteur d'une publication (null si cet appareil n'en est pas l'auteur). */
+export function getPostOwnerToken(postId: string): string | null {
+  return tokenFor(postId, false);
+}
+
 /** Clé secrète de l'auteur, gardée sur son appareil : seule elle permet de retirer ou clore sa publication. */
 function tokenFor(postId: string, create: boolean): string | null {
   const tokens = loadTokens();

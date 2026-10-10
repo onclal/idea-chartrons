@@ -294,3 +294,34 @@ test('publications partagées : la version partagée fait foi, les publications 
   );
   assert.deepEqual(merged.map((p) => [p.id, p.statut]), [['b', PostStatus.EnAttente], ['a', PostStatus.Disponible]]);
 });
+
+import { mergeSharedRelais, parseSharedRelais } from '../src/logic/sharedRelais.js';
+import { LocalRelaisRetraitStatus } from '../src/index.js';
+
+const relaisRow = {
+  id: 'relais-1',
+  post_id: 'post-1',
+  statut: 'Disponible_Au_Local',
+  creneau_depot: 'creneau-2026-10-12-10:00-Depot',
+  creneau_retrait: null,
+  date_depot: '2026-10-10T10:00:00Z',
+};
+
+test('Local Relais partagé : un dépôt valide est accepté, un douteux est écarté', () => {
+  assert.equal(parseSharedRelais(relaisRow)?.statutRetrait, LocalRelaisRetraitStatus.DisponibleAuLocal);
+  assert.equal(parseSharedRelais(relaisRow)?.codeQrValidation, '');
+  assert.equal(parseSharedRelais({ ...relaisRow, statut: 'Piraté' }), null);
+  assert.equal(parseSharedRelais({ ...relaisRow, post_id: '' }), null);
+  assert.equal(parseSharedRelais({ ...relaisRow, creneau_depot: 'nimporte' })?.creneauDepotId, null);
+});
+
+test('Local Relais partagé : le statut partagé fait foi, le code gardé sur l’appareil complète', () => {
+  const shared = parseSharedRelais(relaisRow)!;
+  const mine = { ...shared, statutRetrait: LocalRelaisRetraitStatus.EnAttente, codeQrValidation: 'QR-CHARTRONS-ABCD1234' };
+  const other = { ...shared, id: 'relais-local', postId: 'post-2' };
+  const merged = mergeSharedRelais([mine, other], [shared]);
+  assert.equal(merged.length, 2);
+  assert.equal(merged[0].statutRetrait, LocalRelaisRetraitStatus.DisponibleAuLocal);
+  assert.equal(merged[0].codeQrValidation, 'QR-CHARTRONS-ABCD1234');
+  assert.equal(merged[1].id, 'relais-local');
+});

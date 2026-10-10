@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Input, Modal, Textarea } from './ui';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
+import { LocalPublishNotice } from './DemoNotice';
 
 interface PepiteCreateFormProps {
   open: boolean;
@@ -160,6 +161,7 @@ export function PepiteCreateForm({ open, onClose, onCreated, merchantId, tagsCat
           </div>
         </div>
         {error && <p className="text-sm text-chartrons-brick">{error}</p>}
+        <LocalPublishNotice />
         <Button type="submit" variant="bordeaux" className="w-full" disabled={submitting}>
           {submitting ? t('common.loading') : t('proSpace.pepites.form.submit')}
         </Button>
