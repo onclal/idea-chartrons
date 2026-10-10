@@ -263,3 +263,34 @@ test('recherche IA : avec les vraies fiches, chaque demande de pro va au Concier
     assert.ok(result.recommendations.length > 0, `${demande} doit trouver au moins un professionnel`);
   }
 });
+
+import { mergeSharedPosts, parseSharedPost, prepareSharedPost, SHARED_POST_MAX_CHARS } from '../src/logic/sharedPosts.js';
+import { PostStatus, PostType } from '../src/index.js';
+
+const basePost = { id: 'p1', titre: 'Vélo', description: 'Bon état', type: 'Vente', prix: 40, statut: 'Disponible', photos: [] };
+
+test('publications partagées : une publication valide est acceptée, une douteuse est écartée', () => {
+  assert.equal(parseSharedPost(basePost)?.titre, 'Vélo');
+  assert.equal(parseSharedPost({ ...basePost, titre: '' }), null);
+  assert.equal(parseSharedPost({ ...basePost, type: 'Inconnu' }), null);
+  assert.equal(parseSharedPost({ ...basePost, statut: 'Piraté' }), null);
+  assert.equal(parseSharedPost('n’importe quoi'), null);
+  assert.deepEqual(parseSharedPost({ ...basePost, photos: ['javascript:alert(1)', 'data:text/html,x'] })?.photos, []);
+  assert.equal(parseSharedPost({ ...basePost, prix: -5 })?.prix, null);
+});
+
+test('publications partagées : une photo trop lourde reste sur l’appareil', () => {
+  const heavy = 'data:image/png;base64,' + 'A'.repeat(SHARED_POST_MAX_CHARS);
+  const post = { ...(parseSharedPost({ ...basePost, photos: [heavy] }) as object), photos: [heavy] } as never;
+  assert.deepEqual(prepareSharedPost(post).photos, []);
+});
+
+test('publications partagées : la version partagée fait foi, les publications locales en attente restent', () => {
+  const mk = (id: string, statut: PostStatus, createdAt: string) =>
+    parseSharedPost({ ...basePost, id, statut, type: PostType.Don, createdAt })!;
+  const merged = mergeSharedPosts(
+    [mk('a', PostStatus.EnAttente, '2026-10-01T00:00:00Z'), mk('b', PostStatus.EnAttente, '2026-10-03T00:00:00Z')],
+    [mk('a', PostStatus.Disponible, '2026-10-01T00:00:00Z')],
+  );
+  assert.deepEqual(merged.map((p) => [p.id, p.statut]), [['b', PostStatus.EnAttente], ['a', PostStatus.Disponible]]);
+});

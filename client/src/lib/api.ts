@@ -29,6 +29,8 @@ import type {
 } from '@idea-chartrons/shared';
 import { localDb, withDelay, resetLocalDb } from './localDb';
 import { notifyShared, registerShared } from './sharedContent';
+import { deleteSharedPost, fetchSharedPosts, submitSharedPost, updateSharedPost, withSharedPosts } from './sharedPosts';
+import { isAdminSession } from './adminSession';
 import { getMenus, updateMenus, upsertAppointmentLink } from './gbp';
 import { loadContactMessages, saveContactMessage, type ContactMessage } from './contact';
 import { getActiveDispoSignals, createDispoSignal, getShopDispoSignals } from './reseauPro';
@@ -81,7 +83,7 @@ export interface VipStatusEntry {
 }
 
 export const api = {
-  getPosts: () => withDelay(() => localDb.getPosts()),
+  getPosts: async () => withSharedPosts(await withDelay(() => localDb.getPosts())),
   createPost: (data: {
     titre: string;
     description: string;
@@ -94,13 +96,37 @@ export const api = {
     acteurId?: string | null;
     commerceNom?: string | null;
     expiresAt?: string | null;
-  }) => withDelay(() => localDb.createPost(data)),
-  updatePost: (postId: string, patch: Partial<Omit<PostAnnonce, 'id' | 'createdAt'>>) =>
-    withDelay(() => localDb.updatePost(postId, patch)),
-  deletePost: (postId: string) => withDelay(() => {
-    localDb.deletePost(postId);
+  }) =>
+    withDelay(() => localDb.createPost(data)).then((created) => {
+      void submitSharedPost(created);
+      return created;
+    }),
+  updatePost: async (postId: string, patch: Partial<Omit<PostAnnonce, 'id' | 'createdAt'>>) => {
+    let updated: PostAnnonce;
+    try {
+      updated = await withDelay(() => localDb.updatePost(postId, patch));
+    } catch (error) {
+      // Publication d'un autre visiteur, absente de cet appareil : on part de la version partagée.
+      const shared = (await fetchSharedPosts()).find((post) => post.id === postId);
+      if (!shared) throw error;
+      const next = { ...shared, ...patch, updatedAt: new Date().toISOString() };
+      if (!isAdminSession()) return localDb.upsertLocalPost(next);
+      updated = next;
+    }
+    await updateSharedPost(updated);
+    return updated;
+  },
+  deletePost: async (postId: string) => {
+    let localError: unknown = null;
+    try {
+      await withDelay(() => localDb.deletePost(postId));
+    } catch (error) {
+      localError = error;
+    }
+    await deleteSharedPost(postId);
+    if (localError && !isAdminSession()) throw localError;
     return { ok: true };
-  }),
+  },
   getActeurs: () => withDelay(() => localDb.getAll('acteursLocaux')),
   createActeur: (data: {
     nomCommerce: string;

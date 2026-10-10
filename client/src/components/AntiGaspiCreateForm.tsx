@@ -77,10 +77,10 @@ export function AntiGaspiCreateForm({ open, onClose, onCreated }: AntiGaspiCreat
         auteurNom: commerceNom.trim() || null,
         commerceNom: commerceNom.trim() || null,
         expiresAt,
-        statut: PostStatus.EnAttente,
+        statut: PostStatus.Disponible,
       });
       rememberOwnedPost(created.id);
-      showToast(t('toast.postPending'));
+      showToast(t('toast.offerPublished'));
       onCreated();
       onClose();
     } catch (err) {

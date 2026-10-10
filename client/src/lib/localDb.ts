@@ -784,7 +784,7 @@ class LocalDatabase {
   }): PostAnnonce {
     const now = new Date().toISOString();
     return this.create('postsAnnonces', {
-      id: `post-${Date.now()}`,
+      id: `post-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       auteurNom: data.auteurNom?.trim() || null,
       titre: data.titre,
       description: data.description,
@@ -799,6 +799,13 @@ class LocalDatabase {
       createdAt: now,
       updatedAt: now,
     });
+  }
+
+  /** Garde sur cet appareil une copie d'une publication partagée, avec une modification personnelle (ex. réservation). */
+  upsertLocalPost(post: PostAnnonce): PostAnnonce {
+    return this.getById('postsAnnonces', post.id)
+      ? (this.update('postsAnnonces', post.id, post) as PostAnnonce)
+      : this.create('postsAnnonces', post);
   }
 
   updatePost(postId: string, patch: Partial<Omit<PostAnnonce, 'id' | 'createdAt'>>): PostAnnonce {
