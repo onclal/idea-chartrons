@@ -28,6 +28,7 @@ Le propriétaire est francophone, non développeur. Il compte sur Claude pour lu
 | **Administration en français (07/10)** | Le propriétaire est seul à administrer : l'administration reste en français, sans traduction. L'espagnol vise les pages publiques. |
 | **Réponses binaires (08/10)** | Langage simple, jamais technique. Pas de reformulation de ce que le propriétaire a dit. Une seule question à la fois, de type oui/non ou A/B. Le détail n'est donné que s'il le demande. |
 | **Réponses courtes et ciblées (09/10)** | Réponses courtes, centrées sur ce qui concerne directement le propriétaire. Rien de plus tant qu'il ne le demande pas. Règle permanente, à ne jamais relâcher (pas de rapports, de listes de détails ni d'explications non demandées). |
+| **Trop d'information = interdit (10/10)** | Règle absolue, plus forte que toutes les autres. Un message = **une seule idée, 5 lignes maximum, une seule question** (oui/non ou A/B). Jamais de liste de détails, de numéros de demandes, d'adresses techniques ni de compte rendu des notifications automatiques (Vercel, GitHub) : Claude les traite seul et n'en parle que si elles demandent une décision du propriétaire. Le tableau d'état fait 3 lignes maximum. Le propriétaire n'est pas développeur : l'IA est là pour lui **faciliter** la tâche, jamais la compliquer. En cas de doute, dire moins. |
 | **Projets séparés** | IDÉA CHARTRONS ne se mélange pas avec ses autres projets. Les outils externes (voir §2) sont fabriqués ailleurs : ne pas les construire ici. |
 
 ---
