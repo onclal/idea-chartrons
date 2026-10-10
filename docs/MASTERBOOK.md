@@ -196,8 +196,15 @@ Conséquence : pour administrer réellement le site en ligne, ces contenus devro
 
 ### Publications partagées — tranche 2 (10/10/2026, préparée, pas en ligne)
 - **Quoi** : les annonces des habitants et les offres Anti-Gaspi sont enregistrées dans Supabase (table `idea_shared_posts`) et vues de tous.
-- **Règles décidées par le propriétaire** : les **annonces sont validées par lui avant publication** ; les **offres Anti-Gaspi sont publiées tout de suite** (sans validation, avec téléphone et fin de validité). Menus : point à confirmer avec le propriétaire (les ardoises / menus du jour restent à valider tant qu'il n'a pas tranché).
+- **Règles décidées par le propriétaire** : les **annonces sont validées par lui avant publication** ; les **offres Anti-Gaspi sont publiées tout de suite** (sans validation, avec téléphone et fin de validité). **Menus du jour des commerçants : publiés sans validation** (décision du 10/10).
 - **Sécurité** : lecture publique seulement de ce qui n'est pas en attente ; l'auteur retire ou clôt sa publication grâce à une clé gardée sur son appareil ; l'administrateur voit tout et agit avec son code (vérifié par la base).
 - **Script à exécuter par le propriétaire, guidé pas à pas : `docs/sql/006_publications_partagees.sql`** (après le 004). Tant qu'il n'est pas exécuté, le site garde son fonctionnement actuel.
 - **Reste** : Local Relais non partagé (dépend de créneaux) ; le bandeau « Version de démonstration » reste tant que le Local Relais n'est pas partagé.
 - **Contrôles** : compilation, 25 tests, types, essai navigateur avec faux serveur (une offre Anti-Gaspi publiée par un visiteur est vue par un autre).
+
+### Politique de modération (décision du propriétaire, 10/10/2026)
+- **À contrôler en priorité par le propriétaire** : la partie éditoriale, l'agenda, la vie de quartier, et les **annonces entre particuliers** (pour contrer les ventes illicites).
+- **Sans validation** : offres Anti-Gaspi et menus du jour des commerçants. Raison : le commerçant n'a aucun intérêt à mal publier, et le propriétaire n'a pas le temps de tout gérer.
+- **Premium Pro** : le professionnel signe et valide son abonnement ; les **engagements de chacun** y seront inscrits (conditions à rédiger avec le propriétaire).
+- **Plus tard** : filtre automatique de mots et expressions interdits.
+- **Pour les nouveaux développements** : toute nouvelle publication de visiteur ou de pro suit cette politique (validation seulement pour l'éditorial, l'agenda, la vie de quartier et les annonces de particuliers).
