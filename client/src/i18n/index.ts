@@ -1426,6 +1426,7 @@ const resources = {
       toast: {
         postPublished: 'Annonce publiée !',
         postPending: 'Annonce envoyée : elle sera visible après validation.',
+        offerPublished: 'Offre publiée : elle est visible tout de suite.',
         postUpdated: 'Annonce mise à jour.',
         postDeleted: 'Annonce supprimée.',
         acteurPublished: 'Fiche publiée dans l’annuaire !',
@@ -3356,6 +3357,7 @@ const resources = {
       toast: {
         postPublished: 'Listing published!',
         postPending: 'Listing submitted: it will appear after review.',
+        offerPublished: 'Offer published: it is visible right away.',
         postUpdated: 'Listing updated.',
         postDeleted: 'Listing deleted.',
         acteurPublished: 'Listing published in the directory!',
@@ -4271,6 +4273,7 @@ const resources = {
       toast: {
         postPublished: '¡Anuncio publicado!',
         postPending: 'Anuncio enviado: será visible tras su validación.',
+        offerPublished: 'Oferta publicada: ya es visible.',
         postUpdated: 'Anuncio actualizado.',
         postDeleted: 'Anuncio eliminado.',
         acteurPublished: '¡Ficha publicada en el directorio!',
